@@ -1,38 +1,15 @@
-# Chess [![Build Status](https://travis-ci.org/TiraLabra/chess.svg?branch=master)](https://travis-ci.org/TiraLabra/chess) [![codecov](https://codecov.io/gh/TiraLabra/chess/branch/master/graph/badge.svg)](https://codecov.io/gh/TiraLabra/chess)
+# Chess AI
 
-Chess template for data structures and algorithms project
+This is a school project where I'm building a chess AI. School gave me the  [TIRA chess library](https://github.com/TiraLabra/chess). The TIRA chess library gives the player a method to interact with the lichess webpage. The given chesslibrary itself seems to depend on [Simple chess library](https://github.com/bhlangonijr/chesslib). This Simple chess library provides the list of legal moves for the player.
 
-It is done as part of the course [TKT20007 Ohjelmistotuotantoprojekti](https://github.com/HY-TKTL/TKT20007-Ohjelmistotuotantoprojekti)
+This git repo is providing AI for the TIRA chess library. I provide the rules for the chess and my AI will provide the best move for a piece given a specific situation and restrictions, but I'll also depend heavily on the Simple chess library on some classes eg. Board and Square. All the methods and classes that directly have a link to the chess rules I have written myself.
 
-## Workhours in DK107
+## Links to documentation
 
-Monday 10-13.30
+### [Design document](/Documentation/Design_document.md)
 
-Wednesday 14.30-18
+### Weekly reports
 
-Friday 10-16
+* [Weekly report #1](/Documentation/Weekly_report_1.md)
 
-## Documentation
-- [Definition of Done](https://helsinkifi-my.sharepoint.com/:w:/g/personal/jermusto_ad_helsinki_fi/Ea7I4Fxar9dEjPrevnzOXaMBuWZ7h_ZDH5jQdJm7uQ_Sjw)
-- [Beginner's guide for chess bot setup](https://github.com/TiraLabra/chess/blob/master/documentation/Beginners_guide.md)
-- [Creating your own bot](https://github.com/TiraLabra/chess/blob/master/documentation/Instructions_for_creating_an_engine.md)
-- [Testing your own bot](https://github.com/TiraLabra/chess/blob/master/documentation/testing.md)
-- [API architecture](https://github.com/TiraLabra/chess/blob/master/documentation/architecture.md)
-
-## Project progress
-- [Working hours](https://helsinkifi-my.sharepoint.com/:x:/g/personal/jermusto_ad_helsinki_fi/EWKQox0uvixEupOQ90-N2u0BDQv4EVi05rhoQAP-vzImlg?e=zcIxHE)
-- [Workflow](https://helsinkifi-my.sharepoint.com/:w:/g/personal/jermusto_ad_helsinki_fi/Ea9AnzQhw79PrinE3BbHqvIBcvvZ3k_Q0KPHYS4sj6KzsQ?e=PQUDBy)
-- [Sprint 0 board](https://github.com/TiraLabra/chess/projects/1)
-- [Sprint 1 board](https://github.com/TiraLabra/chess/projects/2) 
-- [Sprint 2 board](https://github.com/TiraLabra/chess/projects/3)
-- [Product backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/jermusto_ad_helsinki_fi/EbSHuSez9tVNi0CxTRtVU_sBo6SEdoqiayo5-I-wRxh_XA?e=TAZVRq)
-
-## Retrospectives
-- [Sprint 0](https://helsinkifi-my.sharepoint.com/:w:/g/personal/jermusto_ad_helsinki_fi/EX7DEhSqQa1Cr1Frk_s9DIoByCM3laqIdS27pmF0lMYovg?e=ZuwpOr)
-- [Sprint 1](https://helsinkifi-my.sharepoint.com/:w:/g/personal/jermusto_ad_helsinki_fi/EaCafe0NeQhIn9RvXX5NGdIBhEdWoSMhUK8QN81QgAOEiQ?e=uZb7Uu)
-- [Sprint 2](https://helsinkifi-my.sharepoint.com/:w:/g/personal/antlammi_ad_helsinki_fi/EZDDm5dJfnhEnIVKQ09PbmwBDXRmR4hKxA7fSKaOYJvkPg?e=a0EW2W)
-
-## Notes on Client Meetings
-
-- [Sprint 0](https://helsinkifi-my.sharepoint.com/:w:/g/personal/jermusto_ad_helsinki_fi/EU6FbXQiGKBNuPhorreCqvoBszaWPCm9tC-sVFk3GOWwbQ?e=7R1OJo)
-- [Sprint 1](https://helsinkifi-my.sharepoint.com/:w:/g/personal/jermusto_ad_helsinki_fi/EfJxIu_TyNRAmp_pyUaEcBQBCu1vNHMAGViYYpNLfkISGQ?e=l4siCN)
+### [Hour reporting](/Documentation/Hour_reporting.md)
