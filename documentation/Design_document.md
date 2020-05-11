@@ -4,22 +4,22 @@ In this project, the chess AI is built on top of the finished chess [template](h
 
 The work is part of Data Structures and Algorithms for Intermediate Studies in the University of Helsinki computer science Bachelor degree.
 
-## What algorithms and data structures are implemented in this project
+## Algorithms and data structures used in this project
 
 Lauri Hartikainen has in [FreeCodeCamp](https://www.freecodecamp.org/news/simple-chess-ai-step-by-step-1d55a9266977/) an interesting solution for building simple chess artificial intelligence.
 
 This solution utilizes a search tree data structure, as well as an alpha-beta pruning algorithm. The alpha-beta pruning compares possible moves x moves down the search tree, and selects the best move from these.
 
-## What problem is the project  solving and why did you choose these algorithms / data structures
+### What problem is the project  solving and why did you choose these algorithms / data structures
 
 I use the selected solution because chess is a zero-sum game in which the search tree and minimax algorithm are really effective. The problem with the MiniMax algorithm, however, is that the number of its inputs and comparable situations can quickly grow large.
 This problem is addressed by an algorithm called alpha-beta pruning.
 
-## What inputs the program receives and how it uses them
+### What inputs the program receives and how it uses them
 
 The program receives the last move played by the opponent and counts certain number of moves from the search tree. From these results, the algorithm selects the best according to predetermined rules that are also provided in the program.
 
-## Target time requirement
+### Target time requirement
 
 The time requirement of the algorithm is O (n ^ m), where n indicates the number of possible moves in typical situation, and m indicates the number of nodes that are searched .
 
@@ -40,6 +40,12 @@ depth n | b^n | b^⌈n/2⌉ + b^⌈n/2⌋ - 1
 6 | 4,096,000,000 | 127,999
 7 | 163,840,000,000 | 2,623,999
 8 | 6,553,600,000,000 | 5,119,999
+
+## Architecture
+
+The architecture will live with the coding, but the initial thought of package diagram is demonstrated below. There are also other Java classes that came automatically from the [TIRA chess library](https://github.com/TiraLabra/chess). These are not marked in the package diagram below, since I only wanted to include the classes that are important for the school task at hand.
+
+![Chess AI package diagram](/documentation/images/chess-ai-package.png)
 
 ## Sources
 
