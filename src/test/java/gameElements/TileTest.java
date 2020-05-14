@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameElements;
 
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pieces.Pawn;
 
 
-/**
- *
- * @author juhop
- */
 public class TileTest {
     
     Tile testTile;
@@ -51,7 +44,15 @@ public class TileTest {
     public void getRankReturnsRightSyntax() {
         int high = 9;
         int low = 0;
-        assertTrue("Error, Rank is too high", high >= testTile.getRank().getIntegerRank());
-        assertTrue("Error, Rank is too low",  low  <= testTile.getRank().getIntegerRank());
+        assertTrue("Error, Rank is too high", high > testTile.getRank().getIntegerRank());
+        assertTrue("Error, Rank is too low",  low  < testTile.getRank().getIntegerRank());
+    }
+    
+    @Test
+    public void getPiecerReturnsRightSyntax() {
+        Pawn testPawn = new Pawn();
+        testTile.setPiece(testPawn);
+        
+        assertThat(testTile.getPiece(), is(testPawn));
     }
 }

@@ -1,7 +1,7 @@
 
 package gameElements;
 
-enum Rank {
+public enum Rank {
     Rank_1(1),
     Rank_2(2),
     Rank_3(3),
@@ -19,5 +19,14 @@ enum Rank {
 
     public int getIntegerRank() {
         return rank;
+    }
+    
+    public static Rank valueOfLabel(int rankInteger) {
+        for (Rank e : values()) {
+            if (e.getIntegerRank() == rankInteger) {
+                return e;
+            }
+        }
+        return null;
     }
 }

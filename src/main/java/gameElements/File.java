@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template letterFile, choose Tools | Templates
  * and open the template in the editor.
  */
 package gameElements;
@@ -10,24 +10,39 @@ package gameElements;
  * @author juhop
  */
 
-enum File {
-    File_A("A"),
-    File_B("B"),
-    File_C("C"),
-    File_D("D"),
-    File_E("E"),
-    File_F("F"),
-    File_G("G"),
-    File_H("H");
+public enum File {
+    File_A("A", 1),
+    File_B("B", 2),
+    File_C("C", 3),
+    File_D("D", 4),
+    File_E("E", 5),
+    File_F("F", 6),
+    File_G("G", 7),
+    File_H("H", 8);
 
-    private final String file;
+    private final String letterFile;
+    private final int numberFile;
 
-    File(String file) {
-        this.file = file;
+    File(String file, int numberFile) {
+        this.letterFile = file;
+        this.numberFile = numberFile;
     }
 
     public String getStringFile() {
-        return file;
+        return letterFile;
+    }
+    
+    public int getIntegerFile() {
+        return numberFile;
+    }
+    
+    public static File valueOfLabel(int fileInteger) {
+        for (File e : values()) {
+            if (e.getIntegerFile() == fileInteger) {
+                return e;
+            }
+        }
+        return null;
     }
 }
 

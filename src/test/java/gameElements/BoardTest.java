@@ -6,6 +6,7 @@ package gameElements;
  * and open the template in the editor.
  */
 
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,7 +20,10 @@ import static org.junit.Assert.*;
  */
 public class BoardTest {
     
+    private final Board testBoard;
+    
     public BoardTest() {
+        testBoard = new Board();
     }
     
     @BeforeClass
@@ -38,9 +42,41 @@ public class BoardTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void boardHas64Tiles() {
+        assertThat(testBoard.getTilesList().length, is(64));
+    }
+    
+    @Test
+    public void getTileReturnsRightTile() {
+        
+        // A1
+        
+        int fileToTest = testBoard.getTile(File.File_A, Rank.Rank_1).getFile().getIntegerFile();
+        int rankToTest = testBoard.getTile(File.File_A, Rank.Rank_1).getRank().getIntegerRank();
+        assertThat(fileToTest, is(new Tile(File.File_A, Rank.Rank_1).getFile().getIntegerFile()));
+        assertThat(rankToTest, is(new Tile(File.File_A, Rank.Rank_1).getRank().getIntegerRank()));
+        
+        // B5
+        
+        int fileToTest2 = testBoard.getTile(File.File_B, Rank.Rank_5).getFile().getIntegerFile();
+        int rankToTest2 = testBoard.getTile(File.File_B, Rank.Rank_5).getRank().getIntegerRank();
+        assertThat(fileToTest2, is(new Tile(File.File_B, Rank.Rank_5).getFile().getIntegerFile()));
+        assertThat(rankToTest2, is(new Tile(File.File_B, Rank.Rank_5).getRank().getIntegerRank()));
+        
+        // C7
+        
+        int fileToTest3 = testBoard.getTile(File.File_C, Rank.Rank_7).getFile().getIntegerFile();
+        int rankToTest3 = testBoard.getTile(File.File_C, Rank.Rank_7).getRank().getIntegerRank();
+        assertThat(fileToTest3, is(new Tile(File.File_C, Rank.Rank_7).getFile().getIntegerFile()));
+        assertThat(rankToTest3, is(new Tile(File.File_C, Rank.Rank_7).getRank().getIntegerRank()));
+        
+        // H8
+        
+        int fileToTest4 = testBoard.getTile(File.File_H, Rank.Rank_8).getFile().getIntegerFile();
+        int rankToTest4 = testBoard.getTile(File.File_H, Rank.Rank_8).getRank().getIntegerRank();
+        assertThat(fileToTest4, is(new Tile(File.File_H, Rank.Rank_8).getFile().getIntegerFile()));
+        assertThat(rankToTest4, is(new Tile(File.File_H, Rank.Rank_8).getRank().getIntegerRank()));
+        
+    }
 }
