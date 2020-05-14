@@ -1,6 +1,6 @@
 # Week 1
 
-[Hour reporting](/Documentation/Hour_reporting.md)
+[Hour reporting](/documentation/Hour_reporting.md)
 
 ## What has happened during week 1
 
