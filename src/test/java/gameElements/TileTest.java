@@ -1,5 +1,6 @@
 package gameElements;
 
+import chess.model.Side;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -50,7 +51,7 @@ public class TileTest {
     
     @Test
     public void getPiecerReturnsRightSyntax() {
-        Pawn testPawn = new Pawn();
+        Pawn testPawn = new Pawn(Side.BLACK);
         testTile.setPiece(testPawn);
         
         assertThat(testTile.getPiece(), is(testPawn));

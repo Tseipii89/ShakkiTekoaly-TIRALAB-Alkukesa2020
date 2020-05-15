@@ -9,11 +9,13 @@ Date       | time | target |
 2020-05-13 | 1.5h | Started TDD coding for TiraBot and some neede chess elements |
 2020-05-13 | 1h | Started Rank, File and Tile class |
 2020-05-14 | 3h | Continued to code different classes and unit -tests for those |
+2020-05-15 | 1h | Start of Pawn movement generator |
+
 
 
 ## Totals
 
  Week   | Time     |
 --------|----------|
- 1      | 8.5h    |
+ 1      | 9.5h    |
 **Tot** | **8.5h** |

@@ -12,5 +12,7 @@ public interface Piece {
     public void setPieceType(PieceType type);
     
     public PieceType getPieceType();
+    
+    public String[] getMoves();
   
 }

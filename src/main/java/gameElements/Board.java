@@ -1,6 +1,9 @@
 
 package gameElements;
 
+import chess.model.Side;
+import pieces.Pawn;
+
 
 public class Board {
     
@@ -26,6 +29,16 @@ public class Board {
     public Tile getTile(File newFile, Rank newRank) {
         int index = 8*(newRank.getIntegerRank() - 1) + newFile.getIntegerFile()-1;
         return tiles[index];
+    }
+    
+    public void initBoard() {
+        for (int i = 8; i < 16; i++) {
+            this.tiles[i].setPiece(new Pawn(Side.WHITE));  
+        }
+        
+        for (int i = 47; i < 55; i++) {
+            this.tiles[i].setPiece(new Pawn(Side.WHITE));  
+        }
     }
     
 }

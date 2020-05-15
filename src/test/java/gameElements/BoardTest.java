@@ -6,6 +6,7 @@ package gameElements;
  * and open the template in the editor.
  */
 
+
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pieces.PieceType;
 
 /**
  *
@@ -78,5 +80,22 @@ public class BoardTest {
         assertThat(fileToTest4, is(new Tile(File.File_H, Rank.Rank_8).getFile().getIntegerFile()));
         assertThat(rankToTest4, is(new Tile(File.File_H, Rank.Rank_8).getRank().getIntegerRank()));
         
+    }
+    
+    @Test
+    public void initBoardSets16Pawns() {
+        int pawns = 0;
+        testBoard.initBoard();
+        
+        for (int i = 0; i < 63; i++) {
+            if (testBoard.getTilesList()[i].getPiece() == null) {
+                
+            } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Pawn) {
+                pawns++;
+            }            
+        }
+        
+        assertThat(pawns, is(16));
+
     }
 }

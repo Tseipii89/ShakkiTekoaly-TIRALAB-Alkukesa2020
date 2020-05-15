@@ -6,6 +6,11 @@ public class Pawn implements Piece {
     
     private Side side;
     private PieceType pieceType;
+    
+    public Pawn(Side side) {
+        this.side = side;
+        this.pieceType = PieceType.Pawn;
+    }
 
 
     @Override
@@ -27,7 +32,10 @@ public class Pawn implements Piece {
     public PieceType getPieceType() {
         return this.pieceType;
     }
-
-
     
+    @Override
+    public String[] getMoves() {
+        return null;
+    }
+
 }
