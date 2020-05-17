@@ -31,5 +31,10 @@ public class Tile {
     public Piece getPiece() {
         return this.piece;
     }
+    
+    @Override
+    public String toString(){ 
+        return file.getStringFile()+rank.toString();
+    }  
    
 }

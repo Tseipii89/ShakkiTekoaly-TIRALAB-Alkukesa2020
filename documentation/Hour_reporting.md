@@ -11,6 +11,11 @@ Date       | time | target |
 2020-05-14 | 3h | Continued to code different classes and unit -tests for those |
 2020-05-15 | 1h | Start of Pawn movement generator |
 
+## Week 2
+
+Date       | time | target |
+-----------|------|--------|
+2020-05-17 | 1h | Pawn movement rules start |
 
 
 ## Totals
@@ -18,4 +23,5 @@ Date       | time | target |
  Week   | Time     |
 --------|----------|
  1      | 9.5h    |
-**Tot** | **8.5h** |
+ 2      | 1h    |
+**Tot** | **10.5h** |

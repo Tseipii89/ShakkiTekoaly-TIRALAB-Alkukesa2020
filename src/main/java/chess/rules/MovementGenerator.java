@@ -6,6 +6,7 @@
 package chess.rules;
 
 import chess.model.Side;
+import gameElements.Board;
 import gameElements.Tile;
 import pieces.Piece;
 import pieces.PieceType;
@@ -20,7 +21,9 @@ public class MovementGenerator {
         
     }
     
-    public String[] pawnMovement(Piece piece, Tile tile) {
+    public String[] pieceMovement(Board gameBoard, Tile tile) {
+        
+        Piece piece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
         if(piece.getPieceType() != PieceType.Pawn) {
             return null;
         }
@@ -28,7 +31,7 @@ public class MovementGenerator {
         int sideMultiplier = 1;
         if (piece.getSide() == Side.BLACK) sideMultiplier = -1;
         
-        return null;
+        return piece.getMoves(gameBoard, tile, sideMultiplier);
         
     }
 }

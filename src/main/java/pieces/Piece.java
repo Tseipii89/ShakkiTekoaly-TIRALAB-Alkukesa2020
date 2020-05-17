@@ -1,6 +1,8 @@
 package pieces;
 
 import chess.model.Side;
+import gameElements.Board;
+import gameElements.Tile;
 
 
 public interface Piece {
@@ -12,7 +14,7 @@ public interface Piece {
     public void setPieceType(PieceType type);
     
     public PieceType getPieceType();
-    
-    public String[] getMoves();
+
+    public String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier);
   
 }

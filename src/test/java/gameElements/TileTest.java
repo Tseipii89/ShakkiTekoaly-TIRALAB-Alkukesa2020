@@ -56,4 +56,9 @@ public class TileTest {
         
         assertThat(testTile.getPiece(), is(testPawn));
     }
+    
+    @Test
+    public void toStringWorksRight() {
+        assertThat(testTile.toString(), is("E2"));
+    }
 }

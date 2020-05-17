@@ -36,8 +36,8 @@ public class Board {
             this.tiles[i].setPiece(new Pawn(Side.WHITE));  
         }
         
-        for (int i = 47; i < 55; i++) {
-            this.tiles[i].setPiece(new Pawn(Side.WHITE));  
+        for (int i = 48; i < 56; i++) {
+            this.tiles[i].setPiece(new Pawn(Side.BLACK));  
         }
     }
     

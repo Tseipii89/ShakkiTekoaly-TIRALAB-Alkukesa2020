@@ -29,4 +29,9 @@ public enum Rank {
         }
         return null;
     }
+    
+    @Override
+    public String toString(){ 
+        return Integer.toString(this.getIntegerRank());
+    }  
 }
