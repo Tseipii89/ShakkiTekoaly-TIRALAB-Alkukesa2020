@@ -5,6 +5,7 @@
  */
 package chess.rules;
 
+import chess.model.Side;
 import gameElements.Board;
 import gameElements.File;
 import gameElements.Rank;
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pieces.Pawn;
 
 /**
  *
@@ -80,5 +82,48 @@ public class MovementGeneratorTest {
         assertThat(pawnMovesB7[1], is("B7B5"));
     }
     
+    @Test
+    public void whitePawnAttacksRightAmountOfMoves() {
+        testBoard.getTile(File.File_D, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_D, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_E, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesD4 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_4));
+        assertThat(pawnMovesD4.length, is(2));
+    }
+    
+    @Test
+    public void whitePawnAttacksRightMoves() {
+        testBoard.getTile(File.File_D, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_D, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_E, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesD4 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_4));
+        assertThat(pawnMovesD4[0], is("D4C5"));
+        assertThat(pawnMovesD4[1], is("D4E5"));
+    }
+    
+    @Test
+    public void blackPawnAttacksRightAmountOfMoves() {
+        testBoard.getTile(File.File_D, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_D, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_E, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        String[] pawnMovesD4 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_5));
+        assertThat(pawnMovesD4.length, is(2));
+    }
+    
+    
+    @Test
+    public void blackPawnAttacksRightMoves() {
+       testBoard.getTile(File.File_D, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_D, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_E, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
+        String[] pawnMovesD4 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_5));
+        assertThat(pawnMovesD4[0], is("D5E4"));
+        assertThat(pawnMovesD4[1], is("D5C4"));
+    }
+
     
 }

@@ -15,7 +15,7 @@ Date       | time | target |
 
 Date       | time | target |
 -----------|------|--------|
-2020-05-17 | 1h | Pawn movement rules start |
+2020-05-17 | 2.5h | Pawn movement rules start and continuous integration |
 
 
 ## Totals
@@ -23,5 +23,5 @@ Date       | time | target |
  Week   | Time     |
 --------|----------|
  1      | 9.5h    |
- 2      | 1h    |
-**Tot** | **10.5h** |
+ 2      | 2.5h    |
+**Tot** | **12h** |

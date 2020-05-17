@@ -1,7 +1,9 @@
 package pieces;
 
 import chess.model.Side;
+import chess.rules.MoveRules;
 import gameElements.Board;
+import gameElements.File;
 import gameElements.Rank;
 import gameElements.Tile;
 
@@ -9,10 +11,12 @@ public class Pawn implements Piece {
     
     private Side side;
     private PieceType pieceType;
+    private MoveRules moveRules;
     
     public Pawn(Side side) {
         this.side = side;
         this.pieceType = PieceType.Pawn;
+        moveRules = new MoveRules();
     }
 
 
@@ -39,21 +43,45 @@ public class Pawn implements Piece {
 
     @Override
     public String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier) {
-        String[] moves;
-        if(tile.getFile().getIntegerFile() == 2 || tile.getFile().getIntegerFile() == 7) {
-            moves = new String[2];
-        } else {
-            moves = new String[1];
-        }
-        int newRankInt = tile.getRank().getIntegerRank() + 1*sideMultiplier;
-        Tile newTile = new Tile(tile.getFile(), Rank.valueOfLabel(newRankInt));
-        moves[0] = tile.toString() + newTile.toString();
         
-        if(tile.getFile().getIntegerFile() == 2) {
-            int newRankInt2 = tile.getRank().getIntegerRank() + 2*sideMultiplier;
-            Tile newTile2 = new Tile(tile.getFile(), Rank.valueOfLabel(newRankInt2));
-            moves[1] = tile.toString() + newTile2.toString();
+        Piece tilesPiece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
+        
+        String[] moves = new String[0];
+
+        // Basic move
+        Tile basicMovementTile = moveRules.countNewTile(tile, sideMultiplier, 0, 1);
+        if (gameBoard.getTile(basicMovementTile.getFile(), basicMovementTile.getRank()).getPiece() == null &&
+                basicMovementTile != null) {
+            String basicMove = tile.getFile().toString() + tile.getRank().toString() + basicMovementTile.getFile().toString() + basicMovementTile.getRank().toString();
+            moves = moveRules.addNewMoveToArray(moves, basicMove);
         }
+        
+        // Start move 2 tiles
+        Tile startMovementTile = moveRules.countNewTile(tile, sideMultiplier, 0, 2);
+        if (gameBoard.getTile(startMovementTile.getFile(), startMovementTile.getRank()).getPiece() == null 
+                && gameBoard.getTile(basicMovementTile.getFile(), basicMovementTile.getRank()).getPiece() == null // there can't be any pieces in between the two jump move
+                && startMovementTile != null) {
+            String startMove = tile.getFile().toString() + tile.getRank().toString() + startMovementTile.getFile().toString() + startMovementTile.getRank().toString();
+            moves = moveRules.addNewMoveToArray(moves, startMove);
+        }
+        
+        // Pawn attack
+        Tile attack1MovementTile = moveRules.countNewTile(tile, sideMultiplier, -1, 1);
+        if (gameBoard.getTile(attack1MovementTile.getFile(), attack1MovementTile.getRank()).getPiece() != null) {
+            if (gameBoard.getTile(attack1MovementTile.getFile(), attack1MovementTile.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
+                String attack1 = tile.getFile().toString() + tile.getRank().toString() + attack1MovementTile.getFile().toString() + attack1MovementTile.getRank().toString();
+                moves = moveRules.addNewMoveToArray(moves, attack1);
+            }
+         } 
+        
+        Tile attack2MovementTile = moveRules.countNewTile(tile, sideMultiplier, 1, 1);
+        if (gameBoard.getTile(attack2MovementTile.getFile(), attack2MovementTile.getRank()).getPiece() != null) {
+            if (gameBoard.getTile(attack2MovementTile.getFile(), attack2MovementTile.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
+                String attack2 = tile.getFile().toString() + tile.getRank().toString() + attack2MovementTile.getFile().toString() + attack2MovementTile.getRank().toString();
+                moves = moveRules.addNewMoveToArray(moves, attack2);            
+            }
+        } 
+
         
         return moves;
     }
