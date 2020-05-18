@@ -116,7 +116,7 @@ public class MovementGeneratorTest {
     
     @Test
     public void blackPawnAttacksRightMoves() {
-       testBoard.getTile(File.File_D, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_D, Rank.Rank_5).setPiece(new Pawn(Side.BLACK));
         testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
         testBoard.getTile(File.File_D, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
         testBoard.getTile(File.File_E, Rank.Rank_4).setPiece(new Pawn(Side.WHITE));
@@ -124,6 +124,51 @@ public class MovementGeneratorTest {
         assertThat(pawnMovesD4[0], is("D5E4"));
         assertThat(pawnMovesD4[1], is("D5C4"));
     }
-
+    
+    @Test
+    public void whitePawnsCantGoOutsideBoard() {
+        testBoard.getTile(File.File_D, Rank.Rank_8).setPiece(new Pawn(Side.WHITE));
+        String[] pawnMovesD8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_8));
+        assertThat(pawnMovesD8.length, is(0));
+    }
+    
+    @Test
+    public void blackPawnsCantGoOutsideBoard() {
+        testBoard.getTile(File.File_D, Rank.Rank_1).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesD8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_1));
+        assertThat(pawnMovesD8.length, is(0));
+    }
+    
+    @Test
+    public void whitePawnsPromotesToQueen() {
+        testBoard.getTile(File.File_D, Rank.Rank_7).setPiece(new Pawn(Side.WHITE));
+        String[] pawnMovesD8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_7));
+        assertThat(pawnMovesD8[0], is("D7D8Q"));
+    }
+    
+    @Test
+    public void blackPawnsPromotesToQueen() {
+        testBoard.getTile(File.File_D, Rank.Rank_2).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesD8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_2));
+        assertThat(pawnMovesD8[0], is("D2D1Q"));
+    }
+    
+    @Test
+    public void whitePawnsAttacksAndPromotesToQueen() {
+        testBoard.getTile(File.File_D, Rank.Rank_7).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_8).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesD8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_7));
+        assertThat(pawnMovesD8[0], is("D7D8Q"));
+        assertThat(pawnMovesD8[1], is("D7C8Q"));
+    }
+    
+    @Test
+    public void blackPawnsAttacksAndPromotesToQueen() {
+        testBoard.getTile(File.File_D, Rank.Rank_2).setPiece(new Pawn(Side.BLACK));
+        testBoard.getTile(File.File_C, Rank.Rank_1).setPiece(new Pawn(Side.WHITE));
+        String[] pawnMovesD8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_2));
+        assertThat(pawnMovesD8[0], is("D2D1Q"));
+        assertThat(pawnMovesD8[1], is("D2C1Q"));
+    }
     
 }

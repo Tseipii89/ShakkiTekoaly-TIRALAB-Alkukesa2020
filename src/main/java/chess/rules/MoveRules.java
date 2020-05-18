@@ -16,6 +16,12 @@ public class MoveRules {
         int newFileInt = currentTile.getFile().getIntegerFile() + fileMovement*sideMultiplier;
         int newRankInt = currentTile.getRank().getIntegerRank() + rankMovement*sideMultiplier;
         
+        if (newFileInt < 1 || newFileInt > 8) {
+            return null;
+        }
+        if (newRankInt < 1 || newRankInt > 8) {
+            return null;
+        }
         return new Tile(File.valueOfLabel(newFileInt), Rank.valueOfLabel(newRankInt));
     }
 
