@@ -4,6 +4,7 @@
 
 ## What has happened during week 2
 * The Pawn mocement rules have been added
+* Checkstyle, contious integration, jacoco added
 
 ## Problems
 * I have started to notice small problems, if I haven't been careful about the refactoring of the classes. The classes become un-maintable very quickly.
