@@ -68,14 +68,11 @@ public class Pawn implements Piece {
         Tile startMovementTile = moveRules.countNewTile(tile, sideMultiplier, 0, 2);
         if (startMovementTile == null) { }
         else if (gameBoard.getTile(startMovementTile.getFile(), startMovementTile.getRank()).getPiece() == null 
-                && gameBoard.getTile(basicMovementTile.getFile(), basicMovementTile.getRank()).getPiece() == null) { // there can't be any pieces in between the two jump move {
-                int canPromotion = (int)(4.5 + sideMultiplier * 2.5);
+                && gameBoard.getTile(basicMovementTile.getFile(), basicMovementTile.getRank()).getPiece() == null) { // there can't be any pieces in between the two jump move 
                 String start;
-                if(tile.getRank().getIntegerRank() == canPromotion) {
-                   start = tile.getFile().toString() + tile.getRank().toString() + startMovementTile.getFile().toString() + startMovementTile.getRank().toString() + "Q"; 
-                } else {
-                   start = tile.getFile().toString() + tile.getRank().toString() + startMovementTile.getFile().toString() + startMovementTile.getRank().toString();
-                }
+               
+                start = tile.getFile().toString() + tile.getRank().toString() + startMovementTile.getFile().toString() + startMovementTile.getRank().toString();
+                
             
             moves = moveRules.addNewMoveToArray(moves, start);
         }

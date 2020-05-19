@@ -58,6 +58,7 @@ public class MovementGeneratorTest {
         assertThat(pawnMovesB2.length, is(2));
     }
     
+    
     @Test
     public void whitePawnReturnsRightTwoMoves() {
         testBoard.initBoard();
@@ -65,6 +66,15 @@ public class MovementGeneratorTest {
         assertThat(pawnMovesB2[0], is("B2B3"));
         assertThat(pawnMovesB2[1], is("B2B4"));
     }
+    
+    @Test
+    public void whitePawnMovementReturn1MoveAsFirstMoveIfEnemyIsInfront() {
+        testBoard.getTile(File.File_D, Rank.Rank_2).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_D, Rank.Rank_3).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesB2 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_2));
+        assertThat(pawnMovesB2.length, is(0));
+    }
+
     
     @Test
     public void blackPawnMovementReturn2MovesAsFirstMove() {
@@ -80,6 +90,14 @@ public class MovementGeneratorTest {
         String[] pawnMovesB7 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_B, Rank.Rank_7));
         assertThat(pawnMovesB7[0], is("B7B6"));
         assertThat(pawnMovesB7[1], is("B7B5"));
+    }
+    
+    @Test
+    public void blackPawnMovementReturn1MoveAsFirstMoveIfEnemyIsInfront() {
+        testBoard.getTile(File.File_D, Rank.Rank_6).setPiece(new Pawn(Side.WHITE));
+        testBoard.getTile(File.File_D, Rank.Rank_7).setPiece(new Pawn(Side.BLACK));
+        String[] pawnMovesB2 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_D, Rank.Rank_7));
+        assertThat(pawnMovesB2.length, is(0));
     }
     
     @Test
