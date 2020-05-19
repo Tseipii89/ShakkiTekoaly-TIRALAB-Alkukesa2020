@@ -64,24 +64,48 @@ public class MoveRules {
         return newMoves;
     }
     
-    public String[] isTileOkToAddAttack(String[] moves, Board gameBoard ,Tile tile, int sideMultiplier, int filesToAdd,int ranksToAdd, double canPromotion) {
+    public String[] isTileOkToAddAttack(String[] moves, 
+                                        Board gameBoard,
+                                        Tile tile, 
+                                        int sideMultiplier, 
+                                        int filesToAdd,
+                                        int ranksToAdd, 
+                                        double canPromotion) {
         Piece tilesPiece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
         Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
-        if (tileToCheck == null) { }
-        else if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() != null) {
-            if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
+        if (tileToCheck == null) { 
+        } else if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() != null) {
+            if (gameBoard.getTile(tileToCheck.getFile(), 
+                    tileToCheck.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
                 String move = createMovementString(tile, tileToCheck, canPromotion);
                 moves = this.addNewMoveToArray(moves, move);
             }
-         } 
+        } 
         return moves;
     }
     
-    public String[] isTileOkToAddPawn(String[] moves, Board gameBoard ,Tile tile, int sideMultiplier, int filesToAdd,int ranksToAdd, double canPromotion) {
+    public String[] isTileOkToAddPawn(String[] moves, 
+                                      Board gameBoard,
+                                      Tile tile, 
+                                      int sideMultiplier, 
+                                      int filesToAdd,
+                                      int ranksToAdd, 
+                                      double canPromotion) {
+        Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
+        if (tileToCheck != null) {
+            if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null) {
+                String move = createMovementString(tile, tileToCheck, canPromotion);
+                moves = this.addNewMoveToArray(moves, move);
+            } 
+        }
+        return moves;
+    }
+    
+    public String[] isTileOkToAddEveryoneElse(String[] moves, Board gameBoard ,Tile tile, int sideMultiplier, int filesToAdd,int ranksToAdd) {
         Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
         if (tileToCheck != null) {
             if(gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null ) {
-                String move = createMovementString(tile, tileToCheck, canPromotion);
+                String move = createMovementString(tile, tileToCheck, 0); // no other piece can promote than Pawn
                 moves = this.addNewMoveToArray(moves, move);
             } 
         }

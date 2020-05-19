@@ -158,6 +158,10 @@ public class BoardTest {
         
     }
     
+    /* Pieces position initially correct */
+    
+    /* PAWN */
+    
     @Test
     public void initBoardSets16Pawns() {
         int pawns = 0;
@@ -188,7 +192,7 @@ public class BoardTest {
             }
         }
         
-         assertThat(pawns, is(8));
+        assertThat(pawns, is(8));
     }
     
     @Test
@@ -206,6 +210,38 @@ public class BoardTest {
             }
         }
         
-         assertThat(pawns, is(8));
+        assertThat(pawns, is(8));
+    }
+    
+    /* KNIGHT */
+    
+    @Test
+    public void initBoardSets4Knights() {
+        int knights = 0;
+        testBoard.initBoard();
+        
+        for (int i = 0; i < 63; i++) {
+            if (testBoard.getTilesList()[i].getPiece() == null) {
+                
+            } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Knight) {
+                knights++;
+            }            
+        }
+        assertThat(knights, is(4));
+    }
+    
+    @Test
+    public void KnightsCorrectPositionInitially() {
+        testBoard.initBoard();
+        assertThat(testBoard.getTile(File.File_B, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Knight));     
+        assertThat(testBoard.getTile(File.File_B, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_G, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Knight));
+        assertThat(testBoard.getTile(File.File_G, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_B, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Knight));
+        assertThat(testBoard.getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+        assertThat(testBoard.getTile(File.File_G, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Knight));
+        assertThat(testBoard.getTile(File.File_G, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+
+
     }
 }

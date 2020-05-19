@@ -3,15 +3,13 @@ package pieces;
 import chess.model.Side;
 import chess.rules.MoveRules;
 import gameElements.Board;
-import gameElements.File;
-import gameElements.Rank;
 import gameElements.Tile;
 
 public class Pawn implements Piece {
     
     private Side side;
     private PieceType pieceType;
-    private MoveRules moveRules;
+    private final MoveRules moveRules;
     
     public Pawn(Side side) {
         this.side = side;

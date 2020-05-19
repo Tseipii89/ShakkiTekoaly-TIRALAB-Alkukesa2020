@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pieces.Knight;
 import pieces.Pawn;
 
 /**
@@ -203,4 +204,87 @@ public class MovementGeneratorTest {
         assertThat(pawnMovesD8[1], is("D2C1Q"));
     }
     
+    /* MOVEMENT KNIGHT */
+    
+    @Test
+    public void whiteKnightMovementReturn2MovesAsFirstMove() {
+        testBoard.initBoard();
+        String[] knightMovesB1 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_B, Rank.Rank_1));
+        assertThat(knightMovesB1.length, is(2));
+    }
+    
+    @Test
+    public void whiteKnightReturnsRightTwoMoves() {
+        testBoard.initBoard();
+        String[] knightMovesB1 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_B, Rank.Rank_1));
+        assertThat(knightMovesB1[0], is("B1A3"));
+        assertThat(knightMovesB1[1], is("B1C3"));
+    }
+    
+    @Test
+    public void blackKnightMovementReturn2MovesAsFirstMove() {
+        testBoard.initBoard();
+        String[] knightMovesB1 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_B, Rank.Rank_1));
+        assertThat(knightMovesB1.length, is(2));
+    }
+    
+    @Test
+    public void blackKnightReturnsRightTwoMoves() {
+        testBoard.initBoard();
+        String[] knightMovesG8 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_G, Rank.Rank_8));
+        assertThat(knightMovesG8[0], is("G8H6"));
+        assertThat(knightMovesG8[1], is("G8F6"));
+    }
+    
+    @Test
+    public void knightReturnRight8moves() {
+        testBoard.getTile(File.File_E, Rank.Rank_5).setPiece(new Knight(Side.BLACK));
+        String[] knightMovesE5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_E, Rank.Rank_5));
+
+        assertThat(knightMovesE5[0], is("E5G4"));
+        assertThat(knightMovesE5[1], is("E5F3"));
+        assertThat(knightMovesE5[2], is("E5D3"));
+        assertThat(knightMovesE5[3], is("E5C4"));
+        assertThat(knightMovesE5[4], is("E5C6"));
+        assertThat(knightMovesE5[5], is("E5D7"));
+        assertThat(knightMovesE5[6], is("E5F7"));
+        assertThat(knightMovesE5[7], is("E5G6"));
+    }
+    
+    @Test
+    public void knightReturnRight4movesIfNextToEdge() {
+        testBoard.getTile(File.File_H, Rank.Rank_5).setPiece(new Knight(Side.WHITE));
+        String[] knightMovesH5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_H, Rank.Rank_5));
+
+        assertThat(knightMovesH5.length, is(4));
+        assertThat(knightMovesH5[0], is("H5F6"));
+        assertThat(knightMovesH5[1], is("H5G7"));
+        assertThat(knightMovesH5[2], is("H5G3"));
+        assertThat(knightMovesH5[3], is("H5F4"));
+    }
+    
+    @Test
+    public void knightReturnRight4movesIfNextToEdgeAndEnemy() {
+        testBoard.getTile(File.File_H, Rank.Rank_5).setPiece(new Knight(Side.WHITE));
+        testBoard.getTile(File.File_F, Rank.Rank_6).setPiece(new Knight(Side.BLACK));
+        String[] knightMovesH5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_H, Rank.Rank_5));
+
+        assertThat(knightMovesH5.length, is(4));
+        assertThat(knightMovesH5[0], is("H5F6"));
+        assertThat(knightMovesH5[1], is("H5G7"));
+        assertThat(knightMovesH5[2], is("H5G3"));
+        assertThat(knightMovesH5[3], is("H5F4"));
+    }
+    
+    @Test
+    public void knightReturnRight3movesIfNextToEdgeAndOwnPiece() {
+        testBoard.getTile(File.File_H, Rank.Rank_5).setPiece(new Knight(Side.WHITE));
+        testBoard.getTile(File.File_F, Rank.Rank_6).setPiece(new Knight(Side.WHITE));
+        String[] knightMovesH5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_H, Rank.Rank_5));
+
+        assertThat(knightMovesH5.length, is(3));
+        assertThat(knightMovesH5[0], is("H5G7"));
+        assertThat(knightMovesH5[1], is("H5G3"));
+        assertThat(knightMovesH5[2], is("H5F4"));
+    }
 }

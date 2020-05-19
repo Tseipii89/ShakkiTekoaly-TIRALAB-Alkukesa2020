@@ -2,6 +2,7 @@
 package gameElements;
 
 import chess.model.Side;
+import pieces.Knight;
 import pieces.Pawn;
 
 
@@ -35,10 +36,14 @@ public class Board {
         for (int i = 8; i < 16; i++) {
             this.tiles[i].setPiece(new Pawn(Side.WHITE));  
         }
+        this.tiles[1].setPiece(new Knight(Side.WHITE));
+        this.tiles[6].setPiece(new Knight(Side.WHITE));
         
         for (int i = 48; i < 56; i++) {
             this.tiles[i].setPiece(new Pawn(Side.BLACK));  
         }
+        this.tiles[57].setPiece(new Knight(Side.BLACK));
+        this.tiles[62].setPiece(new Knight(Side.BLACK));
     }
     
 }
