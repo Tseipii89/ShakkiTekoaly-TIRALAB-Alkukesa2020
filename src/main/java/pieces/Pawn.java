@@ -44,73 +44,21 @@ public class Pawn implements Piece {
     @Override
     public String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier) {
         
-        Piece tilesPiece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
         
         String[] moves = new String[0];
-
+        double canPromotion = (4.5 + sideMultiplier * 2.5);
         // Basic move
-        Tile basicMovementTile = moveRules.countNewTile(tile, sideMultiplier, 0, 1);
-        if (basicMovementTile != null) {
-            if(gameBoard.getTile(basicMovementTile.getFile(), basicMovementTile.getRank()).getPiece() == null ) {
-                double canPromotion = (4.5 + sideMultiplier * 2.5);
-                String basic;
-                if(tile.getRank().getIntegerRank() == canPromotion) {
-                   basic = tile.getFile().toString() + tile.getRank().toString() + basicMovementTile.getFile().toString() + basicMovementTile.getRank().toString() + "Q"; 
-                } else {
-                   basic = tile.getFile().toString() + tile.getRank().toString() + basicMovementTile.getFile().toString() + basicMovementTile.getRank().toString();
-                } 
-               moves = moveRules.addNewMoveToArray(moves, basic);
-            } 
-
-        }
+        moves = moveRules.isTileOkToAddPawn(moves, gameBoard, tile, sideMultiplier, 0, 1, canPromotion);
         
         // Start move 2 tiles
-        Tile startMovementTile = moveRules.countNewTile(tile, sideMultiplier, 0, 2);
-        if (startMovementTile == null) { }
-        else if (gameBoard.getTile(startMovementTile.getFile(), startMovementTile.getRank()).getPiece() == null 
-                && gameBoard.getTile(basicMovementTile.getFile(), basicMovementTile.getRank()).getPiece() == null) { // there can't be any pieces in between the two jump move 
-                String start;
-               
-                start = tile.getFile().toString() + tile.getRank().toString() + startMovementTile.getFile().toString() + startMovementTile.getRank().toString();
-                
-            
-            moves = moveRules.addNewMoveToArray(moves, start);
+        if(moves.length == 1 && tile.getRank().getIntegerRank() == (9 - canPromotion)) { //canpromotion is on the wrong side of the board
+            moves = moveRules.isTileOkToAddPawn(moves, gameBoard, tile, sideMultiplier, 0, 2, canPromotion);
         }
-        
 
+        // Pawn attacks
+        moves = moveRules.isTileOkToAddAttack(moves, gameBoard, tile, sideMultiplier, -1, 1, canPromotion);
         
-        // Pawn attack
-        Tile attack1MovementTile = moveRules.countNewTile(tile, sideMultiplier, -1, 1);
-        if (attack1MovementTile == null) { }
-        else if (gameBoard.getTile(attack1MovementTile.getFile(), attack1MovementTile.getRank()).getPiece() != null) {
-            if (gameBoard.getTile(attack1MovementTile.getFile(), attack1MovementTile.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
-                int canPromotion = (int)(4.5 + sideMultiplier * 2.5);
-                String attack1;
-                if(tile.getRank().getIntegerRank() == canPromotion) {
-                   attack1 = tile.getFile().toString() + tile.getRank().toString() + attack1MovementTile.getFile().toString() + attack1MovementTile.getRank().toString() + "Q"; 
-                } else {
-                   attack1 = tile.getFile().toString() + tile.getRank().toString() + attack1MovementTile.getFile().toString() + attack1MovementTile.getRank().toString();
-                }
-                
-                moves = moveRules.addNewMoveToArray(moves, attack1);
-            }
-         } 
-        
-        Tile attack2MovementTile = moveRules.countNewTile(tile, sideMultiplier, 1, 1);
-        if (attack2MovementTile == null) { }
-        else if (gameBoard.getTile(attack2MovementTile.getFile(), attack2MovementTile.getRank()).getPiece() != null) {
-            if (gameBoard.getTile(attack2MovementTile.getFile(), attack2MovementTile.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
-                
-                int canPromotion = (int)(4.5 + sideMultiplier * 2.5);
-                String attack2;
-                if(tile.getRank().getIntegerRank() == canPromotion) {
-                   attack2 = tile.getFile().toString() + tile.getRank().toString() + attack2MovementTile.getFile().toString() + attack2MovementTile.getRank().toString() + "Q"; 
-                } else {
-                   attack2 = tile.getFile().toString() + tile.getRank().toString() + attack2MovementTile.getFile().toString() + attack2MovementTile.getRank().toString();
-                }
-                moves = moveRules.addNewMoveToArray(moves, attack2);            
-            }
-        } 
+        moves = moveRules.isTileOkToAddAttack(moves, gameBoard, tile, sideMultiplier, 1, 1, canPromotion);
 
         
         return moves;

@@ -1,9 +1,11 @@
 
 package chess.rules;
 
+import gameElements.Board;
 import gameElements.File;
 import gameElements.Rank;
 import gameElements.Tile;
+import pieces.Piece;
 
 /**
  * MoveRules class handles the "dirty" things needed to add the movements to the arrays.
@@ -60,5 +62,39 @@ public class MoveRules {
         newMoves[n] = move;
         
         return newMoves;
+    }
+    
+    public String[] isTileOkToAddAttack(String[] moves, Board gameBoard ,Tile tile, int sideMultiplier, int filesToAdd,int ranksToAdd, double canPromotion) {
+        Piece tilesPiece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
+        Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
+        if (tileToCheck == null) { }
+        else if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() != null) {
+            if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
+                String move = createMovementString(tile, tileToCheck, canPromotion);
+                moves = this.addNewMoveToArray(moves, move);
+            }
+         } 
+        return moves;
+    }
+    
+    public String[] isTileOkToAddPawn(String[] moves, Board gameBoard ,Tile tile, int sideMultiplier, int filesToAdd,int ranksToAdd, double canPromotion) {
+        Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
+        if (tileToCheck != null) {
+            if(gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null ) {
+                String move = createMovementString(tile, tileToCheck, canPromotion);
+                moves = this.addNewMoveToArray(moves, move);
+            } 
+        }
+        return moves;
+    }
+    
+    private String createMovementString(Tile start, Tile finish, double canPromotion) {
+        String basic;
+        if(start.getRank().getIntegerRank() == canPromotion) {
+           basic = start.getFile().toString() + start.getRank().toString() + finish.getFile().toString() + finish.getRank().toString() + "Q"; 
+        } else {
+           basic = start.getFile().toString() + start.getRank().toString() + finish.getFile().toString() + finish.getRank().toString();
+        } 
+        return basic;
     }
 }

@@ -17,6 +17,7 @@ Date       | time | target |
 -----------|------|--------|
 2020-05-17 | 2.5h | Pawn movement rules start and continuous integration |
 2020-05-18 | 2h | Finish Pawn movement rules and correcting checkstyle |
+2020-05-19 | 1.5h | Jacoco exclude extra classes and refactor movement |
 
 
 ## Totals
@@ -24,5 +25,5 @@ Date       | time | target |
  Week   | Time     |
 --------|----------|
  1      | 9.5h    |
- 2      | 4.5h    |
-**Tot** | **14h** |
+ 2      | 6h    |
+**Tot** | **15.5h** |
