@@ -1,5 +1,8 @@
 package gameElements;
 
+import chess.elements.Rank;
+import chess.elements.Tile;
+import chess.elements.File;
 import chess.model.Side;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;

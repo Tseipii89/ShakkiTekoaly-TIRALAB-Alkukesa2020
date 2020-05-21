@@ -1,24 +1,23 @@
-
 package pieces;
 
-import chess.model.Side;
-import chess.rules.MoveRules;
 import chess.elements.Board;
 import chess.elements.Tile;
+import chess.model.Side;
+import chess.rules.MoveRules;
 
-public class Rook implements Piece {
+public class Bishop implements Piece {
     private final Side side;
     private final PieceType pieceType;
     private final MoveRules moveRules;
     private final Integer[] movePairsFile;
     private final Integer[] movePairsRank;
     
-    public Rook(Side side) {
+    public Bishop(Side side) {
         this.side = side;
-        this.pieceType = PieceType.Rook;
+        this.pieceType = PieceType.Bishop;
         moveRules = new MoveRules();
-        this.movePairsFile = new Integer[]{-1, 0, 1, 0};
-        this.movePairsRank = new Integer[]{0, 1, 0, -1};
+        this.movePairsFile = new Integer[]{-1, 1, 1, -1};
+        this.movePairsRank = new Integer[]{1, 1, -1, -1};
     }
 
     @Override

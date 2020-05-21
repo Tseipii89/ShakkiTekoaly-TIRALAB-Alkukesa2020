@@ -7,6 +7,10 @@ package gameElements;
  */
 
 
+import chess.elements.Board;
+import chess.elements.Rank;
+import chess.elements.Tile;
+import chess.elements.File;
 import chess.model.Side;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
@@ -271,6 +275,35 @@ public class BoardTest {
         assertThat(testBoard.getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
         assertThat(testBoard.getTile(File.File_H, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Rook));
         assertThat(testBoard.getTile(File.File_H, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+    }
+    
+    /* BISHOP */
+    @Test
+    public void initBoardSets4Bishops() {
+        int bishops = 0;
+        testBoard.initBoard();
+        
+        for (int i = 0; i < 64; i++) {
+            if (testBoard.getTilesList()[i].getPiece() == null) {
+                
+            } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Bishop) {
+                bishops++;
+            }            
+        }
+        assertThat(bishops, is(4));
+    }
+    
+    @Test
+    public void bishopsCorrectPositionInitially() {
+        testBoard.initBoard();
+        assertThat(testBoard.getTile(File.File_C, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Bishop));     
+        assertThat(testBoard.getTile(File.File_C, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_F, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Bishop));
+        assertThat(testBoard.getTile(File.File_F, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_C, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Bishop));
+        assertThat(testBoard.getTile(File.File_C, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+        assertThat(testBoard.getTile(File.File_F, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Bishop));
+        assertThat(testBoard.getTile(File.File_F, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
     }
 
 }

@@ -1,5 +1,5 @@
 
-package gameElements;
+package chess.elements;
 
 public enum Rank {
     Rank_1(1),

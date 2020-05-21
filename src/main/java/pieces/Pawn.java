@@ -2,8 +2,8 @@ package pieces;
 
 import chess.model.Side;
 import chess.rules.MoveRules;
-import gameElements.Board;
-import gameElements.Tile;
+import chess.elements.Board;
+import chess.elements.Tile;
 
 public class Pawn implements Piece {
     
@@ -23,12 +23,6 @@ public class Pawn implements Piece {
         return this.side;
     }
 
-    @Override
-    public void setSide(Side side) {
-        this.side = side;
-    }
-
-    @Override
     public void setPieceType(PieceType type) {
         this.pieceType = type;
     }

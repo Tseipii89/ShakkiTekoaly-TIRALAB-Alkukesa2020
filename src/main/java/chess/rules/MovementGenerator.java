@@ -6,8 +6,8 @@
 package chess.rules;
 
 import chess.model.Side;
-import gameElements.Board;
-import gameElements.Tile;
+import chess.elements.Board;
+import chess.elements.Tile;
 import pieces.Piece;
 
 /**

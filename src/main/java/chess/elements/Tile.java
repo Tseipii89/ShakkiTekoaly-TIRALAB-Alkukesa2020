@@ -1,5 +1,5 @@
 
-package gameElements;
+package chess.elements;
 
 import pieces.Piece;
 
@@ -33,8 +33,8 @@ public class Tile {
     }
     
     @Override
-    public String toString(){ 
-        return file.getStringFile()+rank.toString();
+    public String toString() { 
+        return file.getStringFile() + rank.toString();
     }  
    
 }

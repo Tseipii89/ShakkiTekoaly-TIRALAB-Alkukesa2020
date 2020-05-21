@@ -3,7 +3,7 @@
  * To change this template letterFile, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameElements;
+package chess.elements;
 
 /**
  *
