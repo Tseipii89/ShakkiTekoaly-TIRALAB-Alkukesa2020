@@ -5,6 +5,7 @@
 ## What has happened during week 2
 * The Pawn mocement rules have been added
 * Knight movement rules
+* Rook movement rules
 * Checkstyle, contious integration, jacoco added and corrections made
 
 ## Problems

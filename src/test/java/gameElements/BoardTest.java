@@ -167,7 +167,7 @@ public class BoardTest {
         int pawns = 0;
         testBoard.initBoard();
         
-        for (int i = 0; i < 63; i++) {
+        for (int i = 0; i < 64; i++) {
             if (testBoard.getTilesList()[i].getPiece() == null) {
                 
             } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Pawn) {
@@ -220,7 +220,7 @@ public class BoardTest {
         int knights = 0;
         testBoard.initBoard();
         
-        for (int i = 0; i < 63; i++) {
+        for (int i = 0; i < 64; i++) {
             if (testBoard.getTilesList()[i].getPiece() == null) {
                 
             } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Knight) {
@@ -231,7 +231,7 @@ public class BoardTest {
     }
     
     @Test
-    public void KnightsCorrectPositionInitially() {
+    public void knightsCorrectPositionInitially() {
         testBoard.initBoard();
         assertThat(testBoard.getTile(File.File_B, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Knight));     
         assertThat(testBoard.getTile(File.File_B, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
@@ -241,7 +241,36 @@ public class BoardTest {
         assertThat(testBoard.getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
         assertThat(testBoard.getTile(File.File_G, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Knight));
         assertThat(testBoard.getTile(File.File_G, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
-
-
     }
+    
+    /* ROOK */
+    
+    @Test
+    public void initBoardSets4Rooks() {
+        int rooks = 0;
+        testBoard.initBoard();
+        
+        for (int i = 0; i < 64; i++) {
+            if (testBoard.getTilesList()[i].getPiece() == null) {
+                
+            } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Rook) {
+                rooks++;
+            }            
+        }
+        assertThat(rooks, is(4));
+    }
+    
+    @Test
+    public void rooksCorrectPositionInitially() {
+        testBoard.initBoard();
+        assertThat(testBoard.getTile(File.File_A, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Rook));     
+        assertThat(testBoard.getTile(File.File_A, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_H, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Rook));
+        assertThat(testBoard.getTile(File.File_H, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_A, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Rook));
+        assertThat(testBoard.getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+        assertThat(testBoard.getTile(File.File_H, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Rook));
+        assertThat(testBoard.getTile(File.File_H, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+    }
+
 }

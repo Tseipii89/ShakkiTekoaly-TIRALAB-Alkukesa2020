@@ -18,6 +18,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import pieces.Knight;
 import pieces.Pawn;
+import pieces.Rook;
 
 /**
  *
@@ -237,7 +238,7 @@ public class MovementGeneratorTest {
     }
     
     @Test
-    public void knightReturnRight8moves() {
+    public void blackKnightReturnRight8moves() {
         testBoard.getTile(File.File_E, Rank.Rank_5).setPiece(new Knight(Side.BLACK));
         String[] knightMovesE5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_E, Rank.Rank_5));
 
@@ -287,4 +288,47 @@ public class MovementGeneratorTest {
         assertThat(knightMovesH5[1], is("H5G3"));
         assertThat(knightMovesH5[2], is("H5F4"));
     }
+    
+    /* MOVEMENT ROOK */
+    
+    @Test
+    public void whiteRookMovementReturn0MovesAsFirstMove() {
+        testBoard.initBoard();
+        String[] knightMovesA1 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_A, Rank.Rank_1));
+        assertThat(knightMovesA1.length, is(0));
+    }
+    
+    @Test
+    public void blackRookReturnRightAmountOfMoves() {
+        testBoard.getTile(File.File_E, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+        String[] rookMovesE5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_E, Rank.Rank_5));
+
+        assertThat(rookMovesE5.length, is(14));
+    
+    }
+    
+ 
+    @Test
+    public void blackRookReturnRightMoves() {
+        testBoard.getTile(File.File_E, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+        String[] rookMovesE5 = testMovementGenerator.pieceMovement(testBoard, testBoard.getTile(File.File_E, Rank.Rank_5));
+
+        assertThat(rookMovesE5[0], is("E5F5"));
+        assertThat(rookMovesE5[1], is("E5G5"));
+        assertThat(rookMovesE5[2], is("E5H5"));
+        assertThat(rookMovesE5[3], is("E5E4"));
+        assertThat(rookMovesE5[4], is("E5E3"));
+        assertThat(rookMovesE5[5], is("E5E2"));
+        assertThat(rookMovesE5[6], is("E5E1"));
+        assertThat(rookMovesE5[7], is("E5D5"));
+        assertThat(rookMovesE5[8], is("E5C5"));
+        assertThat(rookMovesE5[9], is("E5B5"));
+        assertThat(rookMovesE5[10], is("E5A5"));
+        assertThat(rookMovesE5[11], is("E5E6"));
+        assertThat(rookMovesE5[12], is("E5E7"));
+        assertThat(rookMovesE5[13], is("E5E8"));
+    }
+
+    // Test Rook attack and own player moves
+    
 }

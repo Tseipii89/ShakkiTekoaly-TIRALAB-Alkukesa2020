@@ -121,4 +121,26 @@ public class MoveRules {
         } 
         return basic;
     }
+    
+    public String[] vectorMoves(String[] moves, Integer[] movePairsFile, Integer[] movePairsRank, Board gameBoard, Tile tile, int sideMultiplier) {
+        int movesSize;
+        int fileMove;
+        int rankMove;
+
+        for (int i = 0; i < movePairsFile.length; i++) {
+            movesSize = -1;
+            fileMove = movePairsFile[i];
+            rankMove = movePairsRank[i];
+            while(moves.length > movesSize) {
+                movesSize = moves.length;
+                moves = this.isTileOkToAddEveryoneElse(moves, gameBoard, tile, sideMultiplier, fileMove, rankMove);
+                if (moves.length > movesSize) {
+                    fileMove +=  1 * movePairsFile[i];
+                    rankMove +=  1 * movePairsRank[i];
+                }
+            }
+            moves = this.isTileOkToAddAttack(moves, gameBoard, tile, sideMultiplier, fileMove, rankMove, 0); // no other piece than pawn can promote
+        }        
+        return moves;
+    }
 }
