@@ -19,12 +19,12 @@ Date       | time | target |
 2020-05-18 | 2h | Finish Pawn movement rules and correcting checkstyle |
 2020-05-19 | 2.5h | Jacoco exclude extra classes and refactor movement and knight movement rules. Checkstyle to 107 errors |
 2020-05-21 | 2h | Rook and Bishop movement rules. Checkstyle down to 94 errors |
-
+2020-05-23 | 1.5h | Queen and King movement rules. Checkstyle down to 93 errors |
 
 ## Totals
 
  Week   | Time     |
 --------|----------|
  1      | 9.5h    |
- 2      | 9h    |
-**Tot** | **18.5h** |
+ 2      | 10.5h    |
+**Tot** | **20h** |

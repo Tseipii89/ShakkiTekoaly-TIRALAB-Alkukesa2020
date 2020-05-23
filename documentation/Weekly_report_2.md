@@ -7,6 +7,8 @@
 * Knight movement rules added
 * Rook movement rules added
 * Bishop movement rules added
+* Queen movement rules added
+* King movement rules added
 * Checkstyle, contious integration and jacoco added
 
 ## Problems
@@ -15,9 +17,10 @@
 
 
 ## Questions
-
+* I have used Java array, like String[]. Are this okay to use, or do I need to substitu them for something else later?
 
 ## Next week
+* The bot should return a legal move to be tested in the Lichess
 * Starting the min-max algorithm and possibly alpha-beta pruning
 * Checking integration testing, if that should be added now, or only after my bot is finished
 

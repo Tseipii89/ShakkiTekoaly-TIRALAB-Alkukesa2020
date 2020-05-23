@@ -305,5 +305,57 @@ public class BoardTest {
         assertThat(testBoard.getTile(File.File_F, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Bishop));
         assertThat(testBoard.getTile(File.File_F, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
     }
+    
+    /* QUEEN */
+    
+    @Test
+    public void initBoardSets2Queens() {
+        int queens = 0;
+        testBoard.initBoard();
+        
+        for (int i = 0; i < 64; i++) {
+            if (testBoard.getTilesList()[i].getPiece() == null) {
+                
+            } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.Queen) {
+                queens++;
+            }            
+        }
+        assertThat(queens, is(2));
+    }
+    
+    @Test
+    public void queensCorrectPositionInitially() {
+        testBoard.initBoard();
+        assertThat(testBoard.getTile(File.File_D, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.Queen));     
+        assertThat(testBoard.getTile(File.File_D, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_D, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Queen));
+        assertThat(testBoard.getTile(File.File_D, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+    }
+    
+    /* KING */
+    
+    @Test
+    public void initBoardSets2Kings() {
+        int kings = 0;
+        testBoard.initBoard();
+        
+        for (int i = 0; i < 64; i++) {
+            if (testBoard.getTilesList()[i].getPiece() == null) {
+                
+            } else if (testBoard.getTilesList()[i].getPiece().getPieceType() == PieceType.King) {
+                kings++;
+            }            
+        }
+        assertThat(kings, is(2));
+    }
+    
+    @Test
+    public void kingsCorrectPositionInitially() {
+        testBoard.initBoard();
+        assertThat(testBoard.getTile(File.File_E, Rank.Rank_1).getPiece().getPieceType(), is(PieceType.King));     
+        assertThat(testBoard.getTile(File.File_D, Rank.Rank_1).getPiece().getSide(), is(Side.WHITE));
+        assertThat(testBoard.getTile(File.File_E, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.King));
+        assertThat(testBoard.getTile(File.File_D, Rank.Rank_8).getPiece().getSide(), is(Side.BLACK));
+    }
 
 }

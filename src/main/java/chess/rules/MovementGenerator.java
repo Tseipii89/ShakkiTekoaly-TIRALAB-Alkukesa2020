@@ -11,13 +11,13 @@ import chess.elements.Tile;
 import pieces.Piece;
 
 /**
- * Checks the piece in the tile and returns all the moves for that piece.
+ * Checks the piece in the tile and returns all the legal moves for that piece.
  * @author juhop
  */
 public class MovementGenerator {
     
     /**
-     * Creates MovementGenerator to be ready.
+     * Creates MovementGenerator to be ready to be used.
      */
     public MovementGenerator() {
         
