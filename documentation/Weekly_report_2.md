@@ -10,6 +10,7 @@
 * Queen movement rules added
 * King movement rules added
 * Checkstyle, contious integration and jacoco added
+* Added Javadoc for some classes (not all, this is the main cause of checkerrors at the moment)
 
 ## Problems
 * I have started to notice small problems, if I haven't been careful about the refactoring of the classes. The classes become un-maintable very quickly.
