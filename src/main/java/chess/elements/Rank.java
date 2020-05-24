@@ -21,7 +21,7 @@ public enum Rank {
         return rank;
     }
     
-    public static Rank valueOfLabel(int rankInteger) {
+    public static Rank valueOfInteger(int rankInteger) {
         for (Rank e : values()) {
             if (e.getIntegerRank() == rankInteger) {
                 return e;

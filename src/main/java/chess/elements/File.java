@@ -122,9 +122,18 @@ public enum File {
      * @param fileInteger the integer value given to the method.
      * @return File associated with given integer value.
      */
-    public static File valueOfLabel(int fileInteger) {
+    public static File valueOfInteger(int fileInteger) {
         for (File e : values()) {
             if (e.getIntegerFile() == fileInteger) {
+                return e;
+            }
+        }
+        return null;
+    }
+    
+    public static File valueOfLabel(String fileString) {
+        for (File e : values()) {
+            if (e.getStringFile().equals(fileString)) {
                 return e;
             }
         }

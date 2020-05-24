@@ -21,10 +21,17 @@ Date       | time | target |
 2020-05-21 | 2h | Rook and Bishop movement rules. Checkstyle down to 94 errors |
 2020-05-23 | 1.5h | Queen and King movement rules. Checkstyle down to 93 errors |
 
+## Week 3
+
+Date       | time | target |
+-----------|------|--------|
+2020-05-24 | 3h | TiraBot takes the movement String and updates the gameBoard |
+
 ## Totals
 
  Week   | Time     |
 --------|----------|
  1      | 9.5h    |
  2      | 10.5h    |
-**Tot** | **20h** |
+ 3      | 3h    |
+**Tot** | **23h** |

@@ -27,7 +27,7 @@ public class MoveRules {
         if (newRankInt < 1 || newRankInt > 8) {
             return null;
         }
-        return new Tile(File.valueOfLabel(newFileInt), Rank.valueOfLabel(newRankInt));
+        return new Tile(File.valueOfInteger(newFileInt), Rank.valueOfInteger(newRankInt));
     }
 
     public String[] addNewMoveToArray(String[] moves, String move) {

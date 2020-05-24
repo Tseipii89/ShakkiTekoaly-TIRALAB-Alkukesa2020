@@ -7,10 +7,10 @@ import chess.elements.Tile;
 
 public interface Piece {
     
-    public Side getSide();
+    Side getSide();
     
-    public PieceType getPieceType();
+    PieceType getPieceType();
 
-    public String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier);
+    String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier);
   
 }

@@ -35,8 +35,8 @@ public class Board {
         tiles = new Tile[64];
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                File fileToAdd = File.valueOfLabel(j);
-                Rank rankToAdd = Rank.valueOfLabel(i);
+                File fileToAdd = File.valueOfInteger(j);
+                Rank rankToAdd = Rank.valueOfInteger(i);
                 Tile tileToAdd = new Tile(fileToAdd, rankToAdd);
                 int index = 8 * (i - 1) + j - 1;
                 tiles[index] = tileToAdd;
