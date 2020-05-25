@@ -120,7 +120,7 @@ public class MoveRules {
                     + start.getRank().toString() // start rank as a String 
                     + finish.getFile().toString() // finish file as a String
                     + finish.getRank().toString() // finish rank as a String
-                    + "Q"; // all pawns are promoted to Queens
+                    + "q"; // all pawns are promoted to Queens
         } else {
             basic = start.getFile().toString() // start file as a String
                     + start.getRank().toString() // start rank as a String 

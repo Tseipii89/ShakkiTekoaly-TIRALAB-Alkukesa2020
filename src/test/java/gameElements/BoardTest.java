@@ -56,77 +56,77 @@ public class BoardTest {
     
     @Test
     public void assertAllTilesAreSet() {
-        assertThat(testBoard.getTilesList()[0].toString(), is("A1"));
-        assertThat(testBoard.getTilesList()[1].toString(), is("B1"));
-        assertThat(testBoard.getTilesList()[2].toString(), is("C1"));
-        assertThat(testBoard.getTilesList()[3].toString(), is("D1"));
-        assertThat(testBoard.getTilesList()[4].toString(), is("E1"));
-        assertThat(testBoard.getTilesList()[5].toString(), is("F1"));
-        assertThat(testBoard.getTilesList()[6].toString(), is("G1"));
-        assertThat(testBoard.getTilesList()[7].toString(), is("H1"));
+        assertThat(testBoard.getTilesList()[0].toString(), is("a1"));
+        assertThat(testBoard.getTilesList()[1].toString(), is("b1"));
+        assertThat(testBoard.getTilesList()[2].toString(), is("c1"));
+        assertThat(testBoard.getTilesList()[3].toString(), is("d1"));
+        assertThat(testBoard.getTilesList()[4].toString(), is("e1"));
+        assertThat(testBoard.getTilesList()[5].toString(), is("f1"));
+        assertThat(testBoard.getTilesList()[6].toString(), is("g1"));
+        assertThat(testBoard.getTilesList()[7].toString(), is("h1"));
 
-        assertThat(testBoard.getTilesList()[8].toString(), is("A2"));
-        assertThat(testBoard.getTilesList()[9].toString(), is("B2"));
-        assertThat(testBoard.getTilesList()[10].toString(), is("C2"));
-        assertThat(testBoard.getTilesList()[11].toString(), is("D2"));
-        assertThat(testBoard.getTilesList()[12].toString(), is("E2"));
-        assertThat(testBoard.getTilesList()[13].toString(), is("F2"));
-        assertThat(testBoard.getTilesList()[14].toString(), is("G2"));
-        assertThat(testBoard.getTilesList()[15].toString(), is("H2"));
+        assertThat(testBoard.getTilesList()[8].toString(), is("a2"));
+        assertThat(testBoard.getTilesList()[9].toString(), is("b2"));
+        assertThat(testBoard.getTilesList()[10].toString(), is("c2"));
+        assertThat(testBoard.getTilesList()[11].toString(), is("d2"));
+        assertThat(testBoard.getTilesList()[12].toString(), is("e2"));
+        assertThat(testBoard.getTilesList()[13].toString(), is("f2"));
+        assertThat(testBoard.getTilesList()[14].toString(), is("g2"));
+        assertThat(testBoard.getTilesList()[15].toString(), is("h2"));
         
-        assertThat(testBoard.getTilesList()[16].toString(), is("A3"));
-        assertThat(testBoard.getTilesList()[17].toString(), is("B3"));
-        assertThat(testBoard.getTilesList()[18].toString(), is("C3"));
-        assertThat(testBoard.getTilesList()[19].toString(), is("D3"));
-        assertThat(testBoard.getTilesList()[20].toString(), is("E3"));
-        assertThat(testBoard.getTilesList()[21].toString(), is("F3"));
-        assertThat(testBoard.getTilesList()[22].toString(), is("G3"));
-        assertThat(testBoard.getTilesList()[23].toString(), is("H3"));
+        assertThat(testBoard.getTilesList()[16].toString(), is("a3"));
+        assertThat(testBoard.getTilesList()[17].toString(), is("b3"));
+        assertThat(testBoard.getTilesList()[18].toString(), is("c3"));
+        assertThat(testBoard.getTilesList()[19].toString(), is("d3"));
+        assertThat(testBoard.getTilesList()[20].toString(), is("e3"));
+        assertThat(testBoard.getTilesList()[21].toString(), is("f3"));
+        assertThat(testBoard.getTilesList()[22].toString(), is("g3"));
+        assertThat(testBoard.getTilesList()[23].toString(), is("h3"));
         
-        assertThat(testBoard.getTilesList()[24].toString(), is("A4"));
-        assertThat(testBoard.getTilesList()[25].toString(), is("B4"));
-        assertThat(testBoard.getTilesList()[26].toString(), is("C4"));
-        assertThat(testBoard.getTilesList()[27].toString(), is("D4"));
-        assertThat(testBoard.getTilesList()[28].toString(), is("E4"));
-        assertThat(testBoard.getTilesList()[29].toString(), is("F4"));
-        assertThat(testBoard.getTilesList()[30].toString(), is("G4"));
-        assertThat(testBoard.getTilesList()[31].toString(), is("H4"));
+        assertThat(testBoard.getTilesList()[24].toString(), is("a4"));
+        assertThat(testBoard.getTilesList()[25].toString(), is("b4"));
+        assertThat(testBoard.getTilesList()[26].toString(), is("c4"));
+        assertThat(testBoard.getTilesList()[27].toString(), is("d4"));
+        assertThat(testBoard.getTilesList()[28].toString(), is("e4"));
+        assertThat(testBoard.getTilesList()[29].toString(), is("f4"));
+        assertThat(testBoard.getTilesList()[30].toString(), is("g4"));
+        assertThat(testBoard.getTilesList()[31].toString(), is("h4"));
        
-        assertThat(testBoard.getTilesList()[32].toString(), is("A5"));
-        assertThat(testBoard.getTilesList()[33].toString(), is("B5"));
-        assertThat(testBoard.getTilesList()[34].toString(), is("C5"));
-        assertThat(testBoard.getTilesList()[35].toString(), is("D5"));
-        assertThat(testBoard.getTilesList()[36].toString(), is("E5"));
-        assertThat(testBoard.getTilesList()[37].toString(), is("F5"));
-        assertThat(testBoard.getTilesList()[38].toString(), is("G5"));
-        assertThat(testBoard.getTilesList()[39].toString(), is("H5"));
+        assertThat(testBoard.getTilesList()[32].toString(), is("a5"));
+        assertThat(testBoard.getTilesList()[33].toString(), is("b5"));
+        assertThat(testBoard.getTilesList()[34].toString(), is("c5"));
+        assertThat(testBoard.getTilesList()[35].toString(), is("d5"));
+        assertThat(testBoard.getTilesList()[36].toString(), is("e5"));
+        assertThat(testBoard.getTilesList()[37].toString(), is("f5"));
+        assertThat(testBoard.getTilesList()[38].toString(), is("g5"));
+        assertThat(testBoard.getTilesList()[39].toString(), is("h5"));
         
-        assertThat(testBoard.getTilesList()[40].toString(), is("A6"));
-        assertThat(testBoard.getTilesList()[41].toString(), is("B6"));
-        assertThat(testBoard.getTilesList()[42].toString(), is("C6"));
-        assertThat(testBoard.getTilesList()[43].toString(), is("D6"));
-        assertThat(testBoard.getTilesList()[44].toString(), is("E6"));
-        assertThat(testBoard.getTilesList()[45].toString(), is("F6"));
-        assertThat(testBoard.getTilesList()[46].toString(), is("G6"));
-        assertThat(testBoard.getTilesList()[47].toString(), is("H6"));
+        assertThat(testBoard.getTilesList()[40].toString(), is("a6"));
+        assertThat(testBoard.getTilesList()[41].toString(), is("b6"));
+        assertThat(testBoard.getTilesList()[42].toString(), is("c6"));
+        assertThat(testBoard.getTilesList()[43].toString(), is("d6"));
+        assertThat(testBoard.getTilesList()[44].toString(), is("e6"));
+        assertThat(testBoard.getTilesList()[45].toString(), is("f6"));
+        assertThat(testBoard.getTilesList()[46].toString(), is("g6"));
+        assertThat(testBoard.getTilesList()[47].toString(), is("h6"));
       
-        assertThat(testBoard.getTilesList()[48].toString(), is("A7"));
-        assertThat(testBoard.getTilesList()[49].toString(), is("B7"));
-        assertThat(testBoard.getTilesList()[50].toString(), is("C7"));
-        assertThat(testBoard.getTilesList()[51].toString(), is("D7"));
-        assertThat(testBoard.getTilesList()[52].toString(), is("E7"));
-        assertThat(testBoard.getTilesList()[53].toString(), is("F7"));
-        assertThat(testBoard.getTilesList()[54].toString(), is("G7"));
-        assertThat(testBoard.getTilesList()[55].toString(), is("H7"));
+        assertThat(testBoard.getTilesList()[48].toString(), is("a7"));
+        assertThat(testBoard.getTilesList()[49].toString(), is("b7"));
+        assertThat(testBoard.getTilesList()[50].toString(), is("c7"));
+        assertThat(testBoard.getTilesList()[51].toString(), is("d7"));
+        assertThat(testBoard.getTilesList()[52].toString(), is("e7"));
+        assertThat(testBoard.getTilesList()[53].toString(), is("f7"));
+        assertThat(testBoard.getTilesList()[54].toString(), is("g7"));
+        assertThat(testBoard.getTilesList()[55].toString(), is("h7"));
         
-        assertThat(testBoard.getTilesList()[56].toString(), is("A8"));
-        assertThat(testBoard.getTilesList()[57].toString(), is("B8"));
-        assertThat(testBoard.getTilesList()[58].toString(), is("C8"));
-        assertThat(testBoard.getTilesList()[59].toString(), is("D8"));
-        assertThat(testBoard.getTilesList()[60].toString(), is("E8"));
-        assertThat(testBoard.getTilesList()[61].toString(), is("F8"));
-        assertThat(testBoard.getTilesList()[62].toString(), is("G8"));
-        assertThat(testBoard.getTilesList()[63].toString(), is("H8"));
+        assertThat(testBoard.getTilesList()[56].toString(), is("a8"));
+        assertThat(testBoard.getTilesList()[57].toString(), is("b8"));
+        assertThat(testBoard.getTilesList()[58].toString(), is("c8"));
+        assertThat(testBoard.getTilesList()[59].toString(), is("d8"));
+        assertThat(testBoard.getTilesList()[60].toString(), is("e8"));
+        assertThat(testBoard.getTilesList()[61].toString(), is("f8"));
+        assertThat(testBoard.getTilesList()[62].toString(), is("g8"));
+        assertThat(testBoard.getTilesList()[63].toString(), is("h8"));
     }
     
     @Test

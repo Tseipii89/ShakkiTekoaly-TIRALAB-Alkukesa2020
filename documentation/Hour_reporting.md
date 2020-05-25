@@ -26,6 +26,7 @@ Date       | time | target |
 Date       | time | target |
 -----------|------|--------|
 2020-05-24 | 3h | TiraBot takes the movement String and updates the gameBoard |
+2020-05-25 | 3h | TiraBot returns a random move. Lichess works with the bot (although bot doesn't yet know that you shouldn't sacrifice your king) |
 
 ## Totals
 
@@ -33,5 +34,5 @@ Date       | time | target |
 --------|----------|
  1      | 9.5h    |
  2      | 10.5h    |
- 3      | 3h    |
-**Tot** | **23h** |
+ 3      | 6h    |
+**Tot** | **26h** |

@@ -20,49 +20,49 @@ public enum File {
      * String A.
      * Integer 1.
      */
-    File_A("A", 1),
+    File_A("a", 1),
 
     /**
      * String B.
      * Integer 2.
      */
-    File_B("B", 2),
+    File_B("b", 2),
 
     /**
      * String C.
      * Integer 3.
      */
-    File_C("C", 3),
+    File_C("c", 3),
 
     /**
      * String D.
      * Integer 4.
      */
-    File_D("D", 4),
+    File_D("d", 4),
 
     /**
      * String E.
      * Integer 5.
      */
-    File_E("E", 5),
+    File_E("e", 5),
 
     /**
      * String F.
      * Integer 6.
      */
-    File_F("F", 6),
+    File_F("f", 6),
 
     /**
      * String G.
      * Integer 7.
      */
-    File_G("G", 7),
+    File_G("g", 7),
 
     /**
      * String H.
      * Integer 8.
      */
-    File_H("H", 8);
+    File_H("h", 8);
 
     /**
      *

@@ -68,14 +68,16 @@ public class TiraBot implements ChessBot {
      */
     @Override
     public String nextMove(GameState gameState) {
-        if (gameState.myTurn()) {
+        if (gameState.myTurn() && !gameState.moves.isEmpty()) {
             String latestMove = gameState.getLatestMove();
             this.updateMovementOnBoard(latestMove);
         }
         this.countAllMoves(gameState);
         // before alpha-beta pruning let's just return random move
         if (moves.length > 0) {
-            return moves[(random.nextInt(moves.length))];
+            String moveToReturn = moves[(random.nextInt(moves.length))];
+            this.updateMovementOnBoard(moveToReturn);
+            return moveToReturn;
         } else {
             return null;
         }
@@ -109,12 +111,12 @@ public class TiraBot implements ChessBot {
      */
     public void updateMovementOnBoard(String move) {
         String currentFile = move.substring(0, 1);
-        currentFile = currentFile.toUpperCase();
+        currentFile = currentFile.toLowerCase();
         int currentRank = Integer.parseInt(move.substring(1, 2));
         Tile startTile = b.getTile(File.valueOfLabel(currentFile), Rank.valueOfInteger(currentRank));
         
         String finishFile = move.substring(2, 3);
-        finishFile = finishFile.toUpperCase();
+        finishFile = finishFile.toLowerCase();
         int finishRank = Integer.parseInt(move.substring(3, 4));
         Tile finishTile = b.getTile(File.valueOfLabel(finishFile), Rank.valueOfInteger(finishRank));
         
@@ -122,7 +124,7 @@ public class TiraBot implements ChessBot {
         String promote = "";
         if (move.length() > 4) {
             promote =  move.substring(4);
-            promote = promote.toUpperCase();
+            promote = promote.toLowerCase();
         } 
         
         this.updateBoard(startTile, finishTile, promote);
@@ -144,16 +146,16 @@ public class TiraBot implements ChessBot {
         
         finishTile.setPiece(pieceToMove);
         switch (promote) {
-            case "Q":
+            case "q":
                 finishTile.setPiece(new Queen(pieceToMove.getSide()));
                 break;
-            case "R":
+            case "r":
                 finishTile.setPiece(new Rook(pieceToMove.getSide()));
                 break;
-            case "N":
+            case "n":
                 finishTile.setPiece(new Knight(pieceToMove.getSide()));
                 break;
-            case "B":
+            case "b":
                 finishTile.setPiece(new Bishop(pieceToMove.getSide()));
                 break;
             default:

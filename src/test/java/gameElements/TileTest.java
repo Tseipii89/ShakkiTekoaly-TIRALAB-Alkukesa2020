@@ -41,7 +41,7 @@ public class TileTest {
 
     @Test
     public void getFileReturnsRightSyntax() {
-        assertTrue(testTile.getFile().getStringFile().matches("[A-H]"));
+        assertTrue(testTile.getFile().getStringFile().matches("[a-h]"));
     }
     
     @Test
@@ -62,6 +62,6 @@ public class TileTest {
     
     @Test
     public void toStringWorksRight() {
-        assertThat(testTile.toString(), is("E2"));
+        assertThat(testTile.toString(), is("e2"));
     }
 }

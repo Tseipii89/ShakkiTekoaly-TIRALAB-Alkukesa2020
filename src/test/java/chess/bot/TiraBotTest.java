@@ -7,10 +7,8 @@ package chess.bot;
 
 import chess.elements.File;
 import chess.elements.Rank;
-import chess.elements.Tile;
 import chess.engine.GameState;
 import chess.model.Side;
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pieces.Pawn;
 import pieces.PieceType;
 
 /**
@@ -28,7 +25,6 @@ import pieces.PieceType;
 public class TiraBotTest {
     
     TiraBot tirabot;
-    GameState gamestate;
     
     public TiraBotTest() {
 
@@ -44,7 +40,6 @@ public class TiraBotTest {
     
     @Before
     public void setUp() {
-        gamestate = new GameState();
         tirabot = new TiraBot();
     }
     
@@ -56,33 +51,31 @@ public class TiraBotTest {
     @Test
     public void NextMoveReturnsString() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4");
+        gs.setMoves("a2a4");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
-        
-        assertEquals(gs.playing, Side.BLACK);
-        
         tirabot.nextMove(gs);
-        
-        assertEquals(tirabot.nextMove(gamestate).getClass(), String.class);
+        String move = tirabot.nextMove(gs);
+
+        assertEquals(move.getClass(), String.class);
     }
     
     @Test
     public void NextMoveIsOfCorrectForm() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4");
+        gs.setMoves("a2a4");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
         tirabot.nextMove(gs);
         
-        assertTrue(tirabot.nextMove(gamestate).matches("[A-H][1-8][A-H][1-8][NBRQ]?"));
+        assertTrue(tirabot.nextMove(gs).matches("[a-h][1-8][a-h][1-8][nbrq]?"));
     }
     
     @Test
     public void nextMoveUpdatesBoardRightNormalCase() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4");
+        gs.setMoves("a2a4");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
@@ -96,7 +89,7 @@ public class TiraBotTest {
     @Test
     public void nextMoveUpdatesBoardRightNormalCase2Moves() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5");
+        gs.setMoves("a2a4, b7b5");
         gs.playing = Side.WHITE;
         gs.turn = Side.WHITE;
         
@@ -116,7 +109,7 @@ public class TiraBotTest {
     @Test
     public void nextMoveUpdatesBoardRightAttackCase() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5");
+        gs.setMoves("a2a4, b7b5, a4b5");
         gs.playing = Side.WHITE;
         gs.turn = Side.WHITE;
         
@@ -145,7 +138,7 @@ public class TiraBotTest {
     @Test
     public void promotionToQueenWorksOnCorrectSituation() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5, B8a6,b5b6,c7c6,b6b7,c6c7,b7b8q");
+        gs.setMoves("a2a4, b7b5, a4b5, b8a6,b5b6,c7c6,b6b7,c6c7,b7b8q");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
@@ -168,7 +161,7 @@ public class TiraBotTest {
     @Test
     public void promotionToRookWorksOnCorrectSituation() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5, B8a6,b5b6,c7c6,b6b7,c6c7,b7b8r");
+        gs.setMoves("a2a4, b7b5, a4b5, b8a6,b5b6,c7c6,b6b7,c6c7,b7b8r");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
@@ -234,7 +227,7 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
-    /*
+    
     @Test
     public void FirstMoveIsCorrect() {
         GameState gs = new GameState();
@@ -243,8 +236,8 @@ public class TiraBotTest {
         
         tirabot.nextMove(gs);
         
-        assertTrue(tirabot.nextMove(gamestate).matches("[b2][b-c][3-4]"));
+        assertTrue(tirabot.nextMove(gs).matches("[a-h]2[a-h][3-4]|b1[ac]3|g1[fh]3"));
     }
     
-    */
+    
 }
