@@ -35,7 +35,7 @@ public class GameState {
     /**
      * The side that the bot, which has this gamestate object, plays (used for both lichess and xboard games)
      */
-    public Side playing;
+    public Side playing = Side.BLACK;
     /**
      * The side that currently has the turn (used for both lichess and xboard games)
      */

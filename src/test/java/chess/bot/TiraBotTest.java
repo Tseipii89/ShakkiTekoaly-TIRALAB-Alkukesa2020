@@ -55,12 +55,28 @@ public class TiraBotTest {
 
     @Test
     public void NextMoveReturnsString() {
+        GameState gs = new GameState();
+        gs.setMoves("A2A4");
+        gs.playing = Side.BLACK;
+        gs.turn = Side.BLACK;
+        
+        assertEquals(gs.playing, Side.BLACK);
+        
+        tirabot.nextMove(gs);
+        
         assertEquals(tirabot.nextMove(gamestate).getClass(), String.class);
     }
     
     @Test
     public void NextMoveIsOfCorrectForm() {
-        assertTrue(tirabot.nextMove(gamestate).matches("[a-h][1-8][a-h][1-8][nbrq]?"));
+        GameState gs = new GameState();
+        gs.setMoves("A2A4");
+        gs.playing = Side.BLACK;
+        gs.turn = Side.BLACK;
+        
+        tirabot.nextMove(gs);
+        
+        assertTrue(tirabot.nextMove(gamestate).matches("[A-H][1-8][A-H][1-8][NBRQ]?"));
     }
     
     @Test
@@ -217,4 +233,18 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Bishop));
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
+    
+    /*
+    @Test
+    public void FirstMoveIsCorrect() {
+        GameState gs = new GameState();
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+        
+        tirabot.nextMove(gs);
+        
+        assertTrue(tirabot.nextMove(gamestate).matches("[b2][b-c][3-4]"));
+    }
+    
+    */
 }

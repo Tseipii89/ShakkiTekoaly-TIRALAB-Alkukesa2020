@@ -44,6 +44,22 @@ public class MoveRules {
         return newMoves;
     }
     
+    public String[] addNewArrayToArray(String[] firstArray, String[] secondArray) {
+        int n = firstArray.length;
+        int m = secondArray.length;
+        String[] newMoves = new String[n + m];
+       
+        for (int i = 0; i < n; i++) {
+            newMoves[i] = firstArray[i]; 
+        }
+        
+        for (int j = 0; j < m; j++) {
+            newMoves[n+j] = secondArray[j]; 
+        }
+
+        return newMoves;
+    }
+    
     public String[] isTileOkToAddAttack(String[] moves, 
                                         Board gameBoard,
                                         Tile tile, 

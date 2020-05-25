@@ -5,6 +5,9 @@ import chess.elements.File;
 import chess.elements.Rank;
 import chess.elements.Tile;
 import chess.engine.GameState;
+import chess.model.Side;
+import chess.rules.MoveRules;
+import chess.rules.MovementGenerator;
 import java.util.Random;
 import pieces.Bishop;
 import pieces.Knight;
@@ -26,7 +29,13 @@ public class TiraBot implements ChessBot {
     /**
      * Game board to hold the current game piece positions.
      */
-    private final Board b;    
+    private final Board b;   
+    
+    private String[] moves;
+    
+    private final MovementGenerator movementgenerator;
+    
+    private final MoveRules moverules;
 
 
 
@@ -38,6 +47,8 @@ public class TiraBot implements ChessBot {
         this.random = new Random();
         this.b = new Board();
         b.initBoard();
+        movementgenerator = new MovementGenerator();
+        moverules = new MoveRules();
     }
 
     /**
@@ -61,8 +72,31 @@ public class TiraBot implements ChessBot {
             String latestMove = gameState.getLatestMove();
             this.updateMovementOnBoard(latestMove);
         }
-        return "b2b3"; 
+        this.countAllMoves(gameState);
+        // before alpha-beta pruning let's just return random move
+        if (moves.length > 0) {
+            return moves[(random.nextInt(moves.length))];
+        } else {
+            return null;
+        }
+        
     }
+    
+    private void countAllMoves(GameState gameState) {
+        Side sideToPlay = gameState.playing;
+        moves = new String[0];
+        Tile[] tilesList = b.getTilesList();
+        for (int i = 0; i < 64; i++) {
+            if(tilesList[i].getPiece() != null) {
+                if(tilesList[i].getPiece().getSide() == sideToPlay) {
+                    String[] thisTileMoves = movementgenerator.pieceMovement(b, tilesList[i]);
+                    moves = moverules.addNewArrayToArray(thisTileMoves, moves);
+                }
+            }
+            
+        }
+    }
+
     
     
 
