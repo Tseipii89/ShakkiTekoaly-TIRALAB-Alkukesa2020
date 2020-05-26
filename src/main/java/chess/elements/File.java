@@ -17,56 +17,56 @@ package chess.elements;
 public enum File {
 
     /**
-     * String A.
+     * String a.
      * Integer 1.
      */
     File_A("a", 1),
 
     /**
-     * String B.
+     * String b.
      * Integer 2.
      */
     File_B("b", 2),
 
     /**
-     * String C.
+     * String c.
      * Integer 3.
      */
     File_C("c", 3),
 
     /**
-     * String D.
+     * String d.
      * Integer 4.
      */
     File_D("d", 4),
 
     /**
-     * String E.
+     * String e.
      * Integer 5.
      */
     File_E("e", 5),
 
     /**
-     * String F.
+     * String f.
      * Integer 6.
      */
     File_F("f", 6),
 
     /**
-     * String G.
+     * String g.
      * Integer 7.
      */
     File_G("g", 7),
 
     /**
-     * String H.
+     * String h.
      * Integer 8.
      */
     File_H("h", 8);
 
     /**
      *
-     * Every file has a string from A to H that is associated with given file integer.
+     * Every file has a string from a to h that is associated with given file integer.
      * These are defined in the File class as enums, so only certain values are possible.
      * 
      */
@@ -106,7 +106,7 @@ public enum File {
     /**
      *
      * Returns the number value of given File.
-     * Numbers grow from A = 1, B = 2 etc. to H = 8.
+     * Numbers grow from a = 1, b = 2 etc. to h = 8.
      * Numbers are used in the calculations of new Files.
      * 
      * @return integer value of given File.
@@ -117,7 +117,7 @@ public enum File {
     
     /**
      *
-     * Return the File of given number value. Numbers grow from A = 1, B = 2 etc. to H = 8
+     * Return the File of given number value. Numbers grow from a = 1, b = 2 etc. to h = 8
      * 
      * @param fileInteger the integer value given to the method.
      * @return File associated with given integer value.
@@ -131,6 +131,14 @@ public enum File {
         return null;
     }
     
+    /**
+     *
+     * Returns the File associated with given String.
+     * String takes values from a to h.
+     * 
+     * @param fileString the String value to be checked.
+     * @return File associated with given String. 
+     */
     public static File valueOfLabel(String fileString) {
         for (File e : values()) {
             if (e.getStringFile().equals(fileString)) {

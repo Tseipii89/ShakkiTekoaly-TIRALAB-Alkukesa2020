@@ -32,12 +32,26 @@ public class TiraBot implements ChessBot {
      */
     private final Board b;   
     
+    /**
+     * Holds all the moves for player in each situation.
+     */
     private String[] moves;
     
+    /**
+     * Counts all moves for all Pieces.
+     * @see chess.rules.MovementGenerator
+     */
     private final MovementGenerator movementgenerator;
     
+    /**
+     * At the moment this class uses moverules to only combine two arrays.
+     * Should probably make that method into it's own class.
+     */
     private final MoveRules moverules;
     
+    /**
+     * Counts the value of the Board, given the positions of all pieces.
+     */
     private final BoardValueCalculator valueCalc;
 
 
@@ -88,6 +102,15 @@ public class TiraBot implements ChessBot {
         
     }
 
+    /**
+     *
+     * Checks all different moves and returns the move with best value.
+     * 
+     * @param moves all the moves for player's side.
+     * @param gameState that is associated with the given game.
+     * @see chess.engine.GameState
+     * @return the move that holds the best value within the game. Or if all moves are equal, a random move.
+     */
     private String moveToDo(String[] moves, GameState gameState) {
         int changeNow = 0;
         String moveToReturn = moves[(random.nextInt(moves.length))];
@@ -108,14 +131,23 @@ public class TiraBot implements ChessBot {
         return moveToReturn;
     }
     
-    
+    /**
+     *
+     * Counts the value of given move. 
+     * The value depends on position, promotion and capturing of enemy pieces. 
+     * Each Piece has a unique value that enables the evaluating of different Board situations.
+     * 
+     * @param move the Move is to be evaluated
+     * @param multiplier Side multiplier. White wants maximum points, and Black wants minimum points.
+     * @return the integer value of the change in value in regards of this move. 
+     */
     private int moveValueCount(String move, int multiplier) {
 
         Tile startTile = this.moveToTile(move, 0, 2);
         Tile finishTile = this.moveToTile(move, 2, 4);
 
         int promotion = 0;
-        if(move.length() > 4) {
+        if (move.length() > 4) {
             promotion = 90 * multiplier;
         }
         
@@ -123,13 +155,20 @@ public class TiraBot implements ChessBot {
 
     }
  
+    /**
+     *
+     * Method goes through the game Board, and returns all possible moves for given player's Side.
+     * 
+     * @param gameState that is associated with the given game.
+     * @see chess.engine.GameState
+     */
     private void countAllMoves(GameState gameState) {
         Side sideToPlay = gameState.playing;
         moves = new String[0];
         Tile[] tilesList = b.getTilesList();
         for (int i = 0; i < 64; i++) {
-            if(tilesList[i].getPiece() != null) {
-                if(tilesList[i].getPiece().getSide() == sideToPlay) {
+            if (tilesList[i].getPiece() != null) {
+                if (tilesList[i].getPiece().getSide() == sideToPlay) {
                     String[] thisTileMoves = movementgenerator.pieceMovement(b, tilesList[i]);
                     moves = moverules.addNewArrayToArray(thisTileMoves, moves);
                 }
@@ -165,11 +204,20 @@ public class TiraBot implements ChessBot {
         
     }
     
+    /**
+     *
+     * Transforms the move String's tile to a actual Tile on Board.
+     * 
+     * @param move the move that holds the information about the Tile
+     * @param start index of the starting point of the Tile info
+     * @param end index of the end point of Tile info
+     * @return The Tile referenced on the move. The Tile is associated with the game Board.
+     */
     private Tile moveToTile(String move, int start, int end) {
         
-        String currentFile = move.substring(start, start+1);
+        String currentFile = move.substring(start, start + 1);
         currentFile = currentFile.toLowerCase();
-        int currentRank = Integer.parseInt(move.substring(end-1, end));
+        int currentRank = Integer.parseInt(move.substring(end - 1, end));
         
         return b.getTile(File.valueOfLabel(currentFile), Rank.valueOfInteger(currentRank));
     }
