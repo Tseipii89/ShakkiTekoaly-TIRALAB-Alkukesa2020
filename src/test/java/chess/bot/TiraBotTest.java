@@ -226,17 +226,5 @@ public class TiraBotTest {
     }
     
     
-    @Test
-    public void FirstMoveIsCorrect() {
-        GameState gs = new GameState();
-        gs.playing = Side.WHITE;
-        gs.turn = Side.WHITE;
-        
-        tirabot.nextMove(gs);
-       assertTrue(     tirabot.nextMove(gs).matches("[a-h]2[a-h][3-4]")
-                    || tirabot.nextMove(gs).matches("b1[ac]3")
-                    || tirabot.nextMove(gs).matches("g1[fh]3"));
-    }
-    
     
 }
