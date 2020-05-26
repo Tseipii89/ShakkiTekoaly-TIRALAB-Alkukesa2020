@@ -233,7 +233,9 @@ public class TiraBotTest {
         gs.turn = Side.WHITE;
         
         tirabot.nextMove(gs);
-       assertTrue(tirabot.nextMove(gs).matches("([a-h]2[a-h][3-4]|b1[ac]3|g1[fh]3)"));
+       assertTrue(     tirabot.nextMove(gs).matches("[a-h]2[a-h][3-4]")
+                    || tirabot.nextMove(gs).matches("b1[ac]3")
+                    || tirabot.nextMove(gs).matches("g1[fh]3"));
     }
     
     
