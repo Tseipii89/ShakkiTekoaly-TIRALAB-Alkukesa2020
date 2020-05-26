@@ -56,4 +56,14 @@ public class Pawn implements Piece {
         return moves;
     }
 
+    @Override
+    public int getValue() {
+        int sideMultiplier = 1;
+        if (this.side == Side.BLACK) {
+            sideMultiplier = -1;
+        }
+        
+        return 10 * sideMultiplier;
+    }
+
 }

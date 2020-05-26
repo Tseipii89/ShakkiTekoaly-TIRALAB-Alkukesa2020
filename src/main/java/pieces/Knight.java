@@ -46,5 +46,15 @@ public class Knight implements Piece {
         
         return moves;
     }
+
+    @Override
+    public int getValue() {
+        int sideMultiplier = 1;
+        if (this.side == Side.BLACK) {
+            sideMultiplier = -1;
+        }
+        
+        return 30 * sideMultiplier;
+    }
     
 }

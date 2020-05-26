@@ -4,6 +4,7 @@
 
 ## What has happened during week 3
 * Bot takes and returns a random move, that lichess knows how to read
+* Bot prefers eating opponents now
 
 
 ## Problems
@@ -12,7 +13,7 @@
 
 
 ## Questions
-
+* What would be best way to handle situation where my move exposes the king? Should I just make test and find best move for my opponent after my move to see if my king is in danger or some other method?
 
 ## Next week
 

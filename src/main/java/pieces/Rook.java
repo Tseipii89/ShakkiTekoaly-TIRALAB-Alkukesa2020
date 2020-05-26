@@ -37,5 +37,15 @@ public class Rook implements Piece {
         return moveRules.vectorMoves(moves, movePairsFile, movePairsRank, gameBoard, tile, sideMultiplier);
  
     }
+
+    @Override
+    public int getValue() {
+        int sideMultiplier = 1;
+        if (this.side == Side.BLACK) {
+            sideMultiplier = -1;
+        }
+        
+        return 50 * sideMultiplier;
+    }
     
 }

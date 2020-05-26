@@ -10,6 +10,8 @@ public interface Piece {
     Side getSide();
     
     PieceType getPieceType();
+    
+    int getValue();
 
     String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier);
   
