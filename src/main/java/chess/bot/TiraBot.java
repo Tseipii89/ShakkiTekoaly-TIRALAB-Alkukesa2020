@@ -33,11 +33,6 @@ public class TiraBot implements ChessBot {
     private final Board b;   
     
     /**
-     * Holds all the moves for player in each situation.
-     */
-    private String[] moves;
-    
-    /**
      * Counts all moves for all Pieces.
      * @see chess.rules.MovementGenerator
      */
@@ -88,18 +83,18 @@ public class TiraBot implements ChessBot {
     public String nextMove(GameState gameState) {
         if (gameState.myTurn() && !gameState.moves.isEmpty()) {
             String latestMove = gameState.getLatestMove();
-            this.updateMovementOnBoard(latestMove);
+            this.updateMovementOnBoard(latestMove, this.b);
         }
-        this.countAllMoves(gameState);
+        String[] moves = new String[0];
+        moves = this.countAllMoves(gameState.playing, this.b, moves);
         // before alpha-beta pruning let's just return random move
         if (moves.length > 0) {
-            String moveToReturn = this.moveToDo(moves, gameState);
-            this.updateMovementOnBoard(moveToReturn);
+            String moveToReturn = this.moveToDo(moves, gameState.playing, this.b);
+            this.updateMovementOnBoard(moveToReturn, this.b);
             return moveToReturn;
         } else {
             return null;
-        }
-        
+        } 
     }
 
     /**
@@ -111,18 +106,20 @@ public class TiraBot implements ChessBot {
      * @see chess.engine.GameState
      * @return the move that holds the best value within the game. Or if all moves are equal, a random move.
      */
-    private String moveToDo(String[] moves, GameState gameState) {
+    private String moveToDo(String[] moves, Side sideToCheck, Board checkBoard) {
         int changeNow = 0;
         String moveToReturn = moves[(random.nextInt(moves.length))];
-        if (gameState.playing == Side.BLACK) {
+        if (sideToCheck == Side.BLACK) {
             for (String move : moves) {
-                if (this.moveValueCount(move, -1) < changeNow) {
+                if (this.moveValueCount(move, -1, checkBoard) < changeNow
+                       && !this.kingInCheck(move, Side.WHITE, checkBoard)) { // the value of side is white because we want to check that White doesn't have possible check
                     moveToReturn = move;
                 }
             }
         } else {
             for (String move : moves) {
-                if (this.moveValueCount(move, 1) > changeNow) {
+                if (this.moveValueCount(move, 1, checkBoard) > changeNow
+                        && !this.kingInCheck(move, Side.BLACK, checkBoard)) { // the value of side if black because we want to check that Black doesn't have possible check
                     moveToReturn = move;
                 }
             }
@@ -130,6 +127,45 @@ public class TiraBot implements ChessBot {
 
         return moveToReturn;
     }
+    
+    public boolean kingInCheck(String move, Side sideToCheck, Board checkBoard) {
+
+            
+            // we have to take the pieces into memory so, they can be added back
+            Tile startTile = this.moveToTile(move, 0, 2, checkBoard);
+            Tile finishTile = this.moveToTile(move, 2, 4, checkBoard);
+            Piece startTilePiece = checkBoard.getTile(startTile.getFile(), startTile.getRank()).getPiece();
+            Piece finishTilePiece = checkBoard.getTile(finishTile.getFile(), finishTile.getRank()).getPiece();
+            
+            this.updateMovementOnBoard(move, checkBoard);
+           
+            
+            String[] movesToCheck = new String[0];
+            movesToCheck = this.countAllMoves(sideToCheck, checkBoard, movesToCheck);
+            
+            if (sideToCheck == Side.WHITE) {
+                for (String testMove : movesToCheck) {
+                    if (this.moveValueCount(testMove, -1, checkBoard) == 900) {
+                        startTile.setPiece(startTilePiece);
+                        finishTile.setPiece(finishTilePiece);
+                        return true;
+                    }
+                }
+            } else {
+                for (String testMove : movesToCheck) {
+                    if (this.moveValueCount(testMove, 1, checkBoard) == -900) { 
+                        startTile.setPiece(startTilePiece);
+                        finishTile.setPiece(finishTilePiece);
+                        return true;
+                    }
+                }
+            }
+
+            startTile.setPiece(startTilePiece);
+            finishTile.setPiece(finishTilePiece);
+            return false;
+    }
+    
     
     /**
      *
@@ -141,14 +177,14 @@ public class TiraBot implements ChessBot {
      * @param multiplier Side multiplier. White wants maximum points, and Black wants minimum points.
      * @return the integer value of the change in value in regards of this move. 
      */
-    private int moveValueCount(String move, int multiplier) {
+    private int moveValueCount(String move, int multiplier, Board board) {
 
-        Tile startTile = this.moveToTile(move, 0, 2);
-        Tile finishTile = this.moveToTile(move, 2, 4);
+        Tile startTile = this.moveToTile(move, 0, 2, board);
+        Tile finishTile = this.moveToTile(move, 2, 4, board);
 
         int promotion = 0;
         if (move.length() > 4) {
-            promotion = 90 * multiplier;
+            promotion = 80 * multiplier;
         }
         
         return valueCalc.boardValue(startTile, finishTile, promotion);
@@ -162,19 +198,18 @@ public class TiraBot implements ChessBot {
      * @param gameState that is associated with the given game.
      * @see chess.engine.GameState
      */
-    private void countAllMoves(GameState gameState) {
-        Side sideToPlay = gameState.playing;
-        moves = new String[0];
-        Tile[] tilesList = b.getTilesList();
+    private String[] countAllMoves(Side sideToPlay, Board boardToCheck, String[] moves) {
+        Tile[] tilesList = boardToCheck.getTilesList();
         for (int i = 0; i < 64; i++) {
             if (tilesList[i].getPiece() != null) {
                 if (tilesList[i].getPiece().getSide() == sideToPlay) {
-                    String[] thisTileMoves = movementgenerator.pieceMovement(b, tilesList[i]);
+                    String[] thisTileMoves = movementgenerator.pieceMovement(boardToCheck, tilesList[i]);
                     moves = moverules.addNewArrayToArray(thisTileMoves, moves);
                 }
             }
             
         }
+        return moves;
     }
 
     
@@ -187,11 +222,11 @@ public class TiraBot implements ChessBot {
      * 
      * @param move the move in universal chess interface format.
      */
-    public void updateMovementOnBoard(String move) {
+    public void updateMovementOnBoard(String move, Board board) {
 
-        Tile startTile = this.moveToTile(move, 0, 2);
+        Tile startTile = this.moveToTile(move, 0, 2, board);
 
-        Tile finishTile = this.moveToTile(move, 2, 4);
+        Tile finishTile = this.moveToTile(move, 2, 4, board);
         
         
         String promote = "";
@@ -213,13 +248,13 @@ public class TiraBot implements ChessBot {
      * @param end index of the end point of Tile info
      * @return The Tile referenced on the move. The Tile is associated with the game Board.
      */
-    private Tile moveToTile(String move, int start, int end) {
+    private Tile moveToTile(String move, int start, int end, Board board) {
         
         String currentFile = move.substring(start, start + 1);
         currentFile = currentFile.toLowerCase();
         int currentRank = Integer.parseInt(move.substring(end - 1, end));
         
-        return b.getTile(File.valueOfLabel(currentFile), Rank.valueOfInteger(currentRank));
+        return board.getTile(File.valueOfLabel(currentFile), Rank.valueOfInteger(currentRank));
     }
     
     /**
