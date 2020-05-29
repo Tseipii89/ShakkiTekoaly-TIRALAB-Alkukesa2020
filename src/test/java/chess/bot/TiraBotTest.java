@@ -24,30 +24,52 @@ import pieces.PieceType;
  */
 public class TiraBotTest {
     
+    /**
+     *
+     */
     TiraBot tirabot;
     
+    /**
+     *
+     */
     public TiraBotTest() {
 
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
         tirabot = new TiraBot();
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
+        tirabot = null;
+        
     }
 
-
+    /**
+     *
+     */
     @Test
     public void NextMoveReturnsString() {
         GameState gs = new GameState();
@@ -60,6 +82,9 @@ public class TiraBotTest {
         assertEquals(move.getClass(), String.class);
     }
     
+    /**
+     *
+     */
     @Test
     public void NextMoveIsOfCorrectForm() {
         GameState gs = new GameState();
@@ -72,6 +97,9 @@ public class TiraBotTest {
         assertTrue(tirabot.nextMove(gs).matches("[a-h][1-8][a-h][1-8][nbrq]?"));
     }
     
+    /**
+     *
+     */
     @Test
     public void nextMoveUpdatesBoardRightNormalCase() {
         GameState gs = new GameState();
@@ -86,7 +114,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getSide(), is(Side.WHITE));
     }
     
-    
+    /**
+     *
+     */
     @Test
     public void nextMoveUpdatesBoardRightNormalCase2Moves() {
         GameState gs = new GameState();
@@ -108,6 +138,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_5).getPiece().getSide(), is(Side.WHITE));
     }
     
+    /**
+     *
+     */
     @Test
     public void nextMoveUpdatesBoardRightAttackCase() {
         GameState gs = new GameState();
@@ -137,6 +170,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_5).getPiece().getSide(), is(Side.WHITE));
     }
     
+    /**
+     *
+     */
     @Test
     public void promotionToQueenWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -162,6 +198,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
+    /**
+     *
+     */
     @Test
     public void promotionToRookWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -187,6 +226,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
+    /**
+     *
+     */
     @Test
     public void promotionToKnightWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -212,6 +254,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
+    /**
+     *
+     */
     @Test
     public void promotionToBishopWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -237,8 +282,24 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
+ 
     @Test
-    public void pieceCantMoveToLeaveKingToBeChecked() {
+    public void kingInCheckWorksCorrectly() {
+        GameState gs = new GameState();
+        gs.setMoves("d2d4");
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+        
+        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        
+        boolean isKingChecked = tirabot.kingInCheck("f8b4", Side.BLACK, tirabot.getBoard());
+
+        assertThat(isKingChecked, is(true) );
+    }
+    
+    
+    @Test
+    public void whiteWontletKingToBeChecked() {
         GameState gs = new GameState();
         gs.setMoves("d2d4, f8b4");
         gs.playing = Side.WHITE;
@@ -246,7 +307,7 @@ public class TiraBotTest {
         
         tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
         
-        String move = tirabot.nextMove(gs);
+        tirabot.nextMove(gs);
         
         int whiteProtectors = 0;
         
@@ -264,8 +325,6 @@ public class TiraBotTest {
         } 
 
         assertThat(whiteProtectors, is(1) );
-
-
     }
     
     

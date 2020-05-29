@@ -29,6 +29,8 @@ Date       | time | target |
 2020-05-25 | 3h | TiraBot returns a random move. Lichess works with the bot (although bot doesn't yet know that you shouldn't sacrifice your king) |
 2020-05-26 | 2h | Added different values to the pieces. The bot prefers eating opponent pieces now. Still might accidentally sacrifice king. Checkstyle down to 80 errors. |
 2020-05-27 | 4h | King will not go in to checked position. Other pieces will not move to a position where king is checked |
+2020-05-28 | 1h | Refactoring |
+2020-05-29 | 3h | Fixing the King not in check method. There was a fool bug that was hard to recognize since my debugging doesn't work. Refactoring the code. |
 
 
 ## Totals
@@ -37,5 +39,5 @@ Date       | time | target |
 --------|----------|
  1      | 9.5h    |
  2      | 10.5h    |
- 3      | 12h    |
-**Tot** | **32h** |
+ 3      | 16h    |
+**Tot** | **36h** |

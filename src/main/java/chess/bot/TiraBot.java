@@ -23,14 +23,14 @@ import pieces.Rook;
 public class TiraBot implements ChessBot {
     
     /**
-     * Only before alpha-beta pruning is implemented.
+     * The Random is used to return random move.
      */
     private final Random random; 
 
     /**
      * Game board to hold the current game piece positions.
      */
-    private final Board b;   
+    private final Board currentGameBoard;   
     
     /**
      * Counts all moves for all Pieces.
@@ -57,8 +57,8 @@ public class TiraBot implements ChessBot {
      */
     public TiraBot() {
         this.random = new Random();
-        this.b = new Board();
-        b.initBoard();
+        this.currentGameBoard = new Board();
+        currentGameBoard.initBoard();
         movementgenerator = new MovementGenerator();
         moverules = new MoveRules();
         valueCalc = new BoardValueCalculator();
@@ -69,7 +69,7 @@ public class TiraBot implements ChessBot {
      * @return game board.
      */
     public Board getBoard() {
-        return this.b;
+        return this.currentGameBoard;
     }
     
     /**
@@ -81,89 +81,239 @@ public class TiraBot implements ChessBot {
      */
     @Override
     public String nextMove(GameState gameState) {
-        if (gameState.myTurn() && !gameState.moves.isEmpty()) {
-            String latestMove = gameState.getLatestMove();
-            this.updateMovementOnBoard(latestMove, this.b);
-        }
-        String[] moves = new String[0];
-        moves = this.countAllMoves(gameState.playing, this.b, moves);
-        // before alpha-beta pruning let's just return random move
-        if (moves.length > 0) {
-            String moveToReturn = this.moveToDo(moves, gameState.playing, this.b);
-            this.updateMovementOnBoard(moveToReturn, this.b);
-            return moveToReturn;
-        } else {
-            return null;
-        } 
+        // First the Next Move updates the current Board with last move the opponent made
+        this.updateGameStateMove(gameState, this.currentGameBoard);
+        
+        // Second method calculates the next best move or returns null, if player has lost
+        return this.calculateBestMoveForGivenSide(gameState.playing, this.currentGameBoard);
     }
-
+    
     /**
      *
-     * Checks all different moves and returns the move with best value.
+     * Updates the Board with the latest move saved in GameState.
+     * 
+     * @param gameState the GameState that holds the game log data, and from which the latest move will be parsed
+     * @param boardToUpdate The Board that should be updated with given move from GameState
+     */
+    private void updateGameStateMove(GameState gameState, Board boardToUpdate) {
+        // if given GameState is not empty we update the Board given in the method with latest move
+        if (gameState.myTurn() && !gameState.moves.isEmpty()) {
+            String latestMove = gameState.getLatestMove();
+            this.updateMovementOnBoard(latestMove, boardToUpdate);
+        }
+    }
+    
+    /**
+     *
+     * Calculates and returns the best move for given Side with given Board situation.
+     * 
+     * @param side for which to check to which to check the best move.
+     * @param boardToUpdate The Board from which to check the best move.
+     * @return the best move as a String 
+     */
+    private String calculateBestMoveForGivenSide(Side side, Board boardToUpdate) {
+        // The moves always start from beginning, so all moves should be calculated with new array
+        String[] moves = new String[0]; 
+        // countAllMoves method calculates all legal moves for given side and given board
+        moves = this.countAllMoves(side, boardToUpdate, moves); 
+         
+        if (moves.length > 0) { // if moves has even 1 legal move, we can do something.
+            // We calculate the best move from given "all-moves" -list
+            String moveToReturn = this.moveToDo(moves, side, boardToUpdate); 
+            // the move needs to be updated on the Board
+            this.updateMovementOnBoard(moveToReturn, boardToUpdate);          
+            return moveToReturn; // we also want the API used to gaming to know our move
+        } else { // game is lost, and we can't move any piece. GameOver.
+            return null; 
+        } 
+    }
+            
+    /**
+     *
+     * Checks all moves from given array and returns the move with best value.
      * 
      * @param moves all the moves for player's side.
-     * @param gameState that is associated with the given game.
-     * @see chess.engine.GameState
+     * @param sideToCheck The side who's moves we want to check.
+     * @param checkBoard The Board from which the moves should be checked from.
      * @return the move that holds the best value within the game. Or if all moves are equal, a random move.
      */
     private String moveToDo(String[] moves, Side sideToCheck, Board checkBoard) {
-        int changeNow = 0;
-        String moveToReturn = moves[(random.nextInt(moves.length))];
+        
         if (sideToCheck == Side.BLACK) {
-            for (String move : moves) {
-                if (this.moveValueCount(move, -1, checkBoard) < changeNow
-                       && !this.kingInCheck(move, Side.WHITE, checkBoard)) { // the value of side is white because we want to check that White doesn't have possible check
-                    moveToReturn = move;
-                }
+            return this.countBestMoveForBlack(moves, checkBoard);
+        } else { 
+            return this.countBestMoveForWhite(moves, checkBoard);
+        }
+
+    }
+    
+    /**
+     *
+     * Counts the best move for black player.
+     * Made public for testing purposes.
+     * 
+     * @param moves all possible moves given as an array
+     * @param checkBoard the board that we want to check all the moves from
+     * @return the best move for black from the array of moves given the Board situation
+     */
+    public String countBestMoveForBlack(String[] moves, Board checkBoard) {
+        // current value of the checkBoard is set to 0. This counts the change in value, not the actual value of Board.
+        int changeNow = 0; 
+        String[] movesWithoutChecks = new String[0];
+        
+        // remove all moves where Black king is left unchecked
+        for (String move : moves) {
+            if (!this.kingInCheck(move, Side.WHITE, checkBoard)) {
+                movesWithoutChecks = moverules.addNewMoveToArray(movesWithoutChecks, move);
             }
-        } else {
-            for (String move : moves) {
-                if (this.moveValueCount(move, 1, checkBoard) > changeNow
-                        && !this.kingInCheck(move, Side.BLACK, checkBoard)) { // the value of side if black because we want to check that Black doesn't have possible check
-                    moveToReturn = move;
-                }
+        }
+        // If all moves are equal in value, we want to return random move, and not for example the first move.
+        String moveToReturn = movesWithoutChecks[(random.nextInt(movesWithoutChecks.length))]; 
+
+        for (String move : movesWithoutChecks) {
+            // Black player wants to minimize the Board value. 
+            // This means that there is a move that has better value for black than previous best (or initial 0)
+            if (this.moveValueCount(move, -1, checkBoard) < changeNow) { 
+                // set the changeNow value to the new best value for Black (hence the -1 multiplier)
+                changeNow = this.moveValueCount(move, -1, checkBoard); 
+                moveToReturn = move; // set the returnable move to new best
+            }
+        }
+        return moveToReturn; 
+    }
+    
+    /**
+     *
+     * Counts the best move for white player.
+     * Made public for testing purposes.
+     * 
+     * @param moves all possible moves given as an array
+     * @param checkBoard the board that we want to check all the moves from
+     * @return the best move for white from the array of moves given the Board situation
+     */
+    public String countBestMoveForWhite(String[] moves, Board checkBoard) {
+        // current value of the checkBoard is set to 0. This counts the change in value, not the actual value of Board.
+        int changeNow = 0; 
+        String[] movesWithoutChecks = new String[0];
+        
+        // remove all moves where White king is left unchecked
+        for (String move : moves) {
+            if (!this.kingInCheck(move, Side.BLACK, checkBoard)) {
+                movesWithoutChecks = moverules.addNewMoveToArray(movesWithoutChecks, move);
             }
         }
 
+        // If all moves are equal in value, we want to return random move, and not for example the first move.
+        String moveToReturn = movesWithoutChecks[(random.nextInt(movesWithoutChecks.length))]; 
+
+        for (String move : movesWithoutChecks) {
+            // White player wants to maximize the Board value. 
+            // This means that there is a move that has better value for white than previous best (or initial 0)
+            if (this.moveValueCount(move, 1, checkBoard) > changeNow) { 
+                // set the changeNow value to the new best for White
+                changeNow = this.moveValueCount(move, 1, checkBoard); 
+                moveToReturn = move; // set the returnable move to new best
+            }
+        }
+        return moveToReturn; 
+    }
+    
+    
+    /**
+     *
+     * We want to check a move without the possibility of our king being in danger. 
+     * This method is used by the method kingInCheck to see if the king will be left vulnerable after a certain move.
+     * @see chess.bot.TiraBot#kingInCheck(java.lang.String, chess.model.Side, chess.elements.Board) 
+     * 
+     * @param moves all the moves possible for given Side
+     * @param sideToCheck the Side who's moves we want to check
+     * @param checkBoard the baord from which all the moves are to be checked
+     * @return the best for given player, given all the moves and the baord's situation
+     */
+    private String moveToDoWithoutKingCheck(String[] moves, Side sideToCheck, Board checkBoard) {
+        // current value of the checkBoard is set to 0. This counts the change in value, not the actual value of Board.
+        int changeNow = 0; 
+        // If all moves are equal in value, we want to return random move, and not for example the first move.
+        String moveToReturn = moves[(random.nextInt(moves.length))]; 
+        if (sideToCheck == Side.BLACK) {
+            for (String move : moves) {
+                // Black player wants to minimize the Board value. 
+                // This means that there is a move that has better value for black than previous best (or initial 0)
+                if (this.moveValueCount(move, -1, checkBoard) < changeNow) { 
+                    // set the changeNow value to the new best value for Black (hence the -1 multiplier)
+                    changeNow = this.moveValueCount(move, -1, checkBoard); 
+                    moveToReturn = move; // set the returnable move to new best
+                }
+            }
+        } else { // the side is White
+            for (String move : moves) {
+                // White player wants to maximize the Board value. 
+                // This means that there is a move that has better value for white than previous best (or initial 0)
+                if (this.moveValueCount(move, 1, checkBoard) > changeNow) { 
+                    // set the changeNow value to the new best for White
+                    changeNow = this.moveValueCount(move, 1, checkBoard); 
+                    moveToReturn = move; // set the returnable move to new best
+                }
+            }
+        }
         return moveToReturn;
     }
     
-    public boolean kingInCheck(String move, Side sideToCheck, Board checkBoard) {
+    /**
+     *
+     * Check's that is current player's king in danger if the player does the move given in method parameter.
+     * Made public for testing purposes.
+     * 
+     * @param move the move that we want to check won't sacrifice our king
+     * @param opponent the opponent's Side
+     * @param checkBoard the board where all the checking is done
+     * @return true if king will be captured because of this move, false if our king will be safe
+     */
+    public boolean kingInCheck(String move, Side opponent, Board checkBoard) {
+        // we have to take the pieces into memory so, they can be added back
+        Tile startTile = this.moveToTile(move, 0, 2, checkBoard);
+        Tile finishTile = this.moveToTile(move, 2, 4, checkBoard);
+        Piece startTilePiece = checkBoard.getTile(startTile.getFile(), startTile.getRank()).getPiece();
+        Piece finishTilePiece = checkBoard.getTile(finishTile.getFile(), finishTile.getRank()).getPiece();
 
-            
-            // we have to take the pieces into memory so, they can be added back
-            Tile startTile = this.moveToTile(move, 0, 2, checkBoard);
-            Tile finishTile = this.moveToTile(move, 2, 4, checkBoard);
-            Piece startTilePiece = checkBoard.getTile(startTile.getFile(), startTile.getRank()).getPiece();
-            Piece finishTilePiece = checkBoard.getTile(finishTile.getFile(), finishTile.getRank()).getPiece();
-            
-            this.updateMovementOnBoard(move, checkBoard);
-           
-            
-            String[] movesToCheck = new String[0];
-            movesToCheck = this.countAllMoves(sideToCheck, checkBoard, movesToCheck);
-            
-            if (sideToCheck == Side.WHITE) {
-                for (String testMove : movesToCheck) {
-                    if (this.moveValueCount(testMove, -1, checkBoard) == 900) {
-                        startTile.setPiece(startTilePiece);
-                        finishTile.setPiece(finishTilePiece);
-                        return true;
-                    }
-                }
-            } else {
-                for (String testMove : movesToCheck) {
-                    if (this.moveValueCount(testMove, 1, checkBoard) == -900) { 
-                        startTile.setPiece(startTilePiece);
-                        finishTile.setPiece(finishTilePiece);
-                        return true;
-                    }
-                }
+        // update the movement on Board to see what happens next
+        this.updateMovementOnBoard(move, checkBoard); 
+
+        // Check all moves for opponent player and check if they will capture the king
+        String[] movesToCheck = new String[0];
+        movesToCheck = this.countAllMoves(opponent, checkBoard, movesToCheck);
+        // Let's see what is the best move for the opponent, if he/she doesn't do KingCheck
+        String moveToDo = this.moveToDoWithoutKingCheck(movesToCheck, opponent, checkBoard); 
+        boolean kingCaptured = this.isKingCaptured(opponent, moveToDo, checkBoard);
+
+        // set pieces back to situation before check
+        startTile.setPiece(startTilePiece);
+        finishTile.setPiece(finishTilePiece);
+
+        // is our king free or captured
+        return kingCaptured;
+    }
+    
+    /**
+     *
+     * Checks that will given opponent capture the opponents king.
+     * 
+     * @param opponent the opponent's Side who's possible king's capture we want to avoid
+     * @param move the move that we want to check isn't capturing our king
+     * @param board the Board from which we want to check that our king is not captured
+     * @return true if opponent will capture our king, false otherwise
+     */
+    private boolean isKingCaptured(Side opponent, String move, Board board) {
+        if (opponent == Side.WHITE) {
+            if (this.moveValueCount(move, 1, board) >= 900) { // opponent will capture our King
+                return true;
             }
-
-            startTile.setPiece(startTilePiece);
-            finishTile.setPiece(finishTilePiece);
-            return false;
+        } else {
+            if (this.moveValueCount(move, -1, board) <= -900) { // opponent will capture our king
+                return true;
+            }
+        }
+        return false;
     }
     
     
@@ -175,6 +325,7 @@ public class TiraBot implements ChessBot {
      * 
      * @param move the Move is to be evaluated
      * @param multiplier Side multiplier. White wants maximum points, and Black wants minimum points.
+     * @param board count the move's value from this board.
      * @return the integer value of the change in value in regards of this move. 
      */
     private int moveValueCount(String move, int multiplier, Board board) {
@@ -194,11 +345,14 @@ public class TiraBot implements ChessBot {
     /**
      *
      * Method goes through the game Board, and returns all possible moves for given player's Side.
+     * Made public for testing purposes.
      * 
-     * @param gameState that is associated with the given game.
-     * @see chess.engine.GameState
+     * @param sideToPlay count all moves for this Side.
+     * @param boardToCheck count all moves from this board given the board's placement situation.
+     * @param moves add all the moves to this String array
+     * @return return new array where all the legal moves are added
      */
-    private String[] countAllMoves(Side sideToPlay, Board boardToCheck, String[] moves) {
+    public String[] countAllMoves(Side sideToPlay, Board boardToCheck, String[] moves) {
         Tile[] tilesList = boardToCheck.getTilesList();
         for (int i = 0; i < 64; i++) {
             if (tilesList[i].getPiece() != null) {
@@ -221,6 +375,7 @@ public class TiraBot implements ChessBot {
      * Counts the start tile and finish tile and possible promotion from given move String.
      * 
      * @param move the move in universal chess interface format.
+     * @param board the Board against into which the move should be updated
      */
     public void updateMovementOnBoard(String move, Board board) {
 
@@ -246,6 +401,7 @@ public class TiraBot implements ChessBot {
      * @param move the move that holds the information about the Tile
      * @param start index of the starting point of the Tile info
      * @param end index of the end point of Tile info
+     * @param board The Board on which the move should be updated 
      * @return The Tile referenced on the move. The Tile is associated with the game Board.
      */
     private Tile moveToTile(String move, int start, int end, Board board) {
@@ -272,16 +428,16 @@ public class TiraBot implements ChessBot {
         
         finishTile.setPiece(pieceToMove);
         switch (promote) {
-            case "q":
+            case "q": // queen
                 finishTile.setPiece(new Queen(pieceToMove.getSide()));
                 break;
-            case "r":
+            case "r": // rook
                 finishTile.setPiece(new Rook(pieceToMove.getSide()));
                 break;
-            case "n":
+            case "n": // knight
                 finishTile.setPiece(new Knight(pieceToMove.getSide()));
                 break;
-            case "b":
+            case "b": // bishop
                 finishTile.setPiece(new Bishop(pieceToMove.getSide()));
                 break;
             default:

@@ -53,10 +53,6 @@ public class Board {
     public Tile[] getTilesList() {
         return tiles;
     }
-    
-    public void setTilesList(Tile[] tileList) {
-        this.tiles = tileList;
-    }
 
     /**
      *
