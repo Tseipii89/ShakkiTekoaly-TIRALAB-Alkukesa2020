@@ -9,6 +9,8 @@ import chess.elements.File;
 import chess.elements.Rank;
 import chess.engine.GameState;
 import chess.model.Side;
+import chess.rules.KingCheckedCounter;
+import chess.rules.MovementGenerator;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,12 +30,15 @@ public class TiraBotTest {
      *
      */
     TiraBot tirabot;
+    MovementGenerator movementGenerator;
+    KingCheckedCounter kingChecked;
     
     /**
      *
      */
     public TiraBotTest() {
-
+        movementGenerator = new MovementGenerator();
+        kingChecked = new KingCheckedCounter();
     }
     
     /**
@@ -124,7 +129,7 @@ public class TiraBotTest {
         gs.playing = Side.WHITE;
         gs.turn = Side.WHITE;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
 
         
         tirabot.nextMove(gs);
@@ -148,8 +153,8 @@ public class TiraBotTest {
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
         
         tirabot.nextMove(gs);
         
@@ -180,16 +185,16 @@ public class TiraBotTest {
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
         
         tirabot.nextMove(gs);
             
@@ -208,16 +213,16 @@ public class TiraBotTest {
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
         
         tirabot.nextMove(gs);
             
@@ -236,16 +241,16 @@ public class TiraBotTest {
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
         
         tirabot.nextMove(gs);
             
@@ -264,16 +269,16 @@ public class TiraBotTest {
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        tirabot.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
         
         tirabot.nextMove(gs);
             
@@ -290,9 +295,9 @@ public class TiraBotTest {
         gs.playing = Side.WHITE;
         gs.turn = Side.WHITE;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
         
-        boolean isKingChecked = tirabot.kingInCheck("f8b4", Side.BLACK, tirabot.getBoard());
+        boolean isKingChecked = kingChecked.kingInCheck("f8b4", Side.BLACK, tirabot.getBoard());
 
         assertThat(isKingChecked, is(true) );
     }
@@ -305,7 +310,7 @@ public class TiraBotTest {
         gs.playing = Side.WHITE;
         gs.turn = Side.WHITE;
         
-        tirabot.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
         
         tirabot.nextMove(gs);
         

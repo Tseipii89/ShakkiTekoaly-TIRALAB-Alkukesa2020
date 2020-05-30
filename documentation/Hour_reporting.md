@@ -32,6 +32,12 @@ Date       | time | target |
 2020-05-28 | 1h | Refactoring |
 2020-05-29 | 3h | Fixing the King not in check method. There was a fool bug that was hard to recognize since my debugging doesn't work. Refactoring the code. |
 
+## Week 4
+
+Date       | time | target |
+-----------|------|--------|
+2020-05-30 | h |  |
+
 
 ## Totals
 
@@ -40,4 +46,5 @@ Date       | time | target |
  1      | 9.5h    |
  2      | 10.5h    |
  3      | 16h    |
+ 4      | h    |
 **Tot** | **36h** |

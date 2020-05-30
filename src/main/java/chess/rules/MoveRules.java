@@ -2,63 +2,20 @@
 package chess.rules;
 
 import chess.elements.Board;
-import chess.elements.File;
-import chess.elements.Rank;
 import chess.elements.Tile;
+import datastructureproject.datamodifiers.ArrayModifier;
 import pieces.Piece;
 
 
 public class MoveRules {
-    
+    private NewTileCounter newTileCounter;
+    private ArrayModifier arrayModifier;
 
     public MoveRules() {
-        
+        newTileCounter = new NewTileCounter();
+        arrayModifier = new ArrayModifier();
     }
     
-
-    public Tile countNewTile(Tile currentTile, int sideMultiplier, int fileMovement, int rankMovement) {
-        
-        int newFileInt = currentTile.getFile().getIntegerFile() + fileMovement * sideMultiplier;
-        int newRankInt = currentTile.getRank().getIntegerRank() + rankMovement * sideMultiplier;
-        
-        if (newFileInt < 1 || newFileInt > 8) {
-            return null;
-        }
-        if (newRankInt < 1 || newRankInt > 8) {
-            return null;
-        }
-        return new Tile(File.valueOfInteger(newFileInt), Rank.valueOfInteger(newRankInt));
-    }
-
-    public String[] addNewMoveToArray(String[] moves, String move) {
-        int n = moves.length;
-        String[] newMoves = new String[n + 1];
-       
-        for (int j = 0; j < n; j++) {
-            newMoves[j] = moves[j];
-            
-        }
-        
-        newMoves[n] = move;
-        
-        return newMoves;
-    }
-    
-    public String[] addNewArrayToArray(String[] firstArray, String[] secondArray) {
-        int n = firstArray.length;
-        int m = secondArray.length;
-        String[] newMoves = new String[n + m];
-       
-        for (int i = 0; i < n; i++) {
-            newMoves[i] = firstArray[i]; 
-        }
-        
-        for (int j = 0; j < m; j++) {
-            newMoves[n+j] = secondArray[j]; 
-        }
-
-        return newMoves;
-    }
     
     public String[] isTileOkToAddAttack(String[] moves, 
                                         Board gameBoard,
@@ -68,13 +25,13 @@ public class MoveRules {
                                         int ranksToAdd, 
                                         double canPromotion) {
         Piece tilesPiece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
-        Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
+        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
         if (tileToCheck == null) { 
         } else if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() != null) {
             if (gameBoard.getTile(tileToCheck.getFile(), 
                     tileToCheck.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
                 String move = createMovementString(tile, tileToCheck, canPromotion);
-                moves = this.addNewMoveToArray(moves, move);
+                moves = arrayModifier.addNewMoveToArray(moves, move);
             }
         } 
         return moves;
@@ -87,11 +44,11 @@ public class MoveRules {
                                       int filesToAdd,
                                       int ranksToAdd, 
                                       double canPromotion) {
-        Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
+        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
         if (tileToCheck != null) {
             if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null) {
                 String move = createMovementString(tile, tileToCheck, canPromotion);
-                moves = this.addNewMoveToArray(moves, move);
+                moves = arrayModifier.addNewMoveToArray(moves, move);
             } 
         }
         return moves;
@@ -103,11 +60,11 @@ public class MoveRules {
                                               int sideMultiplier,
                                               int filesToAdd,
                                               int ranksToAdd) {
-        Tile tileToCheck = this.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
+        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, filesToAdd, ranksToAdd);
         if (tileToCheck != null) {
             if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null) {
                 String move = createMovementString(tile, tileToCheck, 0); // no other piece can promote than Pawn
-                moves = this.addNewMoveToArray(moves, move);
+                moves = arrayModifier.addNewMoveToArray(moves, move);
             } 
         }
         return moves;
@@ -167,4 +124,6 @@ public class MoveRules {
         }        
         return moves;
     }
+    
+    
 }

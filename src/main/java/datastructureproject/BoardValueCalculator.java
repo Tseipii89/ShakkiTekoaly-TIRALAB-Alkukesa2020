@@ -1,6 +1,7 @@
 
 package datastructureproject;
 
+import chess.elements.Board;
 import chess.elements.Tile;
 import pieces.Piece;
 
@@ -22,6 +23,17 @@ public class BoardValueCalculator {
         }
         
         return valueChange + promotion;
+    }
+    
+    public int allTilesBoardValue(Board board){
+        int value = 0;
+        Tile[] tiles = board.getTilesList();
+        for (int i = 0; i < 64; i++) {
+            if(tiles[i].getPiece() != null) {
+                value += tiles[i].getPiece().getValue();
+            }
+        }
+        return value;
     }
     
 }
