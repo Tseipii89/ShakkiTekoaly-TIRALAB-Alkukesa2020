@@ -79,7 +79,6 @@ public class MovementGenerator {
     
      /**
      *
-     * This method is only public for testing purposes. This method should not be called straight from other classes.
      * Counts the start tile and finish tile and possible promotion from given move String.
      * 
      * @param move the move in universal chess interface format.

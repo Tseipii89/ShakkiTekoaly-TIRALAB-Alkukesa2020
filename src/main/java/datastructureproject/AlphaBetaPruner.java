@@ -2,13 +2,10 @@
 package datastructureproject;
 
 import chess.elements.Board;
-import chess.elements.Tile;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
-import chess.rules.NewTileCounter;
 import datastructureproject.datamodifiers.ArrayModifier;
-import pieces.Piece;
 
 
 public class AlphaBetaPruner {
@@ -16,61 +13,66 @@ public class AlphaBetaPruner {
     private KingCheckedCounter kingChecker;
     private ArrayModifier arrayMod;
     private final BoardValueCalculator boardValueCounter;
-    private final NewTileCounter newTileCounter;
-
+    public BoardStatusSaver boardStatusSaver; //public for testing purposes
+    private AlphaBetaPruner alphabeta;
     
     public AlphaBetaPruner () {
         this.movementGenerator = new MovementGenerator();
         this.kingChecker = new KingCheckedCounter();
         this.arrayMod = new ArrayModifier();
         this.boardValueCounter = new BoardValueCalculator();
-        newTileCounter = new NewTileCounter();
+        boardStatusSaver = new BoardStatusSaver();
     }
     
-    public int minimax(Side side, Board board,int depth, boolean maximizingPlayer) {
+    public int minimax(Side side, Board board, int depth, boolean maximizingPlayer) {
         
         int value = 0;
         
-        Side opponent;
+        Side opponent = this.getOpponent(side);
 
-        if (side == Side.WHITE) {
-            opponent = Side.BLACK;
-        } else {
-            opponent = Side.WHITE;
-        }
-        
-        String[] moves = new String[0];
-        String[] allMoves = this.movementGenerator.countAllMoves(side, board, moves);
-        
-        for (String move : allMoves) {
-            if(!kingChecker.kingInCheck(move, opponent, board)) {
-                arrayMod.addNewMoveToArray(moves, move);
-            }
-        }
+        String[] moves = this.allMovesKingCheckFiltered(side, board);
         
         for (String move : moves) {
             if (depth == 0 || moves.length == 0) { 
                 return boardValueCounter.allTilesBoardValue(board);
+            } else {
+                alphabeta = new AlphaBetaPruner();
             }            
-            Tile startTile = newTileCounter.moveToTile(move, 0, 2, board);
-            Tile finishTile = newTileCounter.moveToTile(move, 2, 4, board);
-            Piece startTilePiece = board.getTile(startTile.getFile(), startTile.getRank()).getPiece();
-            Piece finishTilePiece = board.getTile(finishTile.getFile(), finishTile.getRank()).getPiece();
+            boardStatusSaver.savePieces(move, board);
             movementGenerator.updateMovementOnBoard(move, board);
 
             if (maximizingPlayer) {
                 value = -10000;
-                startTile.setPiece(startTilePiece);
-                finishTile.setPiece(finishTilePiece);
-                return value = Math.max(value, this.minimax(opponent, board, depth-1, false));
+                value = Math.max(value, alphabeta.minimax(opponent, board, depth-1, false));
             } else {
                 value = 10000;
-                startTile.setPiece(startTilePiece);
-                finishTile.setPiece(finishTilePiece);
-                return value = Math.min(value, this.minimax(opponent, board, depth-1, true));
-                
-            } 
+                value = Math.min(value, alphabeta.minimax(opponent, board, depth-1, true)); 
+            }
+            boardStatusSaver.putSavedPiecesBack();
+            
         }
         return value;
     }
+    
+    public Side getOpponent(Side player) {
+        if (player == Side.WHITE) {
+            return Side.BLACK;
+        } else {
+            return Side.WHITE;
+        }
+    }
+    
+    public String[] allMovesKingCheckFiltered(Side side, Board board) {
+        String[] moves = new String[0];
+        String[] allMoves = this.movementGenerator.countAllMoves(side, board, moves);
+        
+        for (String move : allMoves) {
+            if(!kingChecker.kingInCheck(move, this.getOpponent(side), board)) {
+                moves = arrayMod.addNewMoveToArray(moves, move);
+            }
+        }
+        return moves;
+    }
+    
+
 }

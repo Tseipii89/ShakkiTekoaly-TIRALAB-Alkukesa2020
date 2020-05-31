@@ -55,9 +55,14 @@ public class KingCheckedCounter {
         // Check all moves for opponent player and check if they will capture the king
         String[] movesToCheck = new String[0];
         movesToCheck = movementGenerator.countAllMoves(opponent, checkBoard, movesToCheck);
+        boolean kingCaptured = true;
         // Let's see what is the best move for the opponent, if he/she doesn't do KingCheck
-        String moveToDo = this.moveToDoWithoutKingCheck(movesToCheck, opponent, checkBoard); 
-        boolean kingCaptured = this.isKingCaptured(opponent, moveToDo, checkBoard);
+        if (movesToCheck.length > 0) {
+            String moveToDo = this.moveToDoWithoutKingCheck(movesToCheck, opponent, checkBoard); 
+            kingCaptured = this.isKingCaptured(opponent, moveToDo, checkBoard);
+        }
+        
+        
 
         // set pieces back to situation before check
         startTile.setPiece(startTilePiece);

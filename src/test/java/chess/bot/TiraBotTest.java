@@ -11,6 +11,9 @@ import chess.engine.GameState;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
+import datastructureproject.AlphaBetaPruner;
+import datastructureproject.MoveValueCounter;
+import java.util.Random;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,7 +21,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pieces.Bishop;
+import pieces.King;
+import pieces.Knight;
 import pieces.PieceType;
+import pieces.Rook;
 
 /**
  *
@@ -32,6 +39,9 @@ public class TiraBotTest {
     TiraBot tirabot;
     MovementGenerator movementGenerator;
     KingCheckedCounter kingChecked;
+    MoveValueCounter moveValueCounter;
+    Random random;
+    AlphaBetaPruner alphabeta;
     
     /**
      *
@@ -39,6 +49,8 @@ public class TiraBotTest {
     public TiraBotTest() {
         movementGenerator = new MovementGenerator();
         kingChecked = new KingCheckedCounter();
+        moveValueCounter = new MoveValueCounter();
+        alphabeta = new AlphaBetaPruner();
     }
     
     /**
@@ -106,18 +118,66 @@ public class TiraBotTest {
      *
      */
     @Test
-    public void nextMoveUpdatesBoardRightNormalCase() {
+    public void nextMoveUpdatesBoardRightNormalCaseStepByStep() {
         GameState gs = new GameState();
         gs.setMoves("a2a4");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
+        tirabot.updateGameStateMove(gs, tirabot.getBoard());
+        
+        assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getPieceType(), is(PieceType.Pawn));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getSide(), is(Side.WHITE));
+        
+        String[] moves = new String[0];
+        moves = movementGenerator.countAllMoves(Side.BLACK, tirabot.getBoard(), moves);
+        assertThat(moves.length, is(20));
+        assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
+
+        String[] testMoves = new String[1];
+        testMoves[0] = moves[17];
+
+        moveValueCounter.movementGenerator.updateMovementOnBoard(testMoves[0], tirabot.getBoard());
+        String[] movesFiltered = alphabeta.allMovesKingCheckFiltered(Side.WHITE, tirabot.getBoard());
+        
+        assertThat(movesFiltered.length, is(22));
+        
+        
+        alphabeta.boardStatusSaver.savePieces(movesFiltered[1], tirabot.getBoard());
+        assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
+        alphabeta.boardStatusSaver.putSavedPiecesBack();
+        assertThat(movesFiltered[1], is("a4b5"));
+        assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
+        
+
+        
+        alphabeta.boardStatusSaver.savePieces(movesFiltered[20], tirabot.getBoard());
+        assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
+        alphabeta.boardStatusSaver.putSavedPiecesBack();
+        assertThat(movesFiltered[20], is("a1a2"));
+        assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
+    }
+    
+        @Test
+    public void nextMoveUpdatesBoardRightNormalCase() {
+        GameState gs = new GameState();
+        gs.setMoves("a2a4");
+        gs.playing = Side.BLACK;
+        gs.turn = Side.BLACK;
+
+        
+                
         tirabot.nextMove(gs);
+        
+        
         
         assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getPieceType(), is(PieceType.Pawn));
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getSide(), is(Side.WHITE));
     }
+    
+    
     
     /**
      *
@@ -331,7 +391,5 @@ public class TiraBotTest {
 
         assertThat(whiteProtectors, is(1) );
     }
-    
-    
-    
+      
 }

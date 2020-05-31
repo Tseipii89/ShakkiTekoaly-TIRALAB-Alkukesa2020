@@ -2,16 +2,23 @@ package datastructureproject;
 
 import chess.elements.Board;
 import chess.elements.Tile;
+import chess.model.Side;
+import chess.rules.MovementGenerator;
 import chess.rules.NewTileCounter;
 
 
 public class MoveValueCounter {
     private final NewTileCounter newTileCounter;
     private final BoardValueCalculator valueCalc;
+    public BoardStatusSaver boardStatusSaver; // Public for testing
+    public final MovementGenerator movementGenerator; // Public for testing
+    public AlphaBetaPruner alphabeta; // Public for testing
     
     public MoveValueCounter() {
         newTileCounter = new NewTileCounter();
         valueCalc = new BoardValueCalculator();
+        boardStatusSaver = new BoardStatusSaver();
+        movementGenerator = new MovementGenerator();
     }
     
      /**
@@ -37,6 +44,34 @@ public class MoveValueCounter {
         
         return valueCalc.boardValue(startTile, finishTile, promotion);
     }
+    
+    public int moveValueCountMinMax(String move, Side playing, Board board) {
+        alphabeta = new AlphaBetaPruner();
+        // save pieces
+        this.boardStatusSaver.savePieces(move, board);
+
+        // update board
+        this.movementGenerator.updateMovementOnBoard(move, board);
+        
+        // count minmax value
+        
+        Side opponent = this.alphabeta.getOpponent(playing);
+        
+        int value;
+        boolean maximizingPlayer = true;
+        if (opponent == Side.BLACK) {
+            maximizingPlayer = false;
+        }
+        value = this.alphabeta.minimax(opponent, board, 1, maximizingPlayer); // we go one minmax deep first
+        
+        //return pieces
+        this.boardStatusSaver.putSavedPiecesBack();
+        
+        // return minmax value
+        return value;
+    }
+    
+    
 
     
 }

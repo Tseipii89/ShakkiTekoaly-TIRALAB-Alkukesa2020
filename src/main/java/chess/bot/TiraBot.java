@@ -38,8 +38,6 @@ public class TiraBot implements ChessBot {
      */
 
     private final ArrayModifier arrayModifier;
-    
-    private final NewTileCounter newTileCounter;
 
     private final MoveValueCounter moveValueCounter;
     
@@ -55,7 +53,6 @@ public class TiraBot implements ChessBot {
         currentGameBoard.initBoard();
         movementgenerator = new MovementGenerator();
         arrayModifier = new ArrayModifier();
-        newTileCounter = new NewTileCounter();
         moveValueCounter = new MoveValueCounter();
         kingChecked = new KingCheckedCounter();
     }
@@ -87,11 +84,12 @@ public class TiraBot implements ChessBot {
     /**
      *
      * Updates the Board with the latest move saved in GameState.
+     * Public for testing purposes.
      * 
      * @param gameState the GameState that holds the game log data, and from which the latest move will be parsed
      * @param boardToUpdate The Board that should be updated with given move from GameState
      */
-    private void updateGameStateMove(GameState gameState, Board boardToUpdate) {
+    public void updateGameStateMove(GameState gameState, Board boardToUpdate) {
         // if given GameState is not empty we update the Board given in the method with latest move
         if (gameState.myTurn() && !gameState.moves.isEmpty()) {
             String latestMove = gameState.getLatestMove();
@@ -102,12 +100,13 @@ public class TiraBot implements ChessBot {
     /**
      *
      * Calculates and returns the best move for given Side with given Board situation.
+     * Public for testing.
      * 
      * @param side for which to check to which to check the best move.
      * @param boardToUpdate The Board from which to check the best move.
      * @return the best move as a String 
      */
-    private String calculateBestMoveForGivenSide(Side side, Board boardToUpdate) {
+    public String calculateBestMoveForGivenSide(Side side, Board boardToUpdate) {
         // The moves always start from beginning, so all moves should be calculated with new array
         String[] moves = new String[0]; 
         // countAllMoves method calculates all legal moves for given side and given board
@@ -127,13 +126,14 @@ public class TiraBot implements ChessBot {
     /**
      *
      * Checks all moves from given array and returns the move with best value.
+     * Public for testing.
      * 
      * @param moves all the moves for player's side.
      * @param sideToCheck The side who's moves we want to check.
      * @param checkBoard The Board from which the moves should be checked from.
      * @return the move that holds the best value within the game. Or if all moves are equal, a random move.
      */
-    private String moveToDo(String[] moves, Side sideToCheck, Board checkBoard) {
+    public String moveToDo(String[] moves, Side sideToCheck, Board checkBoard) {
         
         if (sideToCheck == Side.BLACK) {
             return this.countBestMoveForBlack(moves, checkBoard);
@@ -169,9 +169,13 @@ public class TiraBot implements ChessBot {
         for (String move : movesWithoutChecks) {
             // Black player wants to minimize the Board value. 
             // This means that there is a move that has better value for black than previous best (or initial 0)
-            if (moveValueCounter.moveValueCount(move, -1, checkBoard) < changeNow) { 
+            // if (moveValueCounter.moveValueCount(move, -1, checkBoard) < changeNow) { LET'S TEST MINMAX  INSTEAD
+            
+            int value = moveValueCounter.moveValueCountMinMax(move, Side.BLACK, checkBoard);
+            
+            if (value < changeNow) { 
                 // set the changeNow value to the new best value for Black (hence the -1 multiplier)
-                changeNow = moveValueCounter.moveValueCount(move, -1, checkBoard); 
+                changeNow = value; 
                 moveToReturn = move; // set the returnable move to new best
             }
         }
@@ -194,6 +198,7 @@ public class TiraBot implements ChessBot {
         
         // remove all moves where White king is left unchecked
         for (String move : moves) {
+            
             if (!kingChecked.kingInCheck(move, Side.BLACK, checkBoard)) {
                 movesWithoutChecks = arrayModifier.addNewMoveToArray(movesWithoutChecks, move);
             }
@@ -205,9 +210,11 @@ public class TiraBot implements ChessBot {
         for (String move : movesWithoutChecks) {
             // White player wants to maximize the Board value. 
             // This means that there is a move that has better value for white than previous best (or initial 0)
-            if (moveValueCounter.moveValueCount(move, 1, checkBoard) > changeNow) { 
+            // if (moveValueCounter.moveValueCount(move, 1, checkBoard) > changeNow) { 
+            int value = moveValueCounter.moveValueCountMinMax(move, Side.WHITE, checkBoard);
+            if ( value > changeNow) { 
                 // set the changeNow value to the new best for White
-                changeNow = moveValueCounter.moveValueCount(move, 1, checkBoard); 
+                changeNow = value; 
                 moveToReturn = move; // set the returnable move to new best
             }
         }
