@@ -26,27 +26,27 @@ public class AlphaBetaPruner {
     
     public int minimax(Side side, Board board, int depth, boolean maximizingPlayer) {
         
-        int value = 0;
+        int value = 1000;
+        if (maximizingPlayer) {
+           value = -1000;
+        }    
         
-        Side opponent = this.getOpponent(side);
 
         String[] moves = this.allMovesKingCheckFiltered(side, board);
+        if (depth == 0 || moves.length == 0) { 
+                return boardValueCounter.allTilesBoardValue(board);
+        } else {
+           alphabeta = new AlphaBetaPruner(); 
+        }  
         
         for (String move : moves) {
-            if (depth == 0 || moves.length == 0) { 
-                return boardValueCounter.allTilesBoardValue(board);
-            } else {
-                alphabeta = new AlphaBetaPruner();
-            }            
             boardStatusSaver.savePieces(move, board);
             movementGenerator.updateMovementOnBoard(move, board);
 
-            if (maximizingPlayer) {
-                value = -10000;
-                value = Math.max(value, alphabeta.minimax(opponent, board, depth-1, false));
+            if (maximizingPlayer) {  
+                value = Math.max(value, alphabeta.minimax(Side.BLACK, board, depth-1, false));
             } else {
-                value = 10000;
-                value = Math.min(value, alphabeta.minimax(opponent, board, depth-1, true)); 
+                value = Math.min(value, alphabeta.minimax(Side.WHITE, board, depth-1, true)); 
             }
             boardStatusSaver.putSavedPiecesBack();
             

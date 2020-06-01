@@ -89,13 +89,13 @@ public class AlphaBetaPrunerTest {
         assertThat(moves.length, is(22));
         
         // Rook movement vertical
-        assertThat(kingChecker.kingInCheck("a3a2", Side.WHITE, testBoard), is(true));
+        assertThat(kingChecker.kingInCheck("a3a2", Side.WHITE, testBoard), is(false));
         
         
         
         // Rook movement horizontal
         
-        assertThat(alphabeta.allMovesKingCheckFiltered(Side.BLACK, testBoard).length, is(21));
+        assertThat(alphabeta.allMovesKingCheckFiltered(Side.BLACK, testBoard).length, is(22));
     }
     
     @Test

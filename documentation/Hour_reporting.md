@@ -38,6 +38,7 @@ Date       | time | target |
 -----------|------|--------|
 2020-05-30 | 4.5h | Making of minimax algo, it doesn't work at the moment. Have to check it later |
 2020-05-31 | 5h | Making of minimax algo ready. The bot stills makes stupid moves though.|
+2020-06-01 | 2.5h | There was a bug in Min-Max. Found it and fixed it.|
 
 
 ## Totals
@@ -47,5 +48,5 @@ Date       | time | target |
  1      | 9.5h    |
  2      | 10.5h    |
  3      | 16h    |
- 4      | 9.5h    |
-**Tot** | **45.5h** |
+ 4      | 12h    |
+**Tot** | **48h** |

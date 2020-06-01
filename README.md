@@ -18,5 +18,6 @@ This git repo is providing AI for the TIRA chess library. I provide the rules fo
 * [Weekly report #1](/documentation/Weekly_report_1.md)
 * [Weekly report #2](/documentation/Weekly_report_2.md)
 * [Weekly report #3](/documentation/Weekly_report_3.md)
+* [Weekly report #4](/documentation/Weekly_report_4.md)
 
 ### [Hour reporting](/documentation/Hour_reporting.md)

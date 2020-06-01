@@ -5,6 +5,7 @@
  */
 package chess.bot;
 
+import chess.elements.Board;
 import chess.elements.File;
 import chess.elements.Rank;
 import chess.engine.GameState;
@@ -12,6 +13,7 @@ import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
 import datastructureproject.AlphaBetaPruner;
+import datastructureproject.BoardValueCalculator;
 import datastructureproject.MoveValueCounter;
 import java.util.Random;
 import static org.hamcrest.CoreMatchers.is;
@@ -42,6 +44,7 @@ public class TiraBotTest {
     MoveValueCounter moveValueCounter;
     Random random;
     AlphaBetaPruner alphabeta;
+    BoardValueCalculator boardValueCounter;
     
     /**
      *
@@ -51,6 +54,7 @@ public class TiraBotTest {
         kingChecked = new KingCheckedCounter();
         moveValueCounter = new MoveValueCounter();
         alphabeta = new AlphaBetaPruner();
+        this.boardValueCounter = new BoardValueCalculator();
     }
     
     /**
@@ -241,26 +245,17 @@ public class TiraBotTest {
     @Test
     public void promotionToQueenWorksOnCorrectSituation() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5, B8a6,b5b6,c7c6,b6b7,a6b4,c2c3,a8a5,b7b8q");
+        gs.setMoves("A8A4, a2a8q");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
         movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
+
         
         tirabot.nextMove(gs);
             
-        assertNull(tirabot.getBoard().getTile(File.File_B, Rank.Rank_7).getPiece());
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Queen));
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Queen));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
     /**
@@ -269,26 +264,17 @@ public class TiraBotTest {
     @Test
     public void promotionToRookWorksOnCorrectSituation() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5, B8a6,b5b6,c7c6,b6b7,a6b4,c2c3,a8a5,b7b8r");
+        gs.setMoves("A8A4, a2a8r");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
         movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
+
         
         tirabot.nextMove(gs);
-            
-        assertNull(tirabot.getBoard().getTile(File.File_B, Rank.Rank_7).getPiece());
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Rook));
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
+
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Rook));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
     /**
@@ -297,26 +283,16 @@ public class TiraBotTest {
     @Test
     public void promotionToKnightWorksOnCorrectSituation() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5, B8a6,b5b6,c7c6,b6b7,a6b4,c2c3,a8a5,b7b8n");
+        gs.setMoves("A8A4, a2a8n");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
         movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
         
         tirabot.nextMove(gs);
             
-        assertNull(tirabot.getBoard().getTile(File.File_B, Rank.Rank_7).getPiece());
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Knight));
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Knight));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
     /**
@@ -325,26 +301,16 @@ public class TiraBotTest {
     @Test
     public void promotionToBishopWorksOnCorrectSituation() {
         GameState gs = new GameState();
-        gs.setMoves("A2A4, B7B5, A4B5, B8a6,b5b6,c7c6,b6b7,a6b4,c2c3,a8a5,b7b8b");
+        gs.setMoves("A8A4, a2a8b");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
         
         movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(3), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(4), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(5), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(6), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(7), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(8), tirabot.getBoard());
-        movementGenerator.updateMovementOnBoard(gs.moves.get(9), tirabot.getBoard());
         
         tirabot.nextMove(gs);
             
-        assertNull(tirabot.getBoard().getTile(File.File_B, Rank.Rank_7).getPiece());
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Bishop));
-        assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Bishop));
+        assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
  
@@ -391,5 +357,133 @@ public class TiraBotTest {
 
         assertThat(whiteProtectors, is(1) );
     }
+    
+
+    // MINIMAX
+
+    
+    @Test
+    public void alphaBetaCountsRightRookCapturesBishop() {
+
+        Board testBoard = new Board();
+
+        testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Bishop(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Bishop(Side.BLACK));
+        testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+
+        int value = alphabeta.minimax(Side.BLACK, testBoard, 1, false);
+        
+        
+        assertThat(value, is(-80) );
+    }
+    
+    @Test
+    public void alphaBetaCountsRightRookCapturesKing() {
+
+        Board testBoard = new Board();
+
+        testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new King(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Bishop(Side.BLACK));
+        testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+
+        int value = alphabeta.minimax(Side.BLACK, testBoard, 1, false);
+        
+        
+        assertThat(value, is(-80) );
+    }
+    
+    @Test
+    public void BlackContainsTheBestMoveBishop() {
+
+        Board testBoard = new Board();
+
+        testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Bishop(Side.WHITE));
+        testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+       
+        
+        String[] moves = alphabeta.allMovesKingCheckFiltered(Side.BLACK, testBoard);
+        
+        assertThat(moves.length, is(11) );
+        assertThat(moves[7], is("a5a4") );
+    }
+    
+    @Test
+    public void BlackContainsTheBestMoveKing() {
+
+        Board testBoard = new Board();
+
+        testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new King(Side.WHITE));
+        testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+       
+        
+        String[] moves = alphabeta.allMovesKingCheckFiltered(Side.BLACK, testBoard);
+        
+        assertThat(moves.length, is(11) );
+        assertThat(moves[7], is("a5a4") );
+    }
+    
+    @Test
+    public void nextMoveWorksWithMinMaxInitCheckBishop() {
+
+        Board testBoard = new Board();
+        
+        testBoard.getTile(File.File_B, Rank.Rank_3).setPiece(new Bishop(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Bishop(Side.BLACK));
+        testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Knight(Side.BLACK));
+        testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+
+        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard);
+        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard);
+        
+        assertThat(move1, is(-80) );
+        assertThat(move2, is(-50) );
+    }
+    
+    @Test
+    public void nextMoveWorksWithMinMaxInitCheckKing() {
+
+        Board testBoard = new Board();
+        
+        testBoard.getTile(File.File_B, Rank.Rank_3).setPiece(new King(Side.WHITE));
+        testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Bishop(Side.BLACK));
+        testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Knight(Side.BLACK));
+        testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
+
+        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard);
+        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard);
+        
+        assertThat(move1, is(-80) );
+        assertThat(move2, is(820) );
+    }
       
+    @Test
+    public void nextMoveWorksWithMinMaxBishop() {
+        GameState gs = new GameState();
+        gs.setMoves("c1b3, b8a4, a8a5, c8c4");
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+
+        String move = tirabot.nextMove(gs);
+        assertThat(move, is("b3c4") );
+    }
+    
+    @Test
+    public void nextMoveWorksWithMinMaxKing() {
+        GameState gs = new GameState();
+        gs.setMoves("e1b3, b8a4, a8a5, c8c4");
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+
+        String move = tirabot.nextMove(gs);
+        assertThat(move, is("b3c4") );
+    }
+    
 }

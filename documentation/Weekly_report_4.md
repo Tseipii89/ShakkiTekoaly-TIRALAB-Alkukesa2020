@@ -7,13 +7,14 @@
 
 
 ## Problems
-* The implementation of MIN-MAx was harder that I suspected
+* The implementation of MIN-MAx was harder that I suspected. I'm not sure if the object-oriented approach was right on this task
 
 
 ## Questions
-* I'm not sure if there is any bugs on the MIN-MAX, but the bot makes sometimes stupid moves in my opinion (but the MIN-MAX actually goes only 2 steps forward, so it might be that it is just not enought at the moment)
+* Should I continue with object-oriented approach? I only have the alpha-beta pruning left for this algorithm. The bugs are very hard to find. I think I have been too lazy with the testing part.
 
 
 ## Next week
+* Alpha-beta pruning done
 
 
