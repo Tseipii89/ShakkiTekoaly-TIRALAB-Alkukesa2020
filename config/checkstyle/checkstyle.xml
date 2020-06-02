@@ -50,15 +50,21 @@
         <module name="EqualsHashCode"/>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
-        <!-- <module name="MagicNumber"/> -->
-        <module name="MissingSwitchDefault"/>
-        <module name="SimplifyBooleanExpression"/>
-        <module name="SimplifyBooleanReturn"/>
-        <module name="InterfaceIsType"/>
-        <!-- <module name="VisibilityModifier"/> -->
-        <module name="ArrayTypeStyle"/>
+         <module name="ArrayTypeStyle"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+        <module name="CyclomaticComplexity"/>
+ 
+        <module name="NPathComplexity"/> 
+        <module name="ClassDataAbstractionCoupling"/>
+        <module name="ClassFanOutComplexity"/>
+        <!-- <module name="MagicNumber"/> -->
+        <module name="MissingSwitchDefault"/>
+        <module name="InterfaceIsType"/>
+        <!-- <module name="VisibilityModifier"/> -->
+
     </module>
 
 </module>

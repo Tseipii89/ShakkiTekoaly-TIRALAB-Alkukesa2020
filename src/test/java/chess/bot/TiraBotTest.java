@@ -457,7 +457,7 @@ public class TiraBotTest {
     }
       
     @Test
-    public void nextMoveWorksWithMinMaxBishop() {
+    public void nextMoveWorksWithMinMaxBishop1() {
         GameState gs = new GameState();
         gs.setMoves("c1b3, b8a4, a8a5, c8c4");
         gs.playing = Side.WHITE;
@@ -466,6 +466,20 @@ public class TiraBotTest {
         movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
         movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
         movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+
+        String move = tirabot.nextMove(gs);
+        assertThat(move, is("b3c4") );
+    }
+    
+    @Test
+    public void nextMoveWorksWithMinMaxBishop2() {
+        GameState gs = new GameState();
+        gs.setMoves("c1b3, a8a5, c8c4");
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
 
         String move = tirabot.nextMove(gs);
         assertThat(move, is("b3c4") );
@@ -484,6 +498,21 @@ public class TiraBotTest {
 
         String move = tirabot.nextMove(gs);
         assertThat(move, is("b3c4") );
+    }
+    
+    @Test
+    public void nextMoveWorksWithMinMaxBlackKing() {
+        GameState gs = new GameState();
+        gs.setMoves("e8b6, b1a5, a1a4, c1c5");
+        gs.playing = Side.BLACK;
+        gs.turn = Side.BLACK;
+
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+
+        String move = tirabot.nextMove(gs);
+        assertThat(move, is("b6c5") );
     }
     
 }

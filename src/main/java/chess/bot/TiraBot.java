@@ -5,7 +5,6 @@ import chess.engine.GameState;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
-import chess.rules.NewTileCounter;
 import datastructureproject.MoveValueCounter;
 import datastructureproject.datamodifiers.ArrayModifier;
 import java.util.Random;
@@ -39,8 +38,14 @@ public class TiraBot implements ChessBot {
 
     private final ArrayModifier arrayModifier;
 
+    /**
+     * Counts the value of the Board after given movement.
+     */
     private final MoveValueCounter moveValueCounter;
     
+    /**
+     * Checks if opponent can check our king if we do this move.
+     */
     private final KingCheckedCounter kingChecked;
 
     /**
@@ -212,7 +217,7 @@ public class TiraBot implements ChessBot {
             // This means that there is a move that has better value for white than previous best (or initial 0)
             // if (moveValueCounter.moveValueCount(move, 1, checkBoard) > changeNow) { 
             int value = moveValueCounter.moveValueCountMinMax(move, Side.WHITE, checkBoard);
-            if ( value > changeNow) { 
+            if (value > changeNow) { 
                 // set the changeNow value to the new best for White
                 changeNow = value; 
                 moveToReturn = move; // set the returnable move to new best

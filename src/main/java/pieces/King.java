@@ -35,7 +35,7 @@ public class King implements Piece {
     public String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier) {
         String[] moves = new String[0];
         for (int i = 0; i < movePairsFile.length; i++) {
-            moves = moveRules.isTileOkToAddEveryoneElse(moves, gameBoard, tile, sideMultiplier, movePairsFile[i], movePairsRank[i]);
+            moves = moveRules.tileEmptyNOTUsedWithPawn(moves, gameBoard, tile, sideMultiplier, movePairsFile[i], movePairsRank[i]);
             moves = moveRules.isTileOkToAddAttack(moves, gameBoard, tile, sideMultiplier, movePairsFile[i], movePairsRank[i], 0); // no other piece than pawn can promote
         }
         return moves;

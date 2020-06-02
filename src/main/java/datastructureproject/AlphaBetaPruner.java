@@ -26,9 +26,9 @@ public class AlphaBetaPruner {
     
     public int minimax(Side side, Board board, int depth, boolean maximizingPlayer) {
         
-        int value = 1000;
+        int value = 100000;
         if (maximizingPlayer) {
-           value = -1000;
+           value = -100000;
         }    
         
 

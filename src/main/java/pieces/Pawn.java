@@ -40,11 +40,11 @@ public class Pawn implements Piece {
         String[] moves = new String[0];
         double canPromotion = (4.5 + sideMultiplier * 2.5);
         // Basic move
-        moves = moveRules.isTileOkToAddPawn(moves, gameBoard, tile, sideMultiplier, 0, 1, canPromotion);
+        moves = moveRules.tileEmptyUSEWithPawn(moves, gameBoard, tile, sideMultiplier, 0, 1, canPromotion);
         
         // Start move 2 tiles
         if(moves.length == 1 && tile.getRank().getIntegerRank() == (9 - canPromotion)) { //canpromotion is on the wrong side of the board
-            moves = moveRules.isTileOkToAddPawn(moves, gameBoard, tile, sideMultiplier, 0, 2, canPromotion);
+            moves = moveRules.tileEmptyUSEWithPawn(moves, gameBoard, tile, sideMultiplier, 0, 2, canPromotion);
         }
 
         // Pawn attacks

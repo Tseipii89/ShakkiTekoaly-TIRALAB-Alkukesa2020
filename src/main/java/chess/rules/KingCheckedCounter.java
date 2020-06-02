@@ -9,7 +9,7 @@ import java.util.Random;
 import pieces.Piece;
 
 /**
- *
+ * Checks if opponent have an opportunity to capture player's king.
  * @author juhop
  */
 public class KingCheckedCounter {
@@ -21,9 +21,20 @@ public class KingCheckedCounter {
      * Counts the value of the Board, given the positions of all pieces.
      */
     private final NewTileCounter newTileCounter;
+
+    /**
+     * Generates all moves for given side on given board.
+     */
     private final MovementGenerator movementGenerator;
+
+    /**
+     * Returns the value of the Board.
+     */
     private final MoveValueCounter moveValueCounter;
     
+    /**
+     * Class checks if given move will give opponent an opportunity to capture player's king.
+     */
     public KingCheckedCounter() {
         this.random = new Random();
         newTileCounter = new NewTileCounter();
@@ -75,8 +86,6 @@ public class KingCheckedCounter {
      /**
      *
      * We want to check a move without the possibility of our king being in danger. 
-     * This method is used by the method kingInCheck to see if the king will be left vulnerable after a certain move.
-     * @see chess.bot.TiraBot#kingInCheck(java.lang.String, chess.model.Side, chess.elements.Board) 
      * 
      * @param moves all the moves possible for given Side
      * @param sideToCheck the Side who's moves we want to check
@@ -114,7 +123,7 @@ public class KingCheckedCounter {
     
       /**
      *
-     * Checks that will given opponent capture the opponents king.
+     * Checks that will given opponent be able to capture the player's king.
      * 
      * @param opponent the opponent's Side who's possible king's capture we want to avoid
      * @param move the move that we want to check isn't capturing our king
