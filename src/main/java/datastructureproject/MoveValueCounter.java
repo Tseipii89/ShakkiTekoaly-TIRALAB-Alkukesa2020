@@ -45,7 +45,7 @@ public class MoveValueCounter {
         return valueCalc.boardValue(startTile, finishTile, promotion);
     }
     
-    public int moveValueCountMinMax(String move, Side playing, Board board) {
+    public int moveValueCountMinMax(String move, Side playing, Board board, int depth) {
         alphabeta = new AlphaBetaPruner();
         // save pieces
         this.boardStatusSaver.savePieces(move, board);
@@ -62,7 +62,7 @@ public class MoveValueCounter {
         if (opponent == Side.BLACK) {
             maximizingPlayer = false;
         }
-        value = this.alphabeta.minimax(opponent, board, 1, maximizingPlayer); // we go one minmax deep first
+        value = this.alphabeta.minimax(opponent, board, depth, maximizingPlayer); // we go one minmax deep first
         
         //return pieces
         this.boardStatusSaver.putSavedPiecesBack();

@@ -432,8 +432,8 @@ public class TiraBotTest {
         testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Knight(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
 
-        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard);
-        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard);
+        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard, 1);
+        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard, 1);
         
         assertThat(move1, is(-80) );
         assertThat(move2, is(-50) );
@@ -449,8 +449,8 @@ public class TiraBotTest {
         testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Knight(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
 
-        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard);
-        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard);
+        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard, 1);
+        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard, 1);
         
         assertThat(move1, is(-80) );
         assertThat(move2, is(820) );

@@ -1,6 +1,7 @@
 package datastructureproject;
 
 import chess.bot.ChessBot;
+import chess.bot.TiraBot;
 import chess.engine.GameState;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +12,20 @@ import java.util.List;
  */
 public class PerformanceTest {
 
-    private ChessBot bot;
-    private List<GameState> gsList = new ArrayList();
+    private final int[] nums = {0, 1, 2, 3};
+    private static final int runs = 20;
+    
 
-    public void setGsList(List<GameState> gsList) {
-        this.gsList = gsList;
-    }
+    
 
 
     public static void main(String[] args) {
-        throw new Error("Peformance test, remove this");
-        /*
-        Set your bot and tests here.
-        */
+        
+      
+        for (int i = 0; i < runs; i++) {
+            AlphaBetaPruner testBot = new AlphaBetaPruner();
+            
+        }
     }
 
 }

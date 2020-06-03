@@ -47,6 +47,9 @@ public class TiraBot implements ChessBot {
      * Checks if opponent can check our king if we do this move.
      */
     private final KingCheckedCounter kingChecked;
+    
+    
+    private final int depth;
 
     /**
      * Tirabot is the implementation for the algorithms and data structures course.
@@ -60,6 +63,19 @@ public class TiraBot implements ChessBot {
         arrayModifier = new ArrayModifier();
         moveValueCounter = new MoveValueCounter();
         kingChecked = new KingCheckedCounter();
+        this.depth = 1;
+    }
+    
+
+    public TiraBot(int depth) {
+        this.random = new Random();
+        this.currentGameBoard = new Board();
+        currentGameBoard.initBoard();
+        movementgenerator = new MovementGenerator();
+        arrayModifier = new ArrayModifier();
+        moveValueCounter = new MoveValueCounter();
+        kingChecked = new KingCheckedCounter();
+        this.depth = depth;
     }
 
     /**
@@ -176,7 +192,7 @@ public class TiraBot implements ChessBot {
             // This means that there is a move that has better value for black than previous best (or initial 0)
             // if (moveValueCounter.moveValueCount(move, -1, checkBoard) < changeNow) { LET'S TEST MINMAX  INSTEAD
             
-            int value = moveValueCounter.moveValueCountMinMax(move, Side.BLACK, checkBoard);
+            int value = moveValueCounter.moveValueCountMinMax(move, Side.BLACK, checkBoard, this.depth);
             
             if (value < changeNow) { 
                 // set the changeNow value to the new best value for Black (hence the -1 multiplier)
@@ -216,7 +232,7 @@ public class TiraBot implements ChessBot {
             // White player wants to maximize the Board value. 
             // This means that there is a move that has better value for white than previous best (or initial 0)
             // if (moveValueCounter.moveValueCount(move, 1, checkBoard) > changeNow) { 
-            int value = moveValueCounter.moveValueCountMinMax(move, Side.WHITE, checkBoard);
+            int value = moveValueCounter.moveValueCountMinMax(move, Side.WHITE, checkBoard, this.depth);
             if (value > changeNow) { 
                 // set the changeNow value to the new best for White
                 changeNow = value; 

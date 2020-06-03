@@ -12,6 +12,7 @@ This git repo is providing AI for the TIRA chess library. I provide the rules fo
 ## Links to documentation
 
 ### [Design document](/documentation/Design_document.md)
+### [Test document](/documentation/Test_Document.md)
 
 ### Weekly reports
 
