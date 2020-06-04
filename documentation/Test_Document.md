@@ -5,7 +5,7 @@ Testing document presents the results of the time the algorithm takes to count t
 As the code improvements are done, so will the test document also be updated.
 
 # Testing
-As explained in <https://github.com/TiraLabra/Testing-and-rmq/tree/master/src/main/java/rmq/util> test have been run 20 times, and first run is ignored.
+Test have been run 20 times. There is an initial run that is not counted to the , to "wake up" the Java compiler.
 
 To measure the algorithm runtime, the average and standard deviation is calculated. 
 
