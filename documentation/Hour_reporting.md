@@ -41,6 +41,7 @@ Date       | time | target |
 2020-06-01 | 2.5h | There was a bug in Min-Max. Found it and fixed it.|
 2020-06-02 | 1h | Making code to have less checkstyle errors. |
 2020-06-03 | 1h | Start to write test document and code the performance test |
+2020-06-04 | 1.5h | Performance test done, there is an issue with TiraBot's usage of Min-Max algo |
 
 
 ## Totals
@@ -50,5 +51,5 @@ Date       | time | target |
  1      | 9.5h    |
  2      | 10.5h    |
  3      | 16h    |
- 4      | 14h    |
-**Tot** | **50h** |
+ 4      | 15.5h    |
+**Tot** | **51.5h** |
