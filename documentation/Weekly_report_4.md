@@ -5,6 +5,8 @@
 ## What has happened during week 4
 * MIN-MAX algorith ready
 * First Performance tests done (I relied very heavily on the performance test package provided within example, probably will refactor this more if I have extra time)
+* Wrote test document
+* Start to write implementation document
 
 
 ## Problems
