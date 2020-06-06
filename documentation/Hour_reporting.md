@@ -44,6 +44,10 @@ Date       | time | target |
 2020-06-04 | 1.5h | Performance test done, there is an issue with TiraBot's usage of Min-Max algo |
 2020-06-05 | 1.5h | Writing of implementation document, and update class diagram |
 
+## Week 5
+Date       | time | target |
+-----------|------|--------|
+2020-06-06 | 4h | Found the problem with MIN-MAX. It wasn't in the bot. It was the performance test. Made corrections. |
 
 ## Totals
 
@@ -53,4 +57,5 @@ Date       | time | target |
  2      | 10.5h    |
  3      | 16h    |
  4      | 17h    |
-**Tot** | **53h** |
+ 5      | 4h    |
+**Tot** | **57h** |

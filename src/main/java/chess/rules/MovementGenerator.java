@@ -20,8 +20,8 @@ import pieces.Rook;
  * @author juhop
  */
 public class MovementGenerator {
-    private NewTileCounter newTileCounter;
-    private ArrayModifier arrayModifier;
+    private final NewTileCounter newTileCounter;
+    private final ArrayModifier arrayModifier;
     /**
      * Creates MovementGenerator to be ready to be used.
      */

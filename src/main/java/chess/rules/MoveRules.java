@@ -3,6 +3,7 @@ package chess.rules;
 
 import chess.elements.Board;
 import chess.elements.Tile;
+import chess.model.Side;
 import datastructureproject.datamodifiers.ArrayModifier;
 import pieces.Piece;
 
@@ -25,6 +26,11 @@ public class MoveRules {
      * Adds movement to the given array.
      */
     private final ArrayModifier arrayModifier;
+    
+    /**
+     * Checks if opponent can check our king if we do this move.
+     */
+    private final KingCheckedCounter kingChecked;
 
     /**
      * Checks if it possible to move to the new tile.
@@ -32,6 +38,7 @@ public class MoveRules {
     public MoveRules() {
         newTileCounter = new NewTileCounter();
         arrayModifier = new ArrayModifier();
+        kingChecked = new KingCheckedCounter();    
     }
     
     /**

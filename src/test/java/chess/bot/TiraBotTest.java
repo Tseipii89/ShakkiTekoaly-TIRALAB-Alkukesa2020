@@ -15,6 +15,7 @@ import chess.rules.MovementGenerator;
 import datastructureproject.AlphaBetaPruner;
 import datastructureproject.BoardValueCalculator;
 import datastructureproject.MoveValueCounter;
+import datastructureproject.datamodifiers.ArrayModifier;
 import java.util.Random;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
@@ -89,8 +90,9 @@ public class TiraBotTest {
     }
 
     /**
-     *
+     * TESTING THE MOVEMENT STRING FORMAT
      */
+    
     @Test
     public void NextMoveReturnsString() {
         GameState gs = new GameState();
@@ -103,9 +105,7 @@ public class TiraBotTest {
         assertEquals(move.getClass(), String.class);
     }
     
-    /**
-     *
-     */
+
     @Test
     public void NextMoveIsOfCorrectForm() {
         GameState gs = new GameState();
@@ -119,8 +119,9 @@ public class TiraBotTest {
     }
     
     /**
-     *
+     * TESTTING BOARD UPDATES MOVES CORRECTLY
      */
+    
     @Test
     public void nextMoveUpdatesBoardRightNormalCaseStepByStep() {
         GameState gs = new GameState();
@@ -163,29 +164,20 @@ public class TiraBotTest {
         assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
     }
     
-        @Test
+    @Test
     public void nextMoveUpdatesBoardRightNormalCase() {
         GameState gs = new GameState();
         gs.setMoves("a2a4");
         gs.playing = Side.BLACK;
         gs.turn = Side.BLACK;
-
-        
-                
+      
         tirabot.nextMove(gs);
-        
-        
-        
+
         assertNull(tirabot.getBoard().getTile(File.File_A, Rank.Rank_2).getPiece());
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getPieceType(), is(PieceType.Pawn));
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getSide(), is(Side.WHITE));
     }
     
-    
-    
-    /**
-     *
-     */
     @Test
     public void nextMoveUpdatesBoardRightNormalCase2Moves() {
         GameState gs = new GameState();
@@ -207,9 +199,7 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_5).getPiece().getSide(), is(Side.WHITE));
     }
     
-    /**
-     *
-     */
+
     @Test
     public void nextMoveUpdatesBoardRightAttackCase() {
         GameState gs = new GameState();
@@ -240,8 +230,9 @@ public class TiraBotTest {
     }
     
     /**
-     *
+     * TESTING PAWN PROMOTIONS
      */
+    
     @Test
     public void promotionToQueenWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -258,9 +249,6 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
-    /**
-     *
-     */
     @Test
     public void promotionToRookWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -276,10 +264,7 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.Rook));
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
-    
-    /**
-     *
-     */
+
     @Test
     public void promotionToKnightWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -295,9 +280,6 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
-    /**
-     *
-     */
     @Test
     public void promotionToBishopWorksOnCorrectSituation() {
         GameState gs = new GameState();
@@ -313,7 +295,10 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_8).getPiece().getSide(), is(Side.WHITE));
     }
     
- 
+     /**
+     * TESTING KING WON'T BE LEFT TO BE CHECKED BY OPPONENT
+     */
+    
     @Test
     public void kingInCheckWorksCorrectly() {
         GameState gs = new GameState();
@@ -358,9 +343,15 @@ public class TiraBotTest {
         assertThat(whiteProtectors, is(1) );
     }
     
-
-    // MINIMAX
-
+     /**
+     * TESTING MIN-MAX ALGO
+     */
+ 
+    /* 
+    Testing that TiraBot calls the right methods when MIN-MAX is used. 
+    Step-by-step testing
+    One step down the MIN-MAX tree
+    */
     
     @Test
     public void alphaBetaCountsRightRookCapturesBishop() {
@@ -513,6 +504,93 @@ public class TiraBotTest {
 
         String move = tirabot.nextMove(gs);
         assertThat(move, is("b6c5") );
+    }
+    
+    /* 
+    Testing that TiraBot calls the right methods when MIN-MAX is used. 
+    Step-by-step testing
+    TWO steps down the MIN-MAX tree
+    */
+    
+    // Check that MovementGenerator counts all possible moves in given situation
+    @Test
+    public void allMovesAreThere() {
+    Side side = Side.WHITE;
+    Board boardToUpdate = new Board();
+    boardToUpdate.initBoard();
+    MovementGenerator movementgenerator = new MovementGenerator();
+    String[] moves = new String[0]; 
+    String[] movesWithoutChecks = new String[0];
+    ArrayModifier arrayModifier = new ArrayModifier();
+    moves = movementgenerator.countAllMoves(side, boardToUpdate, moves); 
+        for (String move : moves) {
+            if (!kingChecked.kingInCheck(move, Side.BLACK, boardToUpdate)) {
+                movesWithoutChecks = arrayModifier.addNewMoveToArray(movesWithoutChecks, move);
+            }
+        }
+      
+     assertThat(movesWithoutChecks.length, is(20) ); 
+    }
+    
+    @Test
+    public void allMovesAreThereDepth() {
+        int changeNow = 0; 
+        Side side = Side.WHITE;
+        Board boardToUpdate = new Board();
+        boardToUpdate.initBoard();
+        MovementGenerator movementgenerator = new MovementGenerator();
+        String[] moves = new String[0]; 
+        String[] movesWithoutChecks = new String[0];
+        ArrayModifier arrayModifier = new ArrayModifier();
+        Random random = new Random();
+
+        moves = movementgenerator.countAllMoves(side, boardToUpdate, moves); 
+        assertThat(moves.length, is(20) ); 
+
+        // remove all moves where Black king is left unchecked
+        for (String move : moves) {
+            if (!kingChecked.kingInCheck(move, side, boardToUpdate)) {
+                movesWithoutChecks = arrayModifier.addNewMoveToArray(movesWithoutChecks, move);
+            }
+        }
+        assertThat(movesWithoutChecks.length, is(20) );
+        // If all moves are equal in value, we want to return random move, and not for example the first move.
+        String moveToReturn = movesWithoutChecks[(random.nextInt(movesWithoutChecks.length))]; 
+        long t;
+        t = System.nanoTime();
+        for (String move : movesWithoutChecks) {
+            // Black player wants to minimize the Board value. 
+            // This means that there is a move that has better value for black than previous best (or initial 0)
+            // if (moveValueCounter.moveValueCount(move, -1, checkBoard) < changeNow) { LET'S TEST MINMAX  INSTEAD
+
+            int value = moveValueCounter.moveValueCountMinMax(move, side, boardToUpdate, 2);
+
+            if (value > changeNow) { 
+                // set the changeNow value to the new best value for Black (hence the -1 multiplier)
+                changeNow = value; 
+                moveToReturn = move; // set the returnable move to new best
+            }
+        }
+        t = System.nanoTime() - t;
+        assertTrue(t  > 400000000 );  
+    }
+    
+    @Test
+    public void allMovesAreThereDepthTiraBot() {
+        Side side = Side.WHITE;
+        Board boardToUpdate = new Board();
+        boardToUpdate.initBoard();
+        MovementGenerator movementgenerator = new MovementGenerator();
+        String[] moves = new String[0]; 
+        moves = movementgenerator.countAllMoves(side, boardToUpdate, moves); 
+
+        TiraBot tirabot2 = new TiraBot(2);
+        long t;
+        t = System.nanoTime();
+        tirabot2.countBestMoveForWhite(moves, boardToUpdate);
+        t = System.nanoTime() - t;
+        assertTrue(t  > 400000000 ); 
+               
     }
     
 }

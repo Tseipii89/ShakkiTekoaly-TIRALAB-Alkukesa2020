@@ -49,7 +49,7 @@ public class TiraBot implements ChessBot {
     private final KingCheckedCounter kingChecked;
     
     
-    private final int depth;
+    private int depth;
 
     /**
      * Tirabot is the implementation for the algorithms and data structures course.

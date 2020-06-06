@@ -23,3 +23,14 @@ Results for MIN-Max performance test. As can be suspected, the run time grows ex
 | 2                           | 451 430 220           | 2 580 760               |
 | 3                           | 10 772 454 800        | 179 152 089             |
 
+### Update 6.6.2020
+
+I got the TiraBot to work, but for some reason it takes a much more time to do the calculations, and it is only possible to calculate the moves down two steps (even that takes very long time).
+
+The step starts at 1, because the tirabot always tries a move and then checks if it was good. This results in a situations where the min-max tree will always be at least 1 step deep. The results are pretty much the same as in MIN-MAX algo.
+
+| Steps down the TiraBot | Average run time (ns) | Standard deviation (ns) |
+|-----------------------------|-----------------------|-------------------------|
+| 1                           | 18 991 050             | 189 664                |
+| 2                           | 426 067 820            | 4 517 328                 |
+| 3                           | 11 001 773 225          | 394 481 457               |

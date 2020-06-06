@@ -54,6 +54,89 @@ public class MovementGeneratorTest {
     }
 
     
+    /*
+    
+    TESTING THAT MOVEMENTGENERATOR RETURNS RIGHT AMOUNT OF MOVES FOR GIVEN BOARD SITUATION
+
+    */
+    
+    @Test
+    public void rightAmountOfMovesInitialBoardSituation() {
+        testBoard.initBoard();
+        String[] moves = new String[0];
+        String[] initialMoves = testMovementGenerator.countAllMoves(Side.WHITE,testBoard, moves);
+        assertThat(initialMoves.length, is(20));
+    }
+    
+    @Test
+    public void rightAmountOfMovesWhiteAttackOnlyBishop() {
+        testBoard.initBoard();
+        // Move Bishop to attack
+        testMovementGenerator.updateMovementOnBoard("c1f4", testBoard);
+
+        String[] moves = new String[0];
+        String[] whiteAttack = testMovementGenerator.countAllMoves(Side.WHITE,testBoard, moves);
+
+        //Bishop
+        assertThat(whiteAttack[0], is("f4e5"));
+        assertThat(whiteAttack[1], is("f4d6"));
+        assertThat(whiteAttack[2], is("f4c7"));
+        assertThat(whiteAttack[3], is("f4g5"));
+        assertThat(whiteAttack[4], is("f4h6"));
+        assertThat(whiteAttack[5], is("f4g3"));
+        assertThat(whiteAttack[6], is("f4e3"));
+        
+        // Pawns
+        
+        assertThat(whiteAttack[7], is("h2h3"));
+        assertThat(whiteAttack[8], is("h2h4"));
+        
+        assertThat(whiteAttack[9], is("g2g3"));
+        assertThat(whiteAttack[10], is("g2g4"));
+        
+        assertThat(whiteAttack[11], is("f2f3"));
+        
+        assertThat(whiteAttack[12], is("e2e3"));
+        assertThat(whiteAttack[13], is("e2e4"));
+        
+        assertThat(whiteAttack[14], is("d2d3"));
+        assertThat(whiteAttack[15], is("d2d4"));
+        
+        assertThat(whiteAttack[16], is("c2c3"));
+        assertThat(whiteAttack[17], is("c2c4"));
+        
+        assertThat(whiteAttack[18], is("b2b3"));
+        assertThat(whiteAttack[19], is("b2b4"));
+        
+        assertThat(whiteAttack[20], is("a2a3"));
+        assertThat(whiteAttack[21], is("a2a4"));
+        //Right Knight
+        assertThat(whiteAttack[22], is("g1f3"));
+        assertThat(whiteAttack[23], is("g1h3"));
+        // Queen
+        assertThat(whiteAttack[24], is("d1c1"));
+        //Left Knight
+        assertThat(whiteAttack[25], is("b1a3"));
+        assertThat(whiteAttack[26], is("b1c3"));
+        
+        assertThat(whiteAttack.length, is(27));
+    }
+    
+    @Test
+    public void rightAmountOfMovesWhiteAttack() {
+        testBoard.initBoard();
+        // Move Bishop to attack
+        testMovementGenerator.updateMovementOnBoard("c1f4", testBoard);
+        // Move Pawn to attack
+        testMovementGenerator.updateMovementOnBoard("c2c6", testBoard);
+        // Move Rook to attack
+        testMovementGenerator.updateMovementOnBoard("a1a6", testBoard);
+        String[] moves = new String[0];
+        String[] whiteAttack = testMovementGenerator.countAllMoves(Side.WHITE,testBoard, moves);
+        assertThat(whiteAttack.length, is(35));
+    }
+    
+    
     /* MOVEMENT PAWN */
 
     @Test

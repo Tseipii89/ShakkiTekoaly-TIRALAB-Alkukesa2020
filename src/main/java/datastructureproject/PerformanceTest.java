@@ -12,7 +12,7 @@ import chess.model.Side;
  */
 public class PerformanceTest {
 
-    private static final int[] NUMSMINMAX = {0, 1, 2, 3};
+    private static final int[] NUMSMINMAX = {0, 1, 2};
     private static final int TESTRUNS = 20;
     private static final double[] averageRunTimes = new double[NUMSMINMAX.length];
     private static final double[] averageSTD = new double[NUMSMINMAX.length];
@@ -25,18 +25,23 @@ public class PerformanceTest {
         for (int run = 0; run < NUMSMINMAX.length; run++) {
             int depth = NUMSMINMAX[run];
             long t;
-            GameState gs = new GameState();  
+            GameState gs = new GameState(); 
+            gs.playing = Side.WHITE;
+            gs.turn = Side.WHITE;
             // Test run inside the given depth
             Board testBoard = new Board();
             testBoard.initBoard();
-            AlphaBetaPruner alphabeta;
-            alphabeta = new AlphaBetaPruner();
-            alphabeta.minimax(Side.WHITE, testBoard, 0, true);
+            TiraBot tirabot;
+            tirabot = new TiraBot();
+            tirabot.nextMove(gs);
             for (int i = 0; i < TESTRUNS; i++) {
-                alphabeta = new AlphaBetaPruner();
+                gs = new GameState();
+                gs.playing = Side.WHITE;
+                gs.turn = Side.WHITE;
+                tirabot = new TiraBot(depth);
                 testBoard.initBoard();
                 t = System.nanoTime();
-                alphabeta.minimax(Side.WHITE, testBoard, depth, true);
+                tirabot.nextMove(gs);
                 t = System.nanoTime() - t;
                 times[i] = t;
             }
