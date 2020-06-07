@@ -48,7 +48,9 @@ public class TiraBot implements ChessBot {
      */
     private final KingCheckedCounter kingChecked;
     
-    
+    /**
+     * The depth how many steps to check down MIN-MAX tree.
+     */
     private int depth;
 
     /**
@@ -66,7 +68,13 @@ public class TiraBot implements ChessBot {
         this.depth = 1;
     }
     
-
+    /**
+     *
+     * Tirabot is the implementation for the algorithms and data structures course.
+     * It counts the best next move for the given the limitations. 
+     * 
+     * @param depth counts the moves down this many steps.
+     */
     public TiraBot(int depth) {
         this.random = new Random();
         this.currentGameBoard = new Board();

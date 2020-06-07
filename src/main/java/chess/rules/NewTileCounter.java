@@ -11,17 +11,30 @@ import chess.elements.Rank;
 import chess.elements.Tile;
 
 /**
- *
+ * Counts the new tile given the movements information.
  * @author juhop
  */
 public class NewTileCounter {
     
+    /**
+     * NewTileCounter ready to be used.
+     */
     public NewTileCounter() {
         
     }
     
-    
-    public Tile countNewTile(Tile currentTile, int sideMultiplier, int fileMovement, int rankMovement) {
+    /**
+     *
+     * Counts new tile on the board, given startTile, side, changes in rank and file, and gameBoard. 
+     * 
+     * @param currentTile the startTile.
+     * @param sideMultiplier which side to count the new tile. -1 for black and 1 for white.
+     * @param fileMovement how many files to move.
+     * @param rankMovement how many ranks to move.
+     * @param board the board on which to count the new move.
+     * @return the new tile on given board computed from info above. 
+     */
+    public Tile countNewTile(Tile currentTile, int sideMultiplier, int fileMovement, int rankMovement, Board board) {
         
         int newFileInt = currentTile.getFile().getIntegerFile() + fileMovement * sideMultiplier;
         int newRankInt = currentTile.getRank().getIntegerRank() + rankMovement * sideMultiplier;
@@ -32,7 +45,8 @@ public class NewTileCounter {
         if (newRankInt < 1 || newRankInt > 8) {
             return null;
         }
-        return new Tile(File.valueOfInteger(newFileInt), Rank.valueOfInteger(newRankInt));
+        
+        return board.getTile(File.valueOfInteger(newFileInt), Rank.valueOfInteger(newRankInt));
     }
     
      /**

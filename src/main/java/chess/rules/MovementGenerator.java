@@ -20,14 +20,22 @@ import pieces.Rook;
  * @author juhop
  */
 public class MovementGenerator {
+
+    /**
+     * NewTileCounter counts the position of new tile, given the start tile and changs in rank and file.
+     */
     private final NewTileCounter newTileCounter;
+
+    /**
+     * ArrayModifier modifies the arrays given to it.
+     */
     private final ArrayModifier arrayModifier;
     /**
      * Creates MovementGenerator to be ready to be used.
      */
     public MovementGenerator() {
-       newTileCounter = new NewTileCounter();
-       arrayModifier = new ArrayModifier();
+        newTileCounter = new NewTileCounter();
+        arrayModifier = new ArrayModifier();
     }
     
     /**

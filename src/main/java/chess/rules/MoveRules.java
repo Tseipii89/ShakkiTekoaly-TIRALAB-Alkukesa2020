@@ -3,7 +3,6 @@ package chess.rules;
 
 import chess.elements.Board;
 import chess.elements.Tile;
-import chess.model.Side;
 import datastructureproject.datamodifiers.ArrayModifier;
 import pieces.Piece;
 
@@ -26,19 +25,13 @@ public class MoveRules {
      * Adds movement to the given array.
      */
     private final ArrayModifier arrayModifier;
-    
-    /**
-     * Checks if opponent can check our king if we do this move.
-     */
-    private final KingCheckedCounter kingChecked;
 
     /**
      * Checks if it possible to move to the new tile.
      */
     public MoveRules() {
         newTileCounter = new NewTileCounter();
-        arrayModifier = new ArrayModifier();
-        kingChecked = new KingCheckedCounter();    
+        arrayModifier = new ArrayModifier();    
     }
     
     /**
@@ -63,12 +56,11 @@ public class MoveRules {
                                         int rankToAdd, 
                                         double canPromotion) {
         Piece tilesPiece = gameBoard.getTile(tile.getFile(), tile.getRank()).getPiece();
-        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd);
+        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd, gameBoard);
         if (tileToCheck == null) {
             return moves;
-        } else if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() != null) {
-            if (gameBoard.getTile(tileToCheck.getFile(), 
-                    tileToCheck.getRank()).getPiece().getSide() != tilesPiece.getSide()) {
+        } else if (tileToCheck.getPiece() != null) {
+            if (tileToCheck.getPiece().getSide() != tilesPiece.getSide()) {
                 String move = createMovementString(tile, tileToCheck, canPromotion);
                 moves = arrayModifier.addNewMoveToArray(moves, move);
             }
@@ -97,9 +89,9 @@ public class MoveRules {
                                       int fileToAdd,
                                       int rankToAdd, 
                                       double canPromotion) {
-        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd);
+        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd, gameBoard);
         if (tileToCheck != null) {
-            if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null) {
+            if (tileToCheck.getPiece() == null) {
                 String move = createMovementString(tile, tileToCheck, canPromotion);
                 moves = arrayModifier.addNewMoveToArray(moves, move);
             } 
@@ -125,9 +117,9 @@ public class MoveRules {
                                               int sideMultiplier,
                                               int fileToAdd,
                                               int rankToAdd) {
-        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd);
+        Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd, gameBoard);
         if (tileToCheck != null) {
-            if (gameBoard.getTile(tileToCheck.getFile(), tileToCheck.getRank()).getPiece() == null) {
+            if (tileToCheck.getPiece() == null) {
                 String move = createMovementString(tile, tileToCheck, 0); // no other piece can promote than Pawn
                 moves = arrayModifier.addNewMoveToArray(moves, move);
             } 
