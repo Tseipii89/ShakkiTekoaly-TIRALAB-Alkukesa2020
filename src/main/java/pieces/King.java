@@ -81,15 +81,30 @@ public class King implements Piece {
     public String[] getMoves(Board gameBoard, Tile tile, int sideMultiplier) {
         String[] moves = new String[0];
         for (int i = 0; i < movePairsFile.length; i++) {
-            moves = moveRules.tileEmptyNOTUsedWithPawn(moves, gameBoard, tile, sideMultiplier, movePairsFile[i], movePairsRank[i]);
-            moves = moveRules.isTileOkToAddAttack(moves, gameBoard, tile, sideMultiplier, movePairsFile[i], movePairsRank[i], 0); // no other piece than pawn can promote
+            moves = moveRules.tileEmptyNOTUsedWithPawn(
+                    moves, 
+                    gameBoard, 
+                    tile, 
+                    sideMultiplier, 
+                    movePairsFile[i], 
+                    movePairsRank[i]
+            );
+            moves = moveRules.isTileOkToAddAttack(
+                    moves, 
+                    gameBoard, 
+                    tile, 
+                    sideMultiplier, 
+                    movePairsFile[i], 
+                    movePairsRank[i], 
+                    0 // no other piece than pawn can promote
+            ); 
         }
         return moves;
     }
 
     /**
      *
-     * @return 900 for white bishop and -900 for black bishop.
+     * @return 900 for white king and -900 for black king.
      */
     @Override
     public int getValue() {

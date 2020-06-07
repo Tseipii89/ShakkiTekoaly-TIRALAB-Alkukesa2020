@@ -48,7 +48,7 @@ Date       | time | target |
 Date       | time | target |
 -----------|------|--------|
 2020-06-06 | 4h | Found the problem with MIN-MAX. It wasn't in the bot. It was the performance test. Made corrections. |
-2020-06-07 | 0.5h | Refactoring and checkstyle down to 54 errors. |
+2020-06-07 | 1h | Refactoring and checkstyle down to 0 errors. |
 
 ## Totals
 
@@ -58,5 +58,5 @@ Date       | time | target |
  2      | 10.5h    |
  3      | 16h    |
  4      | 17h    |
- 5      | 4.5h    |
-**Tot** | **57.5h** |
+ 5      | 5h    |
+**Tot** | **58h** |
