@@ -62,8 +62,8 @@ public class MoveValueCounter {
         if (opponent == Side.BLACK) {
             maximizingPlayer = false;
         }
-        //value = this.alphabeta.alphabeta(opponent, board, depth, -10000000, 10000000, maximizingPlayer); 
-        value = this.alphabeta.minimax(opponent, board, depth, maximizingPlayer); 
+        value = this.alphabeta.alphabeta(opponent, board, depth, -10000000, 10000000, maximizingPlayer); 
+        //value = this.alphabeta.minimax(opponent, board, depth, maximizingPlayer); 
         //return pieces
         this.boardStatusSaver.putSavedPiecesBack();
         
