@@ -200,7 +200,7 @@ public class TiraBot implements ChessBot {
             // This means that there is a move that has better value for black than previous best (or initial 0)
             // if (moveValueCounter.moveValueCount(move, -1, checkBoard) < changeNow) { LET'S TEST MINMAX  INSTEAD
             
-            int value = moveValueCounter.moveValueCountMinMax(move, Side.BLACK, checkBoard, this.depth);
+            int value = moveValueCounter.moveValueCountAlphaBeta(move, Side.BLACK, checkBoard, this.depth);
             
             if (value < changeNow) { 
                 // set the changeNow value to the new best value for Black (hence the -1 multiplier)
@@ -240,7 +240,7 @@ public class TiraBot implements ChessBot {
             // White player wants to maximize the Board value. 
             // This means that there is a move that has better value for white than previous best (or initial 0)
             // if (moveValueCounter.moveValueCount(move, 1, checkBoard) > changeNow) { 
-            int value = moveValueCounter.moveValueCountMinMax(move, Side.WHITE, checkBoard, this.depth);
+            int value = moveValueCounter.moveValueCountAlphaBeta(move, Side.WHITE, checkBoard, this.depth);
             if (value > changeNow) { 
                 // set the changeNow value to the new best for White
                 changeNow = value; 

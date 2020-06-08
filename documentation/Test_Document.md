@@ -34,3 +34,35 @@ The step starts at 1, because the tirabot always tries a move and then checks if
 | 1                           | 18 991 050             | 189 664                |
 | 2                           | 426 067 820            | 4 517 328                 |
 | 3                           | 11 001 773 225          | 394 481 457               |
+
+## Results with Alpha-Beta algorithm (the version 2 of chess AI)
+
+I tried first to see the difference in results when the chess-board was in intial situation. The alpha-beta pruning gave the results below.
+
+| Steps down the TiraBot | Average run time (ns) | Standard deviation (ns) |
+|-----------------------------|-----------------------|-------------------------|
+| 1                           | 23 961 665             | 6 009 945               |
+| 2                           | 462 129 370           | 6 206 256                 |
+| 3                           | 1 406 786 380         | 11 142 290              |
+| 4                           | 14 783 292 950        | 203 886 874              |
+
+There is noticable change in run time, when there are more depth to be checked. Basically alpha-beta does depth 4 check with same cost as min-max does 3.
+
+Also the standard deviation changes a lot. I don't know what causes this. It might be that the randomly choosen first move of bot is to be blamed, but I really don't know.
+
+### Second test 
+
+I tried to make the difference between min-max and alpha-beta even more clear. I choose the board situation given in alpha-beta section of page <https://www.freecodecamp.org/news/simple-chess-ai-step-by-step-1d55a9266977/> and ran the min-max and alpha-beta to see the differences. According to the web site, alpha-beta checks "only" 61 721 postions where min-max checks 879 750 positions.
+
+The difference was clear.
+
+| Steps down the TiraBot | Average run time min-max (ns) | Average run time alpha-beta (ns) | Standard deviation min-max (ns) | Standard deviation alpha-beta (ns) |
+|-----------------------------|-----------------------|-------------------------|-------------------------|-------------------------|
+| 1                           | 25 488 350           | 20 921 330              | 14 526 599              | 747 431            |
+| 2                           | 449 757 665           | 466 062 805                 | 3 408 302             | 17 609 794             |
+| 3                           | 10 266 832 135         | 1 380 264 290             | 36 659 406              | 26 217 170              |
+| 4                           | 257 812 308 655       | 14 157 014 330              | 8 004 264 980              | 125 214 300             |
+
+The run time is clearly better with alpha-beta pruning. 
+
+Again I have no idea what is happening with the standard deviation.

@@ -11,6 +11,7 @@ import chess.elements.Rank;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
+import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -39,7 +41,6 @@ public class AlphaBetaPrunerTest {
     
     public AlphaBetaPrunerTest() {
         alphabeta = new AlphaBetaPruner();
-        testBoard = new Board();
         boardValue = new BoardValueCalculator();
         this.movementGenerator = new MovementGenerator();
         this.kingChecker = new KingCheckedCounter();
@@ -55,6 +56,7 @@ public class AlphaBetaPrunerTest {
     
     @Before
     public void setUp() {
+        testBoard = new Board();
     }
     
     @After
@@ -190,4 +192,52 @@ public class AlphaBetaPrunerTest {
 
         assertThat(minmaxvalue, is(-50));
     }
+    
+    /* ALPHA-BETA PRUNING */
+    
+    @Test
+    public void alphaBetaPruningStopsExtraSteps() {
+      AlphaBetaPruner ab = new AlphaBetaPruner();
+      testBoard.getTile(File.File_B, Rank.Rank_1).setPiece(new Bishop(Side.WHITE));
+      testBoard.getTile(File.File_C, Rank.Rank_2).setPiece(new Knight(Side.BLACK));
+      testBoard.getTile(File.File_C, Rank.Rank_3).setPiece(new Rook(Side.BLACK));
+      testBoard.getTile(File.File_A, Rank.Rank_2).setPiece(new Bishop(Side.BLACK));
+      
+      ab.alphabetaForTesting(Side.WHITE, testBoard, 2, -10000000, 10000000, true, 0);
+      int howManyPrunings = ab.steps; 
+      
+      ab = new AlphaBetaPruner();
+      ab.minimaxTest(Side.WHITE, testBoard, 2, true, 0);
+      int howManyMinMax =  ab.steps;
+     
+      assertThat(howManyPrunings, is(22));
+      assertThat(howManyMinMax, is(41));
+      
+      ab = new AlphaBetaPruner();
+      assertThat(ab.minimax(Side.WHITE, testBoard, 2, true), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000, true)));
+    }
+    
+
+    @Test
+    public void alphaBetaPruningStopsExtraStepsInitialBoard() {
+      AlphaBetaPruner ab = new AlphaBetaPruner();
+      testBoard.initBoard();
+
+      ab.alphabetaForTesting(Side.WHITE, testBoard, 2, -10000000, 10000000, true, 0);
+      
+      
+      int howManyPrunings = ab.steps; 
+      
+      ab = new AlphaBetaPruner();
+      ab.minimaxTest(Side.WHITE, testBoard, 2, true, 0);
+      int howManyMinMax =  ab.steps;
+      
+      assertThat(howManyPrunings, is(60));
+      assertThat(howManyMinMax, is(421));
+      
+      ab = new AlphaBetaPruner();
+      assertThat(ab.minimax(Side.WHITE, testBoard, 2, true), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000, true)));
+    }
+
+
 }

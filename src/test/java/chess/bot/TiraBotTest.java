@@ -423,8 +423,8 @@ public class TiraBotTest {
         testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Knight(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
 
-        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard, 1);
-        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard, 1);
+        int move1 = moveValueCounter.moveValueCountAlphaBeta("b3a4", Side.WHITE, testBoard, 1);
+        int move2 = moveValueCounter.moveValueCountAlphaBeta("b3c4", Side.WHITE, testBoard, 1);
         
         assertThat(move1, is(-80) );
         assertThat(move2, is(-50) );
@@ -440,8 +440,8 @@ public class TiraBotTest {
         testBoard.getTile(File.File_A, Rank.Rank_4).setPiece(new Knight(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
 
-        int move1 = moveValueCounter.moveValueCountMinMax("b3a4", Side.WHITE, testBoard, 1);
-        int move2 = moveValueCounter.moveValueCountMinMax("b3c4", Side.WHITE, testBoard, 1);
+        int move1 = moveValueCounter.moveValueCountAlphaBeta("b3a4", Side.WHITE, testBoard, 1);
+        int move2 = moveValueCounter.moveValueCountAlphaBeta("b3c4", Side.WHITE, testBoard, 1);
         
         assertThat(move1, is(-80) );
         assertThat(move2, is(820) );
@@ -512,7 +512,7 @@ public class TiraBotTest {
     TWO steps down the MIN-MAX tree
     */
     
-    // Check that MovementGenerator counts all possible moves in given situation
+    // Check that MovementGenerator counts all possible movesDone in given situation
     @Test
     public void allMovesAreThere() {
     Side side = Side.WHITE;
@@ -547,14 +547,14 @@ public class TiraBotTest {
         moves = movementgenerator.countAllMoves(side, boardToUpdate, moves); 
         assertThat(moves.length, is(20) ); 
 
-        // remove all moves where Black king is left unchecked
+        // remove all movesDone where Black king is left unchecked
         for (String move : moves) {
             if (!kingChecked.kingInCheck(move, side, boardToUpdate)) {
                 movesWithoutChecks = arrayModifier.addNewMoveToArray(movesWithoutChecks, move);
             }
         }
         assertThat(movesWithoutChecks.length, is(20) );
-        // If all moves are equal in value, we want to return random move, and not for example the first move.
+        // If all movesDone are equal in value, we want to return random move, and not for example the first move.
         String moveToReturn = movesWithoutChecks[(random.nextInt(movesWithoutChecks.length))]; 
         long t;
         t = System.nanoTime();
@@ -563,7 +563,7 @@ public class TiraBotTest {
             // This means that there is a move that has better value for black than previous best (or initial 0)
             // if (moveValueCounter.moveValueCount(move, -1, checkBoard) < changeNow) { LET'S TEST MINMAX  INSTEAD
 
-            int value = moveValueCounter.moveValueCountMinMax(move, side, boardToUpdate, 2);
+            int value = moveValueCounter.moveValueCountAlphaBeta(move, side, boardToUpdate, 2);
 
             if (value > changeNow) { 
                 // set the changeNow value to the new best value for Black (hence the -1 multiplier)
