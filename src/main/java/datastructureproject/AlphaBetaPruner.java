@@ -54,6 +54,48 @@ public class AlphaBetaPruner {
         return value;
     }
     
+    public int alphabeta(Side side, Board board, int depth, int alpha, int beta, boolean maximizingPlayer) {
+        
+        int value = 1000000;
+        if (maximizingPlayer) {
+           value = -1000000;
+        }    
+
+
+        String[] moves = this.allMovesKingCheckFiltered(side, board);
+        
+        if (depth == 0 || moves.length == 0) { 
+                return boardValueCounter.allTilesBoardValue(board);
+        } else {
+           alphabeta = new AlphaBetaPruner(); 
+        }  
+        if (maximizingPlayer) { 
+            for (String move : moves) {
+                boardStatusSaver.savePieces(move, board);
+                movementGenerator.updateMovementOnBoard(move, board);
+                value = Math.max(value, alphabeta.alphabeta(Side.BLACK, board, depth-1, alpha, beta, false));
+                alpha = Math.max(alpha, value);
+                boardStatusSaver.putSavedPiecesBack(); 
+                if (alpha >= beta) {
+                    break;
+                }
+                   
+            }        
+        } else {
+            for (String move : moves) {
+                boardStatusSaver.savePieces(move, board);
+                movementGenerator.updateMovementOnBoard(move, board);                
+                value = Math.min(value, alphabeta.alphabeta(Side.WHITE, board, depth-1, alpha, beta, true)); 
+                beta = Math.min(beta, value);
+                boardStatusSaver.putSavedPiecesBack(); 
+                if (alpha >= beta) {
+                    break;
+                }            
+            }
+        }
+        return value;
+    }
+    
     public Side getOpponent(Side player) {
         if (player == Side.WHITE) {
             return Side.BLACK;

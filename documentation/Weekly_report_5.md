@@ -4,6 +4,7 @@
 
 ## What has happened during week 5
 * Checkstyle down to 0 errors.
+* Alhpa-Beta pruning implemented
 
 
 ## Problems
