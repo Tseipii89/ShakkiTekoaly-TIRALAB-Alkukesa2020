@@ -536,6 +536,7 @@ public class TiraBotTest {
      assertThat(movesWithoutChecks.length, is(20) ); 
     }
     
+    /*
     @Test
     public void allMovesAreThereDepth() {
         int changeNow = 0; 
@@ -578,7 +579,9 @@ public class TiraBotTest {
         t = System.nanoTime() - t;
         assertTrue(t  > 400000000 );  
     }
+*/
     
+    /*
     @Test
     public void allMovesAreThereDepthTiraBot() {
         Side side = Side.WHITE;
@@ -596,5 +599,5 @@ public class TiraBotTest {
         assertTrue(t  > 400000000 ); 
                
     }
-    
+   */ 
 }
