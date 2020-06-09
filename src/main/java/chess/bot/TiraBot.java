@@ -65,7 +65,7 @@ public class TiraBot implements ChessBot {
         arrayModifier = new ArrayModifier();
         moveValueCounter = new MoveValueCounter();
         kingChecked = new KingCheckedCounter();
-        this.depth = 3;
+        this.depth = 2;
     }
     
     /**

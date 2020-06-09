@@ -50,6 +50,7 @@ Date       | time | target |
 2020-06-06 | 4h | Found the problem with MIN-MAX. It wasn't in the bot. It was the performance test. Made corrections. |
 2020-06-07 | 1h | Refactoring and checkstyle down to 0 errors. |
 2020-06-08 | 4h | Alpha-beta pruning implemented. Tests written and again found that performancetest class was the problem. The alpha-beta works again. Writing of testing document. |
+2020-06-09 | 1h | Writing of implementation document |
 
 
 ## Totals
@@ -60,5 +61,5 @@ Date       | time | target |
  2      | 10.5h    |
  3      | 16h    |
  4      | 17h    |
- 5      | 9h    |
-**Tot** | **62h** |
+ 5      | 10h    |
+**Tot** | **63h** |
