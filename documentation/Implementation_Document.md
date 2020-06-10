@@ -84,3 +84,15 @@ As one can see there is significant improvement with alpha-beta pruning. The O(n
 ## Future improvements and shortages
 
 The code was written fully with objects. Now after the implementation of the code, I think it might have been easier to do for example the game board with just matrix table, and not board -object.
+
+### Known problems/updates
+
+* Bishop went in the same tile with Pawn. So again there is something wrong with the movement rules. It has something to do with KingInCheck -class, but the KingInCheck -class works on some instances. These are just super annoying. When I add something, something breaks somewhere else.
+    * Probably because some issue with movement rules, some tests aren't passed.
+    * I just have to make class KingCheckedCounter simpler
+* I haven't implemented the castling for the bot.
+* I haven't added enpassant for my bot.
+* I have to create my own random class.
+* I have to create my own Math.min and Math.max methods. These are super easy to do, though.
+* I have to move the moverules -class's method createMovementString into a different class. Now moverules does two things.
+* In Min-Max I don't have to keep the boolean maximizing player info at parameters. Side info is enough.

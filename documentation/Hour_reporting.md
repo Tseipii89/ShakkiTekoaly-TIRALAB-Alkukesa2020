@@ -51,6 +51,7 @@ Date       | time | target |
 2020-06-07 | 1h | Refactoring and checkstyle down to 0 errors. |
 2020-06-08 | 4h | Alpha-beta pruning implemented. Tests written and again found that performancetest class was the problem. The alpha-beta works again. Writing of testing document. |
 2020-06-09 | 1h | Writing of implementation document |
+2020-06-10 | 1.5h | Writing of issue for my fellow student |
 
 
 ## Totals
@@ -61,5 +62,5 @@ Date       | time | target |
  2      | 10.5h    |
  3      | 16h    |
  4      | 17h    |
- 5      | 10h    |
-**Tot** | **63h** |
+ 5      | 11.5h    |
+**Tot** | **64.5h** |

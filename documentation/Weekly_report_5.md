@@ -5,6 +5,7 @@
 ## What has happened during week 5
 * Checkstyle down to 0 errors.
 * Alhpa-Beta pruning implemented
+* Peer-review of my fellow student's code. He was a master coder.
 
 
 ## Problems
