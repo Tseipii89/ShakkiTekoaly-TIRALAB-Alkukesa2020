@@ -178,9 +178,9 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_A, Rank.Rank_4).getPiece().getSide(), is(Side.WHITE));
     }
     
-    /*
     
-    This doesn't work with alpha-beta. 
+    
+    //This doesn't work with alpha-beta. 
     
     @Test
     public void nextMoveUpdatesBoardRightNormalCase2Moves() {
@@ -202,7 +202,7 @@ public class TiraBotTest {
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_5).getPiece().getPieceType(), is(PieceType.Pawn));
         assertThat(tirabot.getBoard().getTile(File.File_B, Rank.Rank_5).getPiece().getSide(), is(Side.WHITE));
     }
-    */    
+        
 
     @Test
     public void nextMoveUpdatesBoardRightAttackCase() {
@@ -479,13 +479,14 @@ public class TiraBotTest {
         String move = tirabot.nextMove(gs);
         assertThat(move, is("b3c4") );
     }
-    /*
+    
     @Test
-    public void nextMoveWorksWithMinMaxKing() {
+    public void nextMoveWorksWithMinMaxKing1Step() {
         GameState gs = new GameState();
         gs.setMoves("e1b3, b8a4, a8a5, c8c4");
         gs.playing = Side.WHITE;
         gs.turn = Side.WHITE;
+        tirabot = new TiraBot(1);
 
         movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
         movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
@@ -494,7 +495,23 @@ public class TiraBotTest {
         String move = tirabot.nextMove(gs);
         assertThat(move, is("b3c4") );
     }
-    */
+    
+    @Test
+    public void nextMoveWorksWithMinMaxKing2Steps() {
+        GameState gs = new GameState();
+        gs.setMoves("e1b3, b8a4, a8a5, c8c4");
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+        tirabot = new TiraBot(2);
+
+        movementGenerator.updateMovementOnBoard(gs.moves.get(0), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(1), tirabot.getBoard());
+        movementGenerator.updateMovementOnBoard(gs.moves.get(2), tirabot.getBoard());
+
+        String move = tirabot.nextMove(gs);
+        assertThat(move, is("b3b4") );
+    }
+    
     @Test
     public void nextMoveWorksWithMinMaxBlackKing() {
         GameState gs = new GameState();
@@ -536,7 +553,7 @@ public class TiraBotTest {
      assertThat(movesWithoutChecks.length, is(20) ); 
     }
     
-    /*
+    
     @Test
     public void allMovesAreThereDepth() {
         int changeNow = 0; 
@@ -579,9 +596,9 @@ public class TiraBotTest {
         t = System.nanoTime() - t;
         assertTrue(t  > 400000000 );  
     }
-*/
+
     
-    /*
+    
     @Test
     public void allMovesAreThereDepthTiraBot() {
         Side side = Side.WHITE;
@@ -599,5 +616,5 @@ public class TiraBotTest {
         assertTrue(t  > 400000000 ); 
                
     }
-   */ 
+    
 }

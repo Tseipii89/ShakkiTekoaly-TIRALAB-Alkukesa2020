@@ -11,7 +11,6 @@ import chess.elements.Rank;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
-import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,7 +18,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Rule;
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -40,7 +38,6 @@ public class AlphaBetaPrunerTest {
     
     
     public AlphaBetaPrunerTest() {
-        alphabeta = new AlphaBetaPruner();
         boardValue = new BoardValueCalculator();
         this.movementGenerator = new MovementGenerator();
         this.kingChecker = new KingCheckedCounter();
@@ -56,7 +53,8 @@ public class AlphaBetaPrunerTest {
     
     @Before
     public void setUp() {
-        testBoard = new Board();
+        this.testBoard = new Board();
+        this.alphabeta = new AlphaBetaPruner();
     }
     
     @After
@@ -238,6 +236,5 @@ public class AlphaBetaPrunerTest {
       ab = new AlphaBetaPruner();
       assertThat(ab.minimax(Side.WHITE, testBoard, 2, true), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000, true)));
     }
-
 
 }

@@ -12,6 +12,5 @@
     <suppress files="connection.*" checks=".*"/>
     <suppress files="engine.*" checks=".*"/>
     <suppress files="model.*" checks=".*"/>
-    <suppress files="datastructureproject.*" checks=".*"/>
     <suppress files="logging.*" checks=".*"/>
 </suppressions>

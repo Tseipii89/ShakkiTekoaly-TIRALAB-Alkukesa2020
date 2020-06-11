@@ -6,6 +6,16 @@
 package chess.model;
 
 public enum Side {
-    WHITE,
-    BLACK
+    WHITE(1),
+    BLACK(-1);
+    
+    private final int multiplier;
+    
+    Side(int multiplier) {
+        this.multiplier = multiplier;
+    }
+    
+    public int getMultiplier() {
+        return this.multiplier;
+    }
 }

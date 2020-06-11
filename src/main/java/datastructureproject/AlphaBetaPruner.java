@@ -102,7 +102,14 @@ public class AlphaBetaPruner {
         return value;
     }
     
-    public int alphabeta(Side side, Board board, int depth, int alpha, int beta, boolean maximizingPlayer) {
+    public int alphabeta(
+            Side side, 
+            Board board, 
+            int depth, 
+            int alpha, 
+            int beta, 
+            boolean maximizingPlayer
+    ) {
         
         int value = 1000000;
         if (maximizingPlayer) {
@@ -120,6 +127,7 @@ public class AlphaBetaPruner {
         }  
         if (maximizingPlayer) { 
             for (String move : moves) {
+                
                 boardStatusSaver.savePieces(move, board);
                 movementGenerator.updateMovementOnBoard(move, board);
                 value = Math.max(value, alphabeta.alphabeta(Side.BLACK, board, this.depth-1, alpha, beta, false));
@@ -128,10 +136,11 @@ public class AlphaBetaPruner {
                 if (alpha >= beta) {
                     break;
                 }
-                   
+                
             }        
         } else {
             for (String move : moves) {
+                
                 boardStatusSaver.savePieces(move, board);
                 movementGenerator.updateMovementOnBoard(move, board);                
                 value = Math.min(value, alphabeta.alphabeta(Side.WHITE, board, this.depth-1, alpha, beta, true)); 
@@ -139,7 +148,8 @@ public class AlphaBetaPruner {
                 boardStatusSaver.putSavedPiecesBack(); 
                 if (alpha >= beta) {
                     break;
-                }            
+                }  
+                
             }
         }
         return value;

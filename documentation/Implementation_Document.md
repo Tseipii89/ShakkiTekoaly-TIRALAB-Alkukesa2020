@@ -1,5 +1,7 @@
 # Implementation Document
 
+**11.6.2020: Current depth of the bot is 4 steps**.
+
 The realised architecture of the program is shown below (I didn't realise the classes create such a mess). The ready given classes from Tira chess -library are not included in the architecture picture.
 
 ![Chess AI realised architecture diagram](/documentation/images/chess-ai-realised-structure.png)
@@ -12,7 +14,7 @@ The program was tested with two different algorithms. The first one was basic [M
 
 The pseudocode is taken from the [Minimax](https://en.wikipedia.org/wiki/Minimax) wikipedia page. 
 
-```
+```java
 function minimax(node, depth, maximizingPlayer) is
     if depth = 0 or node is a terminal node then
         return the heuristic value of node
@@ -27,7 +29,8 @@ function minimax(node, depth, maximizingPlayer) is
             value := min(value, minimax(child, depth − 1, TRUE))
         return value
 ```
-```
+
+```java
 (* Initial call *)
 minimax(origin, depth, TRUE)
 ```
@@ -38,7 +41,7 @@ The theoretical O -time complexity of this algorithm is O(n^m) where n indicates
 
 The pseudocode is taken from the [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) wikipedia page. 
 
-```
+```java
 function alphabeta(node, depth, α, β, maximizingPlayer) is
     if depth = 0 or node is a terminal node then
         return the heuristic value of node
@@ -59,7 +62,8 @@ function alphabeta(node, depth, α, β, maximizingPlayer) is
                 break (* α cut-off *)
         return value
 ```
-```
+
+```java
 (* Initial call *)
 alphabeta(origin, depth, −∞, +∞, TRUE)
 ```
@@ -85,14 +89,20 @@ As one can see there is significant improvement with alpha-beta pruning. The O(n
 
 The code was written fully with objects. Now after the implementation of the code, I think it might have been easier to do for example the game board with just matrix table, and not board -object.
 
-### Known problems/updates
+### Corrected errors
 
-* Bishop went in the same tile with Pawn. So again there is something wrong with the movement rules. It has something to do with KingInCheck -class, but the KingInCheck -class works on some instances. These are just super annoying. When I add something, something breaks somewhere else.
-    * Probably because some issue with movement rules, some tests aren't passed.
-    * I just have to make class KingCheckedCounter simpler
+* ~~When running bot on Lichess, white bishop went in the same tile with white Pawn. So again there is something wrong with the movement rules. It has something to do with KingInCheck -class, but the KingInCheck -class works on some instances.~~
+  * 11.6.2020: Made KingInCheck -class simpler and corrected the tests. The encountered problem never occured since. I have no idea what caused it, but I'm hopeful it has been corrected.
+
+### Known updates to be made and errors to correct
+
+* The checkstyle errors are once again in 108. I had ignored the datastructure package from checks and that caused the spike.
 * I haven't implemented the castling for the bot.
 * I haven't added enpassant for my bot.
 * I have to create my own random class.
 * I have to create my own Math.min and Math.max methods. These are super easy to do, though.
 * I have to move the moverules -class's method createMovementString into a different class. Now moverules does two things.
 * In Min-Max I don't have to keep the boolean maximizing player info at parameters. Side info is enough.
+* I have to write my own Math.Abs method
+* The scoring of board could be updated. Now the bot makes some stupid moves. I'm very sure the alpha-beta pruning works and the problem is actually the  scoring of the board.
+* The KingInCheck is quite heavy and does some extra iterations. This could be optimised not to do extra iterations.
