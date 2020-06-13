@@ -55,6 +55,12 @@ Date       | time | target |
 2020-06-10 | 2h | Writing of issue for my fellow student. Removed unnecessary code in kingcheckclass. Still the test fails. |
 2020-06-10 | 1.5h | Corrected the test failures. Tested the bot again. Now the moves are correct, but still bot makes stupid moves. It has to be something to do with the board evaluation. Also the checkstyle had ignored the datastructure -package. I added it into checkstyle. Checkstyle errors are again in 108, yay. |
 
+## Week 6
+
+Date       | time | target |
+-----------|------|--------|
+2020-06-13 | 1h | Created min, max and abs methods. Simplified code. Corrected Checkstyle down to 70 errors. Corrected the bug that errored Travis build (at least I think so) |
+
 ## Totals
 
  Week   | Time     |
@@ -64,4 +70,5 @@ Date       | time | target |
  3      | 16h    |
  4      | 17h    |
  5      | 13.5h    |
-**Tot** | **66.5h** |
+ 6      | 1h    |
+**Tot** | **67.5h** |

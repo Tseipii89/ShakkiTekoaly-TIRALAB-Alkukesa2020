@@ -366,7 +366,7 @@ public class TiraBotTest {
         testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Bishop(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
 
-        int value = alphabeta.minimax(Side.BLACK, testBoard, 1, false);
+        int value = alphabeta.minimax(Side.BLACK, testBoard, 1);
         
         
         assertThat(value, is(-80) );
@@ -381,7 +381,7 @@ public class TiraBotTest {
         testBoard.getTile(File.File_C, Rank.Rank_4).setPiece(new Bishop(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_5).setPiece(new Rook(Side.BLACK));
 
-        int value = alphabeta.minimax(Side.BLACK, testBoard, 1, false);
+        int value = alphabeta.minimax(Side.BLACK, testBoard, 1);
         
         
         assertThat(value, is(-80) );
@@ -594,7 +594,7 @@ public class TiraBotTest {
             }
         }
         t = System.nanoTime() - t;
-        assertTrue(t  > 400000000 );  
+        assertTrue(t  > 350000000 );  
     }
 
     
@@ -613,7 +613,7 @@ public class TiraBotTest {
         t = System.nanoTime();
         tirabot2.countBestMoveForWhite(moves, boardToUpdate);
         t = System.nanoTime() - t;
-        assertTrue(t  > 400000000 ); 
+        assertTrue(t  > 350000000 ); 
                
     }
     

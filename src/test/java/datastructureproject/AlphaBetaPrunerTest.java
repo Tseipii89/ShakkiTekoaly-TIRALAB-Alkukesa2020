@@ -116,7 +116,7 @@ public class AlphaBetaPrunerTest {
         testBoard.getTile(File.File_A, Rank.Rank_3).setPiece(new Rook(Side.BLACK));
         testBoard.getTile(File.File_C, Rank.Rank_2).setPiece(new Bishop(Side.BLACK));
         
-        int minmaxvalue = alphabeta.minimax(Side.WHITE, testBoard, 0, true);
+        int minmaxvalue = alphabeta.minimax(Side.WHITE, testBoard, 0);
 
         assertThat(minmaxvalue, is(-80));
     }
@@ -186,7 +186,7 @@ public class AlphaBetaPrunerTest {
         testBoard.getTile(File.File_A, Rank.Rank_3).setPiece(new Rook(Side.BLACK));
         testBoard.getTile(File.File_C, Rank.Rank_2).setPiece(new Bishop(Side.BLACK));
         
-        int minmaxvalue = alphabeta.minimax(Side.WHITE, testBoard, 1, true);
+        int minmaxvalue = alphabeta.minimax(Side.WHITE, testBoard, 1);
 
         assertThat(minmaxvalue, is(-50));
     }
@@ -201,18 +201,18 @@ public class AlphaBetaPrunerTest {
       testBoard.getTile(File.File_C, Rank.Rank_3).setPiece(new Rook(Side.BLACK));
       testBoard.getTile(File.File_A, Rank.Rank_2).setPiece(new Bishop(Side.BLACK));
       
-      ab.alphabetaForTesting(Side.WHITE, testBoard, 2, -10000000, 10000000, true, 0);
+      ab.alphabetaForTesting(Side.WHITE, testBoard, 2, -10000000, 10000000, 0);
       int howManyPrunings = ab.steps; 
       
       ab = new AlphaBetaPruner();
-      ab.minimaxTest(Side.WHITE, testBoard, 2, true, 0);
+      ab.minimaxTest(Side.WHITE, testBoard, 2, 0);
       int howManyMinMax =  ab.steps;
      
       assertThat(howManyPrunings, is(22));
       assertThat(howManyMinMax, is(41));
       
       ab = new AlphaBetaPruner();
-      assertThat(ab.minimax(Side.WHITE, testBoard, 2, true), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000, true)));
+      assertThat(ab.minimax(Side.WHITE, testBoard, 2), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000)));
     }
     
 
@@ -221,20 +221,20 @@ public class AlphaBetaPrunerTest {
       AlphaBetaPruner ab = new AlphaBetaPruner();
       testBoard.initBoard();
 
-      ab.alphabetaForTesting(Side.WHITE, testBoard, 2, -10000000, 10000000, true, 0);
+      ab.alphabetaForTesting(Side.WHITE, testBoard, 2, -10000000, 10000000, 0);
       
       
       int howManyPrunings = ab.steps; 
       
       ab = new AlphaBetaPruner();
-      ab.minimaxTest(Side.WHITE, testBoard, 2, true, 0);
+      ab.minimaxTest(Side.WHITE, testBoard, 2, 0);
       int howManyMinMax =  ab.steps;
       
       assertThat(howManyPrunings, is(60));
       assertThat(howManyMinMax, is(421));
       
       ab = new AlphaBetaPruner();
-      assertThat(ab.minimax(Side.WHITE, testBoard, 2, true), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000, true)));
+      assertThat(ab.minimax(Side.WHITE, testBoard, 2), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000)));
     }
 
 }

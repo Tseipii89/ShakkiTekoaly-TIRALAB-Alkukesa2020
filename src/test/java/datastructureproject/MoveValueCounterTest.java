@@ -58,7 +58,7 @@ public class MoveValueCounterTest {
         testBoard.getTile(File.File_C, Rank.Rank_3).setPiece(new Rook(Side.BLACK));
         testBoard.getTile(File.File_A, Rank.Rank_2).setPiece(new Bishop(Side.BLACK));
         
-        assertThat(testMoveValueCounter.moveValueCountAlphaBeta("b1a2", Side.WHITE, testBoard, 2), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000, true)));
+        assertThat(testMoveValueCounter.moveValueCountAlphaBeta("b1a2", Side.WHITE, testBoard, 2), is(ab.alphabeta(Side.WHITE, testBoard, 2, -10000000, 10000000)));
         assertThat(testMoveValueCounter.moveValueCountAlphaBeta("b1a2", Side.WHITE, testBoard, 2), is(-50));
         
         testMoveValueCounter = new MoveValueCounter();

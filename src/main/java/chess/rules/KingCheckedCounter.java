@@ -2,12 +2,11 @@
 package chess.rules;
 
 import chess.elements.Board;
-import chess.elements.Tile;
 import chess.model.Side;
 import datastructureproject.BoardStatusSaver;
 import datastructureproject.MoveValueCounter;
+import datastructureproject.datamodifiers.NumberModificator;
 import java.util.Random;
-import pieces.Piece;
 
 /**
  * Checks if opponent have an opportunity to capture player's king.
@@ -33,7 +32,16 @@ public class KingCheckedCounter {
      */
     private final MoveValueCounter moveValueCounter;
 
-    private BoardStatusSaver boardStatusSaver; //public for testing purposes
+    /**
+     * BoardStatus saver saves board situation before move
+     * and puts the pieces back at right positions after the move check.  
+     */
+    private BoardStatusSaver boardStatusSaver; 
+    
+    /**
+     * NumberModificator does for example min, max and abs methods for number comparisons.
+     */
+    private NumberModificator numbermod;
 
     
     /**
@@ -45,6 +53,7 @@ public class KingCheckedCounter {
         movementGenerator = new MovementGenerator();
         moveValueCounter = new MoveValueCounter();
         this.boardStatusSaver = new BoardStatusSaver();
+        this.numbermod = new NumberModificator();
     }
     
      
@@ -71,7 +80,13 @@ public class KingCheckedCounter {
         // Let's see what is the best move for the opponent, if he/she doesn't do KingCheck
         if (movesToCheck.length > 0) {
             for (String moveToCheck : movesToCheck) {
-                if (Math.abs(moveValueCounter.moveValueCount(moveToCheck, opponent.getMultiplier(), checkBoard)) >= 900) {
+                
+                int boardValueOfTheMove = numbermod.abs(
+                        // get the absolute board value after the move
+                        moveValueCounter.moveValueCount(moveToCheck, opponent.getMultiplier(), checkBoard)
+                );
+                
+                if (boardValueOfTheMove >= 900) {
                     kingCaptured = true;
                 }
             }
