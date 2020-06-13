@@ -4,6 +4,8 @@ Testing document presents the results of the time the algorithm takes to count t
 
 As the code improvements are done, so will the test document also be updated.
 
+**NB** Also one should note that there is one checkstyle error caused by PerformanceTest -class. This is regarded to the AbstractionCoupling that shouldn't higher than 7. However because the PerformanceTest is unique in it's own style, I haven't fixed this problem. It doesn't affect the performance of the program or any other class.
+
 # Testing
 Test have been run 20 times. There is an initial run that is not counted to the , to "wake up" the Java compiler.
 

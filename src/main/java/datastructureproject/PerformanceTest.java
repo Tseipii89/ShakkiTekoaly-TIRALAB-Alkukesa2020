@@ -15,18 +15,43 @@ import pieces.Queen;
 import pieces.Rook;
 
 /**
- * Use this class to write performance tests for your bot.
- * 
+ * Performance test counts the average run time and standard deviation of the run time on different steps.
  */
 public class PerformanceTest {
 
+    /**
+     * How deep to go through the min-max tree.
+     * Each step is gone through.
+     */
     private static final int[] NUMSMINMAX = {0, 1, 2, 3};
-    private static final int TESTRUNS = 20;
-    private static final double[] averageRunTimes = new double[NUMSMINMAX.length];
-    private static final double[] averageSTD = new double[NUMSMINMAX.length];
-    private static final long[] times = new long[TESTRUNS];
-    
 
+    /**
+     * How many test runs to do in one step.
+     */
+    private static final int TESTRUNS = 20;
+
+    /**
+     * Array to hold the average of the test runs of different steps.
+     */
+    private static final double[] AVERAGERUNTIMES = new double[NUMSMINMAX.length];
+
+    /**
+     * Array to hold the average of the test runs of different steps.
+     */
+    private static final double[] AVERAGESTD = new double[NUMSMINMAX.length];
+
+    /**
+     * Array to hold the run lengths of given depth.
+     */
+    private static final long[] TIMES = new long[TESTRUNS];
+    
+    /**
+     *
+     * Runs TESTRUNS number of test runs on different depths on min-max tree specified on NUMSMINMAX.
+     * The average and standard deviation of the tests runs are printed out.
+     * 
+     * @param args the initial parameter used with main -method.
+     */
     public static void main(String[] args) {
         
 
@@ -51,27 +76,46 @@ public class PerformanceTest {
                 t = System.nanoTime();
                 tirabot.nextMove(gs);
                 t = System.nanoTime() - t;
-                times[i] = t;
+                TIMES[i] = t;
             }
-            averageRunTimes[run] = getAverage(times);
-            averageSTD[run] = getStd(times, averageRunTimes[run]);
+            AVERAGERUNTIMES[run] = getAverage(TIMES);
+            AVERAGESTD[run] = getStd(TIMES, AVERAGERUNTIMES[run]);
 
         }
         
         System.out.println(printResults());
     }
     
+    /**
+     *
+     * Creates the results print out.
+     * 
+     * @return the string builder that holds the ready build message.
+     */
     public static String printResults() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Average run times:\n");
-        appendResults(sb, averageRunTimes, "ns", averageSTD);
+        appendResults(sb, AVERAGERUNTIMES, "ns", AVERAGESTD);
         
         return sb.toString();
     }
     
-    private static void appendResults(StringBuilder sb, double[] arr, String suffix, 
-            double[] std) {
+    /**
+     *
+     * Creates the print of the message that is shown in terminal.
+     * 
+     * @param sb the string builder on which to add the texts.
+     * @param arr array holds the average run times.
+     * @param suffix in this case is nanoseconds or ns.
+     * @param std array holds the standard deviations.
+     */
+    private static void appendResults(
+            StringBuilder sb, 
+            double[] arr, 
+            String suffix, 
+            double[] std
+    ) {
         for (int i = 0; i < NUMSMINMAX.length; i++) {
             String num = Integer.toString(NUMSMINMAX[i]);
 
@@ -88,6 +132,14 @@ public class PerformanceTest {
         }
     }
     
+    /**
+     *
+     * Counts the standard deviation of given values.
+     * 
+     * @param times the array from which to count the standard deviation.
+     * @param mean the mean of the array values.
+     * @return the standrd deviation of the values in the array.
+     */
     private static double getStd(long[] times, double mean) {
         double s = 0;
         for (long time : times) {
@@ -96,6 +148,13 @@ public class PerformanceTest {
         return Math.sqrt(s / (times.length - 1));
     }
 
+    /**
+     *
+     * Counts the average of given long array.
+     * 
+     * @param times the array from which to count the average.
+     * @return the average of the array values.
+     */
     private static double getAverage(long[] times) {
         double s = 0;
         for (long time : times) {
@@ -104,6 +163,13 @@ public class PerformanceTest {
         return s / times.length;
     }
     
+    /**
+     *
+     * The initial setting of chess Board didn't emphasize the difference between different improvements enough.
+     * This Board setting will show the alpha-beta vs. min-max improvement very cleary.
+     * 
+     * @param boardToSet the board on which to set the pieces accordingly.
+     */
     private static void setTestBoard(Board boardToSet) {
         // Set Black Pieces
         boardToSet.getTile(File.File_A, Rank.Rank_8).setPiece(new Rook(Side.BLACK));

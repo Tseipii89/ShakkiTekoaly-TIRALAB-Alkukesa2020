@@ -59,7 +59,7 @@ Date       | time | target |
 
 Date       | time | target |
 -----------|------|--------|
-2020-06-13 | 1h | Created min, max and abs methods. Simplified code. Corrected Checkstyle down to 70 errors. Corrected the bug that errored Travis build (at least I think so) |
+2020-06-13 | 1.5h | Created min, max and abs methods. Simplified code. Corrected Checkstyle down to 56 errors. Corrected the bug that errored Travis build (at least I think so) |
 
 ## Totals
 
