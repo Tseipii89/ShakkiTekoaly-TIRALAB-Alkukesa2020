@@ -98,8 +98,6 @@ The code was written fully with objects. Now after the implementation of the cod
 
 * The checkstyle errors are in 56.
 * I have to write user manual for the bot and different gradle commands
-* I have to create my own random class.
-* Substitute min, max and random method with my own in the correct classes
 * I haven't implemented the castling for the bot.
 * I haven't added enpassant for my bot.
 * I have to move the moverules -class's method createMovementString into a different class. Now moverules does two things.

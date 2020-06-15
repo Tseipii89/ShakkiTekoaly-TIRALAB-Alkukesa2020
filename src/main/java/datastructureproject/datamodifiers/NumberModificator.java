@@ -1,6 +1,11 @@
 package datastructureproject.datamodifiers;
 
+
 public class NumberModificator {
+    
+    static int RandomMultiplier = 1;
+    static int RandomIncrement = 1;
+    static int RandomHowManyIterations = 1;
     
     public NumberModificator() {
         
@@ -34,5 +39,39 @@ public class NumberModificator {
             
         return abs;
     }
+    
+    
+
+ 
+    public int random(int n) {
+        
+        int seed = 32767 % n;
+        
+        int random = (RandomMultiplier * seed + RandomIncrement) % n;
+        
+        for (int i = 0; i < RandomHowManyIterations; i++) {
+            random = (RandomMultiplier * random + RandomIncrement) % n;  
+        }
+        
+       RandomIncrement++;
+       RandomIncrement %= 10;
+       
+       RandomMultiplier++;
+       RandomMultiplier %= 10;
+       
+       RandomHowManyIterations++;
+       RandomHowManyIterations %= 10;
+       
+       this.abs(random);
+       
+       if (random == n) {
+           random--;
+       }
+        
+        return random % n;
+  
+    }
+
+    
     
 }

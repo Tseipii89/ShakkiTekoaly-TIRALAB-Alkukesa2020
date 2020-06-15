@@ -6,17 +6,12 @@ import chess.model.Side;
 import datastructureproject.BoardStatusSaver;
 import datastructureproject.MoveValueCounter;
 import datastructureproject.datamodifiers.NumberModificator;
-import java.util.Random;
 
 /**
  * Checks if opponent have an opportunity to capture player's king.
  * @author juhop
  */
 public class KingCheckedCounter {
-     /**
-     * The Random is used to return random move.
-     */
-    private final Random random; 
      /**
      * Counts the value of the Board, given the positions of all pieces.
      */
@@ -48,7 +43,6 @@ public class KingCheckedCounter {
      * Class checks if given move will give opponent an opportunity to capture player's king.
      */
     public KingCheckedCounter() {
-        this.random = new Random();
         newTileCounter = new NewTileCounter();
         movementGenerator = new MovementGenerator();
         moveValueCounter = new MoveValueCounter();

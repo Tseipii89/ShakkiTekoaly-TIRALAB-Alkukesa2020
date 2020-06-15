@@ -7,7 +7,7 @@ import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
 import datastructureproject.MoveValueCounter;
 import datastructureproject.datamodifiers.ArrayModifier;
-import java.util.Random;
+import datastructureproject.datamodifiers.NumberModificator;
 
 
 /**
@@ -19,7 +19,7 @@ public class TiraBot implements ChessBot {
     /**
      * The Random is used to return random move.
      */
-    private final Random random; 
+    private final NumberModificator random; 
 
     /**
      * Game board to hold the current game piece positions.
@@ -58,7 +58,7 @@ public class TiraBot implements ChessBot {
      * It counts the best next move for the given the limitations. 
      */
     public TiraBot() {
-        this.random = new Random();
+        this.random = new NumberModificator();
         this.currentGameBoard = new Board();
         currentGameBoard.initBoard();
         movementgenerator = new MovementGenerator();
@@ -76,7 +76,7 @@ public class TiraBot implements ChessBot {
      * @param depth counts the moves down this many steps.
      */
     public TiraBot(int depth) {
-        this.random = new Random();
+        this.random = new NumberModificator();
         this.currentGameBoard = new Board();
         currentGameBoard.initBoard();
         movementgenerator = new MovementGenerator();
@@ -193,7 +193,7 @@ public class TiraBot implements ChessBot {
             }
         }
         // If all moves are equal in value, we want to return random move, and not for example the first move.
-        String moveToReturn = movesWithoutChecks[(random.nextInt(movesWithoutChecks.length))]; 
+        String moveToReturn = movesWithoutChecks[(random.random(movesWithoutChecks.length))]; 
 
         for (String move : movesWithoutChecks) {
             // Black player wants to minimize the Board value. 
@@ -234,7 +234,7 @@ public class TiraBot implements ChessBot {
         }
 
         // If all moves are equal in value, we want to return random move, and not for example the first move.
-        String moveToReturn = movesWithoutChecks[(random.nextInt(movesWithoutChecks.length))]; 
+        String moveToReturn = movesWithoutChecks[(random.random(movesWithoutChecks.length))]; 
 
         for (String move : movesWithoutChecks) {
             // White player wants to maximize the Board value. 

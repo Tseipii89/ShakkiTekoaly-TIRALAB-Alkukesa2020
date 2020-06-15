@@ -6,6 +6,7 @@ import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
 import datastructureproject.datamodifiers.ArrayModifier;
+import datastructureproject.datamodifiers.NumberModificator;
 
 /**
  *
@@ -42,7 +43,8 @@ public class AlphaBetaPruner {
     public BoardStatusSaver boardStatusSaver;
 
     /**
-     * AlphabetaPruners have other alphabetapruners as their variables since the alpha-beta and min-max has been done with recursive method.
+     * AlphabetaPruners have other alphabetapruners as their variables,
+     * since the alpha-beta and min-max has been done with recursive method.
      */
     private AlphaBetaPruner alphabeta;
 
@@ -56,6 +58,8 @@ public class AlphaBetaPruner {
      */
     private int depth;
     
+    private final NumberModificator modificator; 
+    
     /**
      * Initialises new AlphaBetaPruner.
      */
@@ -66,6 +70,7 @@ public class AlphaBetaPruner {
         this.boardValueCounter = new BoardValueCalculator();
         boardStatusSaver = new BoardStatusSaver();
         this.steps = 0;
+        this.modificator = new NumberModificator();
     }
     
     /**
@@ -82,6 +87,7 @@ public class AlphaBetaPruner {
         this.boardValueCounter = new BoardValueCalculator();
         boardStatusSaver = new BoardStatusSaver();
         this.steps = stepsSoFar;
+        this.modificator = new NumberModificator();
     }
     
     /**
@@ -115,9 +121,9 @@ public class AlphaBetaPruner {
             movementGenerator.updateMovementOnBoard(move, board);
 
             if (side == Side.WHITE) {  
-                value = Math.max(value, alphabeta.minimax(Side.BLACK, board, depth - 1));
+                value = modificator.max(value, alphabeta.minimax(Side.BLACK, board, depth - 1));
             } else {
-                value = Math.min(value, alphabeta.minimax(Side.WHITE, board, depth - 1)); 
+                value = modificator.min(value, alphabeta.minimax(Side.WHITE, board, depth - 1)); 
             }
             boardStatusSaver.putSavedPiecesBack();
             
@@ -157,11 +163,11 @@ public class AlphaBetaPruner {
             boardStatusSaver.savePieces(move, board);
             movementGenerator.updateMovementOnBoard(move, board);
             if (side == Side.WHITE) {  
-                value = Math.max(value, alphabeta.minimaxTest(Side.BLACK, board, depth - 1, this.steps));
+                value = modificator.max(value, alphabeta.minimaxTest(Side.BLACK, board, depth - 1, this.steps));
                 this.steps = alphabeta.steps;
                 this.steps++;
             } else {
-                value = Math.min(value, alphabeta.minimaxTest(Side.WHITE, board, depth - 1, this.steps)); 
+                value = modificator.min(value, alphabeta.minimaxTest(Side.WHITE, board, depth - 1, this.steps)); 
                 this.steps = alphabeta.steps;
                 this.steps++;
             }
@@ -210,8 +216,8 @@ public class AlphaBetaPruner {
                 
                 boardStatusSaver.savePieces(move, board);
                 movementGenerator.updateMovementOnBoard(move, board);
-                value = Math.max(value, alphabeta.alphabeta(Side.BLACK, board, this.depth-1, alpha, beta));
-                alpha = Math.max(alpha, value);
+                value = modificator.max(value, alphabeta.alphabeta(Side.BLACK, board, this.depth - 1, alpha, beta));
+                alpha = modificator.max(alpha, value);
                 boardStatusSaver.putSavedPiecesBack(); 
                 if (alpha >= beta) {
                     break;
@@ -223,8 +229,8 @@ public class AlphaBetaPruner {
                 
                 boardStatusSaver.savePieces(move, board);
                 movementGenerator.updateMovementOnBoard(move, board);                
-                value = Math.min(value, alphabeta.alphabeta(Side.WHITE, board, this.depth-1, alpha, beta)); 
-                beta = Math.min(beta, value);
+                value = modificator.min(value, alphabeta.alphabeta(Side.WHITE, board, this.depth - 1, alpha, beta)); 
+                beta = modificator.min(beta, value);
                 boardStatusSaver.putSavedPiecesBack(); 
                 if (alpha >= beta) {
                     break;
@@ -275,8 +281,17 @@ public class AlphaBetaPruner {
             for (String move : moves) {
                 boardStatusSaver.savePieces(move, board);
                 movementGenerator.updateMovementOnBoard(move, board);
-                value = Math.max(value, alphabeta.alphabetaForTesting(Side.BLACK, board, this.depth-1, alpha, beta, this.steps));
-                alpha = Math.max(alpha, value);
+                value = modificator.max(value, 
+                        alphabeta.alphabetaForTesting(
+                            Side.BLACK, 
+                            board, 
+                            this.depth - 1, 
+                            alpha, 
+                            beta, 
+                            this.steps
+                        )
+                );
+                alpha = modificator.max(alpha, value);
                 boardStatusSaver.putSavedPiecesBack(); 
                 this.steps = alphabeta.steps;
                 this.steps++;
@@ -289,8 +304,15 @@ public class AlphaBetaPruner {
             for (String move : moves) {
                 boardStatusSaver.savePieces(move, board);
                 movementGenerator.updateMovementOnBoard(move, board);                
-                value = Math.min(value, alphabeta.alphabetaForTesting(Side.WHITE, board, this.depth-1, alpha, beta, this.steps)); 
-                beta = Math.min(beta, value);
+                value = modificator.min(value, alphabeta.alphabetaForTesting(
+                        Side.WHITE, 
+                        board, 
+                        this.depth - 1, 
+                        alpha, 
+                        beta, 
+                        this.steps)
+                ); 
+                beta = modificator.min(beta, value);
                 boardStatusSaver.putSavedPiecesBack();
                 this.steps = alphabeta.steps;
                 this.steps++;
@@ -330,7 +352,7 @@ public class AlphaBetaPruner {
         String[] allMoves = this.movementGenerator.countAllMoves(side, board, moves);
         
         for (String move : allMoves) {
-            if(!kingChecker.kingInCheck(move, this.getOpponent(side), board)) {
+            if (!kingChecker.kingInCheck(move, this.getOpponent(side), board)) {
                 moves = arrayMod.addNewMoveToArray(moves, move);
             }
         }

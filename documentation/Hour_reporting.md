@@ -60,6 +60,7 @@ Date       | time | target |
 Date       | time | target |
 -----------|------|--------|
 2020-06-13 | 1.5h | Created min, max and abs methods. Simplified code. Corrected Checkstyle down to 56 errors. Corrected the bug that errored Travis build (at least I think so) |
+2020-06-15 | 2h | Created random and implemented min, max, abs and random methods to replace teh pre-made methods. |
 
 ## Totals
 
@@ -70,5 +71,5 @@ Date       | time | target |
  3      | 16h    |
  4      | 17h    |
  5      | 13.5h    |
- 6      | 1h    |
-**Tot** | **67.5h** |
+ 6      | 3h    |
+**Tot** | **69.5h** |
