@@ -96,8 +96,7 @@ The code was written fully with objects. Now after the implementation of the cod
 
 ### Known updates to be made and errors to correct
 
-* The checkstyle errors are in 56.
-* I have to write user manual for the bot and different gradle commands
+* The checkstyle errors are in 38.
 * I haven't implemented the castling for the bot.
 * I haven't added enpassant for my bot.
 * I have to move the moverules -class's method createMovementString into a different class. Now moverules does two things.

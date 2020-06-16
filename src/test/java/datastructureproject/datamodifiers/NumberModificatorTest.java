@@ -9,6 +9,8 @@ import chess.elements.Board;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,6 +30,7 @@ public class NumberModificatorTest {
     private ArrayModifier arrayModifier;
     private KingCheckedCounter kingChecked;
     private NumberModificator random; 
+    private int lastRandom; 
     
     public NumberModificatorTest() {
         numberTest = new NumberModificator();
@@ -83,6 +86,7 @@ public class NumberModificatorTest {
         // If all moves are equal in value, we want to return random move, and not for example the first move.
        int randomResult = random.random(movesWithoutChecks.length); 
        assertTrue(randomResult > -1);
+        this.lastRandom = randomResult;
     }
     
     @Test
@@ -103,6 +107,7 @@ public class NumberModificatorTest {
         // If all moves are equal in value, we want to return random move, and not for example the first move.
        int randomResult = random.random(movesWithoutChecks.length); 
        assertTrue(randomResult < movesWithoutChecks.length);
+       assertThat(randomResult, is(not(this.lastRandom)));
     }
     
     @Test

@@ -7,6 +7,7 @@
 * Created min, max, abs and random methods.
 * Implemented the methods above.
 * Removed the unnecessary boolean maximize or minimize from alpha-beta and min-max methods
+* Wrote user manual
 
 ## Problems
 
