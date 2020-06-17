@@ -7,6 +7,8 @@ package chess.rules;
 
 import chess.model.Side;
 import chess.elements.Board;
+import chess.elements.File;
+import chess.elements.Rank;
 import chess.elements.Tile;
 import datastructureproject.datamodifiers.ArrayModifier;
 import pieces.Bishop;
@@ -93,19 +95,50 @@ public class MovementGenerator {
      * @param board the Board against into which the move should be updated
      */
     public void updateMovementOnBoard(String move, Board board) {
+        
+        if (move.length() > 5) {
+            this.castling(move, board);
+        } else {
+            Tile startTile = newTileCounter.moveToTile(move, 0, 2, board);
 
-        Tile startTile = newTileCounter.moveToTile(move, 0, 2, board);
+            Tile finishTile = newTileCounter.moveToTile(move, 2, 4, board);
 
-        Tile finishTile = newTileCounter.moveToTile(move, 2, 4, board);
+
+            String promote = "";
+            if (move.length() > 4) {
+                promote =  move.substring(4);
+                promote = promote.toLowerCase();
+            } 
+
+            this.updateBoard(startTile, finishTile, promote); 
+        }
+    }
+    
+    public void castling(String move, Board board) {
+        Rank startRank = Rank.valueOfInteger(Integer.parseInt(move.substring(0, 1)));
         
-        
-        String promote = "";
-        if (move.length() > 4) {
-            promote =  move.substring(4);
-            promote = promote.toLowerCase();
-        } 
-        
-        this.updateBoard(startTile, finishTile, promote);  
+        if ("q".equals(move.substring(1, 2))) {
+            // King
+            Piece king = board.getTile(File.File_E, startRank).getPiece();
+            board.getTile(File.File_C, startRank).setPiece(king);
+            board.getTile(File.File_E, startRank).setPiece(null);
+            
+            // Rook
+            Piece rook = board.getTile(File.File_A, startRank).getPiece();
+            board.getTile(File.File_D, startRank).setPiece(rook);
+            board.getTile(File.File_A, startRank).setPiece(null);
+        } else {
+            // King
+            Piece king = board.getTile(File.File_E, startRank).getPiece();
+            board.getTile(File.File_G, startRank).setPiece(king);
+            board.getTile(File.File_E, startRank).setPiece(null);
+            
+            // Rook
+            Piece rook = board.getTile(File.File_H, startRank).getPiece();
+            board.getTile(File.File_F, startRank).setPiece(rook);
+            board.getTile(File.File_H, startRank).setPiece(null);
+            
+        }
     }
     
         /**

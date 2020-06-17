@@ -89,6 +89,8 @@ As one can see there is significant improvement with alpha-beta pruning. The O(n
 
 The code was written fully with objects. Now after the implementation of the code, I think it might have been easier to do for example the game board with just matrix table, and not board -object.
 
+
+
 ### Corrected errors
 
 * ~~When running bot on Lichess, white bishop went in the same tile with white Pawn. So again there is something wrong with the movement rules. It has something to do with KingInCheck -class, but the KingInCheck -class works on some instances.~~
@@ -96,9 +98,13 @@ The code was written fully with objects. Now after the implementation of the cod
 
 ### Known updates to be made and errors to correct
 
-* The checkstyle errors are in 38.
-* I haven't implemented the castling for the bot.
-* I haven't added enpassant for my bot.
+* The checkstyle errors are in 26.
+* Write tests for opponent castling.
 * I have to move the moverules -class's method createMovementString into a different class. Now moverules does two things.
 * The scoring of board could be updated. Now the bot makes some stupid moves. I'm very sure the alpha-beta pruning works and the problem is actually the  scoring of the board.
 * The KingInCheck is quite heavy and does some extra iterations. This could be optimised not to do extra iterations.
+
+### Known updates to be made and errors not to be corrected
+
+* The bot recognizes castling done by opponent and updates the board, but I haven't implemented the castling for the bot.
+* I haven't added enpassant for my bot.

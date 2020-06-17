@@ -2,14 +2,15 @@ package chess.bot;
 
 import chess.elements.Board;
 import chess.elements.File;
+import chess.elements.Rank;
 import chess.engine.GameState;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
-import com.github.bhlangonijr.chesslib.Rank;
 import datastructureproject.MoveValueCounter;
 import datastructureproject.datamodifiers.ArrayModifier;
 import datastructureproject.datamodifiers.NumberModificator;
+import pieces.PieceType;
 
 
 /**
@@ -54,6 +55,10 @@ public class TiraBot implements ChessBot {
      * The depth how many steps to check down MIN-MAX tree.
      */
     private int depth;
+    
+    private GameState gameState;
+    
+    private NumberModificator numberMod;
 
     /**
      * Tirabot is the implementation for the algorithms and data structures course.
@@ -68,6 +73,7 @@ public class TiraBot implements ChessBot {
         moveValueCounter = new MoveValueCounter();
         kingChecked = new KingCheckedCounter();
         this.depth = 2;
+        this.numberMod = new NumberModificator();
     }
     
     /**
@@ -86,6 +92,7 @@ public class TiraBot implements ChessBot {
         moveValueCounter = new MoveValueCounter();
         kingChecked = new KingCheckedCounter();
         this.depth = depth;
+        this.numberMod = new NumberModificator();
     }
 
     /**
@@ -105,6 +112,8 @@ public class TiraBot implements ChessBot {
      */
     @Override
     public String nextMove(GameState gameState) {
+        
+        this.gameState = gameState;
         // First the Next Move updates the current Board with last move the opponent made
         this.updateGameStateMove(gameState, this.currentGameBoard);
         
@@ -124,8 +133,28 @@ public class TiraBot implements ChessBot {
         // if given GameState is not empty we update the Board given in the method with latest move
         if (gameState.myTurn() && !gameState.moves.isEmpty()) {
             String latestMove = gameState.getLatestMove();
+            this.opponentCastling(latestMove, boardToUpdate);
             movementgenerator.updateMovementOnBoard(latestMove, boardToUpdate);
         }
+    }
+    
+    private String opponentCastling(String latestMove, Board boardToUpdate) {
+        File startFile = File.valueOfLabel(latestMove.substring(0, 1));
+        Rank startRank = Rank.valueOfInteger(Integer.parseInt(latestMove.substring(1, 2)));
+        
+        File finishFile = File.valueOfLabel(latestMove.substring(2, 3));
+        
+        if (boardToUpdate.getTile(startFile, startRank).getPiece().getPieceType() == PieceType.King 
+                && numberMod.abs(startFile.getIntegerFile() - finishFile.getIntegerFile()) > 1) {
+            if (finishFile == File.File_C) {
+                return startRank + "queenside";
+            }
+            if (finishFile == File.File_G) {
+                return startRank + "kingside";
+            }
+        }
+        
+        return latestMove;
     }
     
     /**
@@ -211,7 +240,7 @@ public class TiraBot implements ChessBot {
             }
         }
         
-        this.updateCastling(moveToReturn, -1);
+        this.updateCastling(moveToReturn, Side.BLACK);
         
         return moveToReturn; 
     }
@@ -253,14 +282,40 @@ public class TiraBot implements ChessBot {
             }
         }
         
-        this.updateCastling(moveToReturn, 1);
+        this.updateCastling(moveToReturn, Side.WHITE);
         
         return moveToReturn; 
     }
 
-    private void updateCastling(String moveToReturn, int sideMultiplier) {
+    private void updateCastling(String moveToReturn, Side side) {
         File startFile = File.valueOfLabel(moveToReturn.substring(0, 1));
-        Rank startRank = Rank.valueOf(moveToReturn.substring(1, 2));
+        Rank startRank = Rank.valueOfInteger(Integer.parseInt(moveToReturn.substring(1, 2)));
+        
+        if (side == Side.WHITE) {
+            if (startFile == File.File_E && startRank == Rank.Rank_1) {
+                this.gameState.castlingKingSideWhite = false;
+                this.gameState.castlingQueenSideWhite = false;
+            }
+            if (startFile == File.File_A && startRank == Rank.Rank_1) {
+                this.gameState.castlingQueenSideWhite = false;
+            }
+            if (startFile == File.File_H && startRank == Rank.Rank_1) {
+                this.gameState.castlingKingSideWhite = false;
+            }
+            
+        } else {
+            if (startFile == File.File_E && startRank == Rank.Rank_8) {
+                this.gameState.castlingKingSideBlack = false;
+                this.gameState.castlingQueenSideBlack = false;
+            }
+            if (startFile == File.File_A && startRank == Rank.Rank_8) {
+                this.gameState.castlingQueenSideBlack = false;
+            }
+            if (startFile == File.File_H && startRank == Rank.Rank_8) {
+                this.gameState.castlingKingSideBlack = false;
+            }
+        }
+        
         
     }
     
