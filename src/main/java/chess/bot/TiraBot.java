@@ -1,10 +1,12 @@
 package chess.bot;
 
 import chess.elements.Board;
+import chess.elements.File;
 import chess.engine.GameState;
 import chess.model.Side;
 import chess.rules.KingCheckedCounter;
 import chess.rules.MovementGenerator;
+import com.github.bhlangonijr.chesslib.Rank;
 import datastructureproject.MoveValueCounter;
 import datastructureproject.datamodifiers.ArrayModifier;
 import datastructureproject.datamodifiers.NumberModificator;
@@ -208,6 +210,9 @@ public class TiraBot implements ChessBot {
                 moveToReturn = move; // set the returnable move to new best
             }
         }
+        
+        this.updateCastling(moveToReturn, -1);
+        
         return moveToReturn; 
     }
     
@@ -247,7 +252,16 @@ public class TiraBot implements ChessBot {
                 moveToReturn = move; // set the returnable move to new best
             }
         }
+        
+        this.updateCastling(moveToReturn, 1);
+        
         return moveToReturn; 
+    }
+
+    private void updateCastling(String moveToReturn, int sideMultiplier) {
+        File startFile = File.valueOfLabel(moveToReturn.substring(0, 1));
+        Rank startRank = Rank.valueOf(moveToReturn.substring(1, 2));
+        
     }
     
 }

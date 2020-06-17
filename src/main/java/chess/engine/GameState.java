@@ -56,8 +56,20 @@ public class GameState {
      */
     public ArrayList<String> moves;
     
+    public boolean castlingKingSideWhite;
+    
+    public boolean castlingKingSideBlack;
+    
+    public boolean castlingQueenSideWhite;
+    
+    public boolean castlingQueenSideBlack;
+    
     public GameState() {
         this.moves = new ArrayList();
+        this.castlingKingSideWhite = true;
+        this.castlingKingSideBlack = true;
+        this.castlingQueenSideWhite = true;
+        this.castlingQueenSideBlack = true;
     }
     
     /**
