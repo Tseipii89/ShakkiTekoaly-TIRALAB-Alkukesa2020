@@ -143,16 +143,18 @@ public class TiraBot implements ChessBot {
         Rank startRank = Rank.valueOfInteger(Integer.parseInt(latestMove.substring(1, 2)));
         
         File finishFile = File.valueOfLabel(latestMove.substring(2, 3));
-        
-        if (boardToUpdate.getTile(startFile, startRank).getPiece().getPieceType() == PieceType.King 
-                && numberMod.abs(startFile.getIntegerFile() - finishFile.getIntegerFile()) > 1) {
-            if (finishFile == File.File_C) {
-                return startRank + "queenside";
-            }
-            if (finishFile == File.File_G) {
-                return startRank + "kingside";
+        if (boardToUpdate.getTile(startFile, startRank).getPiece() != null) {
+            if (boardToUpdate.getTile(startFile, startRank).getPiece().getPieceType() == PieceType.King 
+                    && numberMod.abs(startFile.getIntegerFile() - finishFile.getIntegerFile()) > 1) {
+                if (finishFile == File.File_C) {
+                    return startRank + "queenside";
+                }
+                if (finishFile == File.File_G) {
+                    return startRank + "kingside";
+                }
             }
         }
+
         
         return latestMove;
     }

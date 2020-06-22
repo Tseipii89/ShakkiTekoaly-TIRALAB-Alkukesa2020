@@ -6,14 +6,42 @@ import chess.model.Side;
 import chess.rules.MovementGenerator;
 import chess.rules.NewTileCounter;
 
-
+/**
+ *
+ * TiraBot uses this class to value different possible moves to find the best move.
+ * 
+ * @author juhop
+ */
 public class MoveValueCounter {
+
+    /**
+     * Calculates the new tile.
+     */
     private final NewTileCounter newTileCounter;
+
+    /**
+     * Calculates the value of board.
+     */
     private final BoardValueCalculator valueCalc;
+
+    /**
+     * Saves the state before the move.
+     */
     public BoardStatusSaver boardStatusSaver; // Public for testing
+
+    /**
+     * The movement generator to generate all possible moves.
+     */
     public final MovementGenerator movementGenerator; // Public for testing
+
+    /**
+     * The AlphaBetaPruner used in this class.
+     */
     public AlphaBetaPruner alphabeta; // Public for testing
     
+    /**
+     * Creates new move MoveValueCounter ready to be used.
+     */
     public MoveValueCounter() {
         newTileCounter = new NewTileCounter();
         valueCalc = new BoardValueCalculator();
@@ -45,6 +73,16 @@ public class MoveValueCounter {
         return valueCalc.boardValue(startTile, finishTile, promotion);
     }
     
+    /**
+     *
+     * Using alpha-beta to count best move for given depth in min-max tree.
+     * 
+     * @param move The move to be done.
+     * @param playing Side that is currently playing.
+     * @param board The board that is being updated.
+     * @param depth How deep we go into alpha-beta algo.
+     * @return the board value of best move.
+     */
     public int moveValueCountAlphaBeta(String move, Side playing, Board board, int depth) {
         alphabeta = new AlphaBetaPruner();
         // save pieces
@@ -66,6 +104,15 @@ public class MoveValueCounter {
         return value;
     }
     
+    /**
+     * Counts the nodes checked by Alpha-beta algorithm.
+     * 
+     * @param move The move to be done.
+     * @param playing Side that is currently playing.
+     * @param board The board that is being updated.
+     * @param depth How deep we go into alpha-beta algo.
+     * @return How many leaves were checked.
+     */
     public int moveValueCountAlphaBetaTest(String move, Side playing, Board board, int depth) {
         alphabeta = new AlphaBetaPruner();
         // save pieces
@@ -87,6 +134,16 @@ public class MoveValueCounter {
         return value;
     }
     
+    /**
+     *
+     * Counts the nodes checked by Min-Max algorithm.
+     * 
+     * @param move The move to be done.
+     * @param playing Side that is currently playing.
+     * @param board The board that is being updated.
+     * @param depth How deep we go into min-max algo.
+     * @return How many leaves were checked.
+     */
     public int moveValueCountMinMaxTest(String move, Side playing, Board board, int depth) {
         alphabeta = new AlphaBetaPruner();
         // save pieces

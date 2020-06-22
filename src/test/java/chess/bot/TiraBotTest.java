@@ -553,4 +553,26 @@ public class TiraBotTest {
      assertThat(movesWithoutChecks.length, is(20) ); 
     }
     
+    /* 
+    
+    CASTLING
+    
+    */
+    
+    @Test
+    public void castlingUpdatesCorrectlyCanCastle() {
+        Board boardToUpdate = new Board();
+        boardToUpdate.getTile(File.File_E, Rank.Rank_8).setPiece(new King(Side.BLACK));
+        boardToUpdate.getTile(File.File_A, Rank.Rank_8).setPiece(new Rook(Side.BLACK));
+        
+        GameState gs = new GameState();
+        gs.setMoves("e8c8");
+        gs.playing = Side.WHITE;
+        gs.turn = Side.WHITE;
+        
+        tirabot.updateGameStateMove(gs, boardToUpdate);
+        
+        assertThat(boardToUpdate.getTile(File.File_C, Rank.Rank_8).getPiece().getPieceType(), is(PieceType.King));
+    }
+    
 }

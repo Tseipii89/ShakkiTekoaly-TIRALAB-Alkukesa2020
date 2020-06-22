@@ -64,6 +64,12 @@ Date       | time | target |
 2020-06-16 | 1h | Wrote user manual. Chekcstyle down to 38 errors. |
 2020-06-16 | 3.5h | Wrote code for castling and decided it was so bad code that I didn't want to implement it. I only added so that the bot knows how to read castling move. Chekcstyle down to 26 errors. |
 
+## Week 7
+
+Date       | time | target |
+-----------|------|--------|
+2020-06-22 | 0.5h | Corrected Castling bug, checkstyle errors down to 22. |
+
 ## Totals
 
  Week   | Time     |
@@ -74,4 +80,5 @@ Date       | time | target |
  4      | 17h    |
  5      | 13.5h    |
  6      | 8h    |
-**Tot** | **74.5h** |
+ 7      | 0.5h    |
+**Tot** | **75h** |
