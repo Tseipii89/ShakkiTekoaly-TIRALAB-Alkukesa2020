@@ -54,7 +54,7 @@ or, if you didn't,
 
 ### XBoard
 
-All the info below is from [Tira Chess library](https://github.com/TiraLabra/chess/blob/master/documentation/Beginners_guide.md) and not tested by yours truly.
+All the info below is from [Tira Chess library](https://github.com/TiraLabra/chess/blob/master/documentation/Beginners_guide.md) and not tested by yours truly. I battled with the xBoard installation for 1.5 hours before giving up. I installed cygwin and all kinds of different packages the xBoard said it needed. It was endless swamp.
 
 XBoard is a graphical user interface chessboard for chess engines. Xboard can be connected to your tira chess engine.
 

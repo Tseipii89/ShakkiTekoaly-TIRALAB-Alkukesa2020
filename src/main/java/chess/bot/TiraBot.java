@@ -131,7 +131,7 @@ public class TiraBot implements ChessBot {
      */
     public void updateGameStateMove(GameState gameState, Board boardToUpdate) {
         // if given GameState is not empty we update the Board given in the method with latest move
-        if (gameState.myTurn() && !gameState.moves.isEmpty()) {
+        if (!gameState.moves.isEmpty()) {
             String latestMove = gameState.getLatestMove();
             this.opponentCastling(latestMove, boardToUpdate);
             movementgenerator.updateMovementOnBoard(latestMove, boardToUpdate);

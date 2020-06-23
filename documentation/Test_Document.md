@@ -52,7 +52,7 @@ There is noticable change in run time, when there are more depth to be checked. 
 
 Also the standard deviation changes a lot. I don't know what causes this. It might be that the randomly choosen first move of bot is to be blamed, but I really don't know.
 
-### Second test 
+### Second test
 
 I tried to make the difference between min-max and alpha-beta even more clear. I choose the board situation given in alpha-beta section of page <https://www.freecodecamp.org/news/simple-chess-ai-step-by-step-1d55a9266977/> and ran the min-max and alpha-beta to see the differences. According to the web site, alpha-beta checks "only" 61 721 postions where min-max checks 879 750 positions.
 
@@ -65,6 +65,6 @@ The difference was clear.
 | 3                           | 10 266 832 135         | 1 380 264 290             | 36 659 406              | 26 217 170              |
 | 4                           | 257 812 308 655       | 14 157 014 330              | 8 004 264 980              | 125 214 300             |
 
-The run time is clearly better with alpha-beta pruning. 
+The run time is clearly better with alpha-beta pruning.
 
 Again I have no idea what is happening with the standard deviation.
