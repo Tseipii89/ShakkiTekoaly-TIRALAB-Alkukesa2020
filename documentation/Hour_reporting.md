@@ -70,6 +70,7 @@ Date       | time | target |
 -----------|------|--------|
 2020-06-22 | 2h | Corrected Castling bug, checkstyle errors down to 22. Also made peer review.|
 2020-06-23 | 1.5h | I battled 1.5 hours to install the xBoard with no success. Apparently Linux programs are not so easily turned into Windows ones. |
+2020-06-24 | 0.5h | I moved the moverules -class's method createMovementString into its own class. Checkstyle errors down to 17. |
 
 ## Totals
 
@@ -81,5 +82,5 @@ Date       | time | target |
  4      | 17h    |
  5      | 13.5h    |
  6      | 8h    |
- 7      | 3.5h    |
-**Tot** | **78h** |
+ 7      | 4h    |
+**Tot** | **78.5h** |

@@ -4,6 +4,7 @@ package chess.rules;
 import chess.elements.Board;
 import chess.elements.Tile;
 import datastructureproject.datamodifiers.ArrayModifier;
+import datastructureproject.datamodifiers.MoveToString;
 import pieces.Piece;
 
 /**
@@ -25,13 +26,16 @@ public class MoveRules {
      * Adds movement to the given array.
      */
     private final ArrayModifier arrayModifier;
+    
+    private final MoveToString moveToString;
 
     /**
      * Checks if it possible to move to the new tile.
      */
     public MoveRules() {
         newTileCounter = new NewTileCounter();
-        arrayModifier = new ArrayModifier();    
+        arrayModifier = new ArrayModifier();  
+        moveToString = new MoveToString();
     }
     
     /**
@@ -61,7 +65,7 @@ public class MoveRules {
             return moves;
         } else if (tileToCheck.getPiece() != null) {
             if (tileToCheck.getPiece().getSide() != tilesPiece.getSide()) {
-                String move = createMovementString(tile, tileToCheck, canPromotion);
+                String move = this.moveToString.createMovementString(tile, tileToCheck, canPromotion);
                 moves = arrayModifier.addNewMoveToArray(moves, move);
             }
         } 
@@ -92,7 +96,7 @@ public class MoveRules {
         Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd, gameBoard);
         if (tileToCheck != null) {
             if (tileToCheck.getPiece() == null) {
-                String move = createMovementString(tile, tileToCheck, canPromotion);
+                String move = this.moveToString.createMovementString(tile, tileToCheck, canPromotion);
                 moves = arrayModifier.addNewMoveToArray(moves, move);
             } 
         }
@@ -120,38 +124,13 @@ public class MoveRules {
         Tile tileToCheck = newTileCounter.countNewTile(tile, sideMultiplier, fileToAdd, rankToAdd, gameBoard);
         if (tileToCheck != null) {
             if (tileToCheck.getPiece() == null) {
-                String move = createMovementString(tile, tileToCheck, 0); // no other piece can promote than Pawn
+                String move = this.moveToString.createMovementString(tile, tileToCheck, 0); // no other piece can promote than Pawn
                 moves = arrayModifier.addNewMoveToArray(moves, move);
             } 
         }
         return moves;
     }
     
-    /**
-     *
-     * Transforms the given movement tiles to a String presentation of the move.
-     * 
-     * @param start The tile where the piece moves from.
-     * @param finish The tile where the piece moves to.
-     * @param canPromotion If piece is pawn and can promote. 
-     * @return the String presentation of the movement.
-     */
-    private String createMovementString(Tile start, Tile finish, double canPromotion) {
-        String basic;
-        if (start.getRank().getIntegerRank() == canPromotion) {
-            basic = start.getFile().toString() // start file as a String
-                    + start.getRank().toString() // start rank as a String 
-                    + finish.getFile().toString() // finish file as a String
-                    + finish.getRank().toString() // finish rank as a String
-                    + "q"; // all pawns are promoted to Queens
-        } else {
-            basic = start.getFile().toString() // start file as a String
-                    + start.getRank().toString() // start rank as a String 
-                    + finish.getFile().toString() // finish file as a String
-                    + finish.getRank().toString(); // finish rank as a String
-        } 
-        return basic;
-    }
     
     /**
      *

@@ -89,8 +89,6 @@ As one can see there is significant improvement with alpha-beta pruning. The O(n
 
 The code was written fully with objects. Now after the implementation of the code, I think it might have been easier to do for example the game board with just matrix table, and not board -object.
 
-
-
 ### Corrected errors
 
 * ~~When running bot on Lichess, white bishop went in the same tile with white Pawn. So again there is something wrong with the movement rules. It has something to do with KingInCheck -class, but the KingInCheck -class works on some instances.~~
@@ -99,9 +97,16 @@ The code was written fully with objects. Now after the implementation of the cod
 ### Known updates to be made and errors to correct
 
 * The checkstyle errors are in 22.
-* I have to move the moverules -class's method createMovementString into a different class. Now moverules does two things.
 * The scoring of board could be updated. Now the bot makes some stupid moves. I'm very sure the alpha-beta pruning works and the problem is actually the  scoring of the board.
 * The KingInCheck is quite heavy and does some extra iterations. This could be optimised not to do extra iterations.
+* At least in Lichess the bot knows only how to move as a white player.
+* I haven't included the draw -rule of chess for the bot. Damn, I noticed this on 24.6.2020.
+* I added the sideMultiplier used in the code into the Side enums. I need to replace the multiplier everywhere.
+* Minimax has a stupid solution for converting Board and back to String and vice versa.
+* Minimax is constantly selecting new AlphaBetaPruner objects.
+* recursion won't finish if the king is eaten
+* Test document needs to be filled with chapter of JUnit tests and how the bot works.
+* Tests run slowly.
 
 ### Known updates to be made and errors not to be corrected
 

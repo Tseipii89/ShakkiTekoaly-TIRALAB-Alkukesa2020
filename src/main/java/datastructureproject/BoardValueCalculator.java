@@ -5,19 +5,37 @@ import chess.elements.Board;
 import chess.elements.Tile;
 import pieces.Piece;
 
+/**
+ *
+ * Board Value Calculator calculates the whole board's value and
+ * value of independent single move that player might do.
+ * 
+ * @author juhop
+ */
 public class BoardValueCalculator {
  
-    
+    /**
+     * Creates new Board Value Calculator ready to be used.
+     */
     public BoardValueCalculator() {
         
     }
     
+    /**
+     *
+     * Calculates the value change that can be achieved by doing the intended move.
+     * 
+     * @param startTile where the move starts.
+     * @param finishTile where the move ends.
+     * @param promotion if the piece is being promoted.
+     * @return value change after the move.
+     */
     public int boardValue(Tile startTile, Tile finishTile, int promotion) {
         int valueChange = 0;
         
         Piece pieceToMove = startTile.getPiece();
-        if(finishTile.getPiece() != null) {
-            if(finishTile.getPiece().getSide() != pieceToMove.getSide()) {
+        if (finishTile.getPiece() != null) {
+            if (finishTile.getPiece().getSide() != pieceToMove.getSide()) {
                 valueChange -= finishTile.getPiece().getValue();
             }
         }
@@ -25,11 +43,19 @@ public class BoardValueCalculator {
         return valueChange + promotion;
     }
     
-    public int allTilesBoardValue(Board board){
+    /**
+     *
+     * Calculates the whole game Board's value.
+     * Whites are + and Blacks are -.
+     * 
+     * @param board to be calculated.
+     * @return the value of board.
+     */
+    public int allTilesBoardValue(Board board) {
         int value = 0;
         Tile[] tiles = board.getTilesList();
         for (int i = 0; i < 64; i++) {
-            if(tiles[i].getPiece() != null) {
+            if (tiles[i].getPiece() != null) {
                 value += tiles[i].getPiece().getValue();
             }
         }
