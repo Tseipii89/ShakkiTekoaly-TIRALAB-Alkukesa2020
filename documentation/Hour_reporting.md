@@ -74,6 +74,7 @@ Date       | time | target |
 2020-06-24 | 1h | Started and almost finished the position valuation of the pieces. |
 2020-06-25 | 1h | Fixing bugs in position valuation |
 2020-06-27 | 3.5h | Finally got the position valuation to work. Checkstyle errors down to 16. |
+2020-06-27 | 1h | Finishing touches. |
 
 ## Totals
 
@@ -85,5 +86,5 @@ Date       | time | target |
  4      | 17h    |
  5      | 13.5h    |
  6      | 8h    |
- 7      | 9.5h    |
-**Tot** | **84h** |
+ 7      | 10.5h    |
+**Tot** | **85h** |
