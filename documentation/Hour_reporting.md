@@ -71,6 +71,9 @@ Date       | time | target |
 2020-06-22 | 2h | Corrected Castling bug, checkstyle errors down to 22. Also made peer review.|
 2020-06-23 | 1.5h | I battled 1.5 hours to install the xBoard with no success. Apparently Linux programs are not so easily turned into Windows ones. |
 2020-06-24 | 0.5h | I moved the moverules -class's method createMovementString into its own class. Checkstyle errors down to 17. |
+2020-06-24 | 1h | Started and almost finished the position valuation of the pieces. |
+2020-06-25 | 1h | Fixing bugs in position valuation |
+2020-06-27 | 3.5h | Finally got the position valuation to work. Checkstyle errors down to 16. |
 
 ## Totals
 
@@ -82,5 +85,5 @@ Date       | time | target |
  4      | 17h    |
  5      | 13.5h    |
  6      | 8h    |
- 7      | 4h    |
-**Tot** | **78.5h** |
+ 7      | 9.5h    |
+**Tot** | **84h** |

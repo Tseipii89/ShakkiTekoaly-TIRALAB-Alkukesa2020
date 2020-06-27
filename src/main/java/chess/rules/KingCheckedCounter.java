@@ -80,7 +80,7 @@ public class KingCheckedCounter {
                         moveValueCounter.moveValueCount(moveToCheck, opponent.getMultiplier(), checkBoard)
                 );
                 
-                if (boardValueOfTheMove >= 900) {
+                if (boardValueOfTheMove >= 800) {
                     kingCaptured = true;
                 }
             }

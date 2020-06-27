@@ -107,7 +107,6 @@ public class NumberModificatorTest {
         // If all moves are equal in value, we want to return random move, and not for example the first move.
        int randomResult = random.random(movesWithoutChecks.length); 
        assertTrue(randomResult < movesWithoutChecks.length);
-       assertThat(randomResult, is(not(this.lastRandom)));
     }
     
     @Test

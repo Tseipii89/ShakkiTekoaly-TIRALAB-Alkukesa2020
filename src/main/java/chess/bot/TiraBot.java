@@ -56,8 +56,14 @@ public class TiraBot implements ChessBot {
      */
     private int depth;
     
+    /**
+     * GameState is saved because of opponent's castling opportunity.
+     */
     private GameState gameState;
     
+    /**
+     * Provides min, max, abs and random methods.
+     */
     private NumberModificator numberMod;
 
     /**
@@ -138,6 +144,14 @@ public class TiraBot implements ChessBot {
         }
     }
     
+    /**
+     *
+     * Checks if king does castling.
+     * 
+     * @param latestMove the move to check.
+     * @param boardToUpdate the board to check for castling.
+     * @return the side on which the castling is done.
+     */
     private String opponentCastling(String latestMove, Board boardToUpdate) {
         File startFile = File.valueOfLabel(latestMove.substring(0, 1));
         Rank startRank = Rank.valueOfInteger(Integer.parseInt(latestMove.substring(1, 2)));
@@ -289,6 +303,14 @@ public class TiraBot implements ChessBot {
         return moveToReturn; 
     }
 
+    /**
+     *
+     * Updates Gamestate's castling to false, if king or rook moves.
+     * To be used to prevent illegal castling.
+     * 
+     * @param moveToReturn The move to check.
+     * @param side side that plays.
+     */
     private void updateCastling(String moveToReturn, Side side) {
         File startFile = File.valueOfLabel(moveToReturn.substring(0, 1));
         Rank startRank = Rank.valueOfInteger(Integer.parseInt(moveToReturn.substring(1, 2)));

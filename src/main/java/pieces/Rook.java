@@ -40,6 +40,11 @@ public class Rook implements Piece {
     private final Integer[] movePairsRank;
     
     /**
+     * Valuates the different positions of the piece.
+     */
+    private final double[] positionValue;
+    
+    /**
      * Creates new Rook ready to be used.
      * @param side The side this piece belongs to.
      */
@@ -49,6 +54,15 @@ public class Rook implements Piece {
         moveRules = new MoveRules();
         this.movePairsFile = new Integer[]{-1, 0, 1, 0};
         this.movePairsRank = new Integer[]{0, 1, 0, -1};
+        this.positionValue = new double[]{
+            0,  0,  0,  1,  1,  0,  0,  0,
+            -1,  0,  0,  0,  0,  0,  0, -1,
+            -1,  0,  0,  0,  0,  0,  0, -1,
+            -1,  0,  0,  0,  0,  0,  0, -1,
+            -1,  0,  0,  0,  0,  0,  0, -1,
+            -1,  0,  0,  0,  0,  0,  0, -1,
+            1,  1,  1,  1,  1,  1,  1, -1,
+            0,  0,  0,  0,  0,  0,  0,  0};
     }
 
     /**
@@ -90,12 +104,12 @@ public class Rook implements Piece {
      */
     @Override
     public int getValue() {
-        int sideMultiplier = 1;
-        if (this.side == Side.BLACK) {
-            sideMultiplier = -1;
-        }
-        
-        return 50 * sideMultiplier;
+        return 50;
+    }
+
+    @Override
+    public double getPositionValue(int position) {
+        return this.positionValue[position];    
     }
     
 }

@@ -40,6 +40,11 @@ public class Knight implements Piece {
     private final Integer[] movePairsRank;
     
     /**
+     * Valuates the different positions of the piece.
+     */
+    private final double[] positionValue;
+    
+    /**
      * Creates new Knight ready to be used.
      * @param side The side this piece belongs to.
      */
@@ -49,6 +54,15 @@ public class Knight implements Piece {
         moveRules = new MoveRules();
         this.movePairsFile = new Integer[]{-2, -1, 1, 2, 2, 1, -1, -2};
         this.movePairsRank = new Integer[]{1, 2, 2, 1, -1, -2, -2, -1};
+        this.positionValue = new double[]{
+            -5, -4, -3, -3,  -3,  -3,   -4, -5,
+            -4, -2.0,   0,  1,    1,   0,   -2, -4,
+            -3,    1,   1,  2,    2,   1,    1, -3,
+            -3,  0.0,   2, 2.0, 2.0,   2,  0.0, -3,
+            -3,    1,   2, 2.0, 2.0,   2,    1, -3,
+            -3,  0.0, 1.0,   2,   2, 1.0,  0.0, -3,
+            -4, -2.0, 0.0, 0.0, 0.0, 0.0, -2.0, -4,
+            -5, -4.0,  -3,  -3,  -3,  -3,   -4, -5};
     }
 
     /**
@@ -112,12 +126,12 @@ public class Knight implements Piece {
      */
     @Override
     public int getValue() {
-        int sideMultiplier = 1;
-        if (this.side == Side.BLACK) {
-            sideMultiplier = -1;
-        }
-        
-        return 30 * sideMultiplier;
+        return 30;
+    }
+
+    @Override
+    public double getPositionValue(int position) {
+        return this.positionValue[position];    
     }
     
 }

@@ -93,11 +93,12 @@ The code was written fully with objects. Now after the implementation of the cod
 
 * ~~When running bot on Lichess, white bishop went in the same tile with white Pawn. So again there is something wrong with the movement rules. It has something to do with KingInCheck -class, but the KingInCheck -class works on some instances.~~
   * 11.6.2020: Made KingInCheck -class simpler and corrected the tests. The encountered problem never occured since. I have no idea what caused it, but I'm hopeful it has been corrected.
+* Bot uses piece positions to position itself in better places
 
 ### Known updates to be made and errors to correct
 
-* The checkstyle errors are in 22.
-* The scoring of board could be updated. Now the bot makes some stupid moves. I'm very sure the alpha-beta pruning works and the problem is actually the  scoring of the board.
+* The checkstyle errors are in 16.
+* The bot doesn't understand the difference between checkmate and check. That makes it that it might not know how to end the game.
 * The KingInCheck is quite heavy and does some extra iterations. This could be optimised not to do extra iterations.
 * At least in Lichess the bot knows only how to move as a white player.
 * I haven't included the draw -rule of chess for the bot. Damn, I noticed this on 24.6.2020.
@@ -107,6 +108,7 @@ The code was written fully with objects. Now after the implementation of the cod
 * recursion won't finish if the king is eaten
 * Test document needs to be filled with chapter of JUnit tests and how the bot works.
 * Tests run slowly.
+* Jacoco coverance is in 91% (could be 100%)
 
 ### Known updates to be made and errors not to be corrected
 

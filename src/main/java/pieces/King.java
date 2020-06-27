@@ -40,6 +40,11 @@ public class King implements Piece {
     private final Integer[] movePairsRank;
     
     /**
+     * Valuates the different positions of the piece.
+     */
+    private final double[] positionValue;
+    
+    /**
      * Creates new King ready to be used.
      * @param side The side this piece belongs to.
      */
@@ -49,6 +54,15 @@ public class King implements Piece {
         moveRules = new MoveRules();
         this.movePairsFile = new Integer[]{-1, -1, 0, 1, 1, 1, 0, -1};
         this.movePairsRank = new Integer[]{0, 1, 1, 1, 0, -1, -1, -1};
+        this.positionValue = new double[]{
+            2,  3,  1,  0,  0,  1,  3,  2,
+            2,  2,  0,  0,  0,  0,  2,  2,
+            -1, -2, -2, -2, -2, -2, -2, -1,
+            -2, -3, -3, -4, -4, -3, -3, -2,
+            -3, -4, -4, -5, -5, -4, -4, -3,
+            -3, -4, -4, -5, -5, -4, -4, -3,
+            -3, -4, -4, -5, -5, -4, -4, -3,
+            -3, -4, -4, -5, -5, -4, -4, -3};
     }
 
     /**
@@ -107,13 +121,13 @@ public class King implements Piece {
      * @return 900 for white king and -900 for black king.
      */
     @Override
-    public int getValue() {
-        int sideMultiplier = 1;
-        if (this.side == Side.BLACK) {
-            sideMultiplier = -1;
-        }
-        
-        return 900 * sideMultiplier;
+    public int getValue() {        
+        return 900;
+    }
+
+    @Override
+    public double getPositionValue(int position) {
+        return this.positionValue[position];    
     }
     
 }

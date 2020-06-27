@@ -39,6 +39,11 @@ public class Queen implements Piece {
     private final Integer[] movePairsRank;
     
     /**
+     * Valuates the different positions of the piece.
+     */
+    private final double[] positionValue;
+    
+    /**
      * Creates new Queen ready to be used.
      * @param side The side this piece belongs to.
      */
@@ -48,6 +53,15 @@ public class Queen implements Piece {
         moveRules = new MoveRules();
         this.movePairsFile = new Integer[]{-1, -1, 0, 1, 1, 1, 0, -1};
         this.movePairsRank = new Integer[]{0, 1, 1, 1, 0, -1, -1, -1};
+        this.positionValue = new double[]{
+            -2, -1, -1, -1, -1, -1, -1, -2,
+            -1,  0,  1,  0,  0,  0,  0, -1,
+            -1,  1,  1,  1,  1,  1,  0, -1,
+            0,  0,  1,  1,  1,  1,  0, -1,
+            -1,  0,  1,  1,  1,  1,  0, -1,
+            -1,  0,  1,  1,  1,  1,  0, -1,
+            -1,  0,  0,  0,  0,  0,  0, -1,
+            -2, -1, -1, -1, -1, -1, -1, -2};
     }
 
     /**
@@ -89,12 +103,12 @@ public class Queen implements Piece {
      */
     @Override
     public int getValue() {
-        int sideMultiplier = 1;
-        if (this.side == Side.BLACK) {
-            sideMultiplier = -1;
-        }
-        
-        return 90 * sideMultiplier;
+        return 90;
+    }
+
+    @Override
+    public double getPositionValue(int position) {
+        return this.positionValue[position];    
     }
     
 }

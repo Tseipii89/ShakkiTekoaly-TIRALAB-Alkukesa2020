@@ -3,6 +3,7 @@ package datastructureproject;
 
 import chess.elements.Board;
 import chess.elements.Tile;
+import chess.model.Side;
 import pieces.Piece;
 
 /**
@@ -32,15 +33,29 @@ public class BoardValueCalculator {
      */
     public int boardValue(Tile startTile, Tile finishTile, int promotion) {
         int valueChange = 0;
-        
+        int startIndex = 8 * (startTile.getRank().getIntegerRank() - 1) + startTile.getFile().getIntegerFile() - 1;
+        int finishIndex = 8 * (finishTile.getRank().getIntegerRank() - 1) + finishTile.getFile().getIntegerFile() - 1;
         Piece pieceToMove = startTile.getPiece();
         if (finishTile.getPiece() != null) {
             if (finishTile.getPiece().getSide() != pieceToMove.getSide()) {
-                valueChange -= finishTile.getPiece().getValue();
+                Piece checkPiece = finishTile.getPiece();
+                valueChange -= checkPiece.getValue() * checkPiece.getSide().getMultiplier();
+                if(checkPiece.getSide() == Side.BLACK) {
+                    valueChange -= checkPiece.getPositionValue(63 - finishIndex) * checkPiece.getSide().getMultiplier();
+                } else {
+                    valueChange -= checkPiece.getPositionValue(finishIndex) * checkPiece.getSide().getMultiplier();
+                }
             }
         }
+        if(pieceToMove.getSide() == Side.BLACK) {
+            valueChange += pieceToMove.getPositionValue(63 - startIndex);
+            valueChange -= pieceToMove.getPositionValue(63 - finishIndex);
+        } else {
+            valueChange -= pieceToMove.getPositionValue(startIndex);
+            valueChange += pieceToMove.getPositionValue(finishIndex);
+        }
         
-        return valueChange + promotion;
+        return valueChange + promotion * pieceToMove.getSide().getMultiplier();
     }
     
     /**
@@ -56,7 +71,13 @@ public class BoardValueCalculator {
         Tile[] tiles = board.getTilesList();
         for (int i = 0; i < 64; i++) {
             if (tiles[i].getPiece() != null) {
-                value += tiles[i].getPiece().getValue();
+                Piece checkPiece = tiles[i].getPiece();
+                value += checkPiece.getValue() * checkPiece.getSide().getMultiplier();
+                if(checkPiece.getSide() == Side.BLACK) {
+                    value -= checkPiece.getPositionValue(63 - i);
+                } else {
+                    value += checkPiece.getPositionValue(i);
+                }
             }
         }
         return value;

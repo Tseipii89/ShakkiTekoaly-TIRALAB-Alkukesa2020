@@ -27,6 +27,11 @@ public class Pawn implements Piece {
     private final MoveRules moveRules;
     
     /**
+     * Valuates the different positions of the piece.
+     */
+    private final double[] positionValue;
+    
+    /**
      * Creates new Pawn ready to be used.
      * @param side The side this piece belongs to.
      */
@@ -34,6 +39,15 @@ public class Pawn implements Piece {
         this.side = side;
         this.pieceType = PieceType.Pawn;
         moveRules = new MoveRules();
+        this.positionValue = new double[]{
+            0,  0,  0,  0,  0,  0,  0, 0, 
+            1,  1,  1, -2, -2,  1,  1, 1, 
+            1, -1, -1,  0,  0, -1, -1, 1,
+            0,  0,  0,  2,  2,  0,  0, 0, 
+            1,  1,  1,  3,  3,  1,  1, 1, 
+            1,  1,  2,  3,  3,  2,  1, 1, 
+            5,  5,  5,  5,  5,  5,  5, 5, 
+            0,  0,  0,  0,  0,  0,  0, 0};
     }
 
     /**
@@ -99,12 +113,12 @@ public class Pawn implements Piece {
      */
     @Override
     public int getValue() {
-        int sideMultiplier = 1;
-        if (this.side == Side.BLACK) {
-            sideMultiplier = -1;
-        }
-        
-        return 10 * sideMultiplier;
+        return 10;
+    }
+
+    @Override
+    public double getPositionValue(int position) {
+        return this.positionValue[position];    
     }
 
 }

@@ -118,7 +118,7 @@ public class AlphaBetaPrunerTest {
         
         int minmaxvalue = alphabeta.minimax(Side.WHITE, testBoard, 0);
 
-        assertThat(minmaxvalue, is(-80));
+        assertThat(minmaxvalue, is(-76));
     }
     
     @Test
@@ -188,7 +188,7 @@ public class AlphaBetaPrunerTest {
         
         int minmaxvalue = alphabeta.minimax(Side.WHITE, testBoard, 1);
 
-        assertThat(minmaxvalue, is(-50));
+        assertThat(minmaxvalue, is(-45));
     }
     
     /* ALPHA-BETA PRUNING */
@@ -208,7 +208,7 @@ public class AlphaBetaPrunerTest {
       ab.minimaxTest(Side.WHITE, testBoard, 2, 0);
       int howManyMinMax =  ab.steps;
      
-      assertThat(howManyPrunings, is(22));
+      assertThat(howManyPrunings, is(27));
       assertThat(howManyMinMax, is(41));
       
       ab = new AlphaBetaPruner();
@@ -230,7 +230,7 @@ public class AlphaBetaPrunerTest {
       ab.minimaxTest(Side.WHITE, testBoard, 2, 0);
       int howManyMinMax =  ab.steps;
       
-      assertThat(howManyPrunings, is(60));
+      assertThat(howManyPrunings, is(125));
       assertThat(howManyMinMax, is(421));
       
       ab = new AlphaBetaPruner();

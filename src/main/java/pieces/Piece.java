@@ -28,6 +28,14 @@ public interface Piece {
      * @return the value of this piece.
      */
     int getValue();
+    
+    /**
+     *
+     * @param position the position on Tile list
+     * @see chess.elements.Board#getTilesList() 
+     * @return the value of this piece's position.
+     */
+    double getPositionValue(int position);
 
     /**
      * Returns all the moves this piece can do.
